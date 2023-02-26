@@ -17,11 +17,11 @@ import { toISO8601String } from '../utils';
 export async function bundle(epub: Epubook): Promise<Uint8Array> {
   return new Promise(async (res, rej) => {
     const opfs = epub
-      .packageDocuments()
+      .packages()
       .map((opf) => [opf.filename(), fflate.strToU8(makePackageDocument(opf))] as const);
 
     const items: Record<string, Uint8Array> = {};
-    for (const opf of epub.packageDocuments()) {
+    for (const opf of epub.packages()) {
       const base = path.dirname(opf.filename());
       for (const item of opf.items()) {
         const name = path.join(base, item.filename());
@@ -77,7 +77,7 @@ export function makeContainer(epub: Epubook): string {
     unpairedTags: ['rootfile']
   });
 
-  const rootfile = epub.packageDocuments().map((p) => ({
+  const rootfile = epub.packages().map((p) => ({
     '@_full-path': p.filename(),
     '@_media-type': 'application/oebps-package+xml',
     '#text': ''

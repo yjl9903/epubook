@@ -1,7 +1,7 @@
 import * as path from 'pathe';
 import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
-import { PackageDocument } from './opf';
+import { PackageDocument, PackageDocumentMeta } from './opf';
 
 export class Epubook {
   /**
@@ -13,13 +13,15 @@ export class Epubook {
    */
   private opfs: PackageDocument[] = [new PackageDocument('OEBPS/content.opf')];
 
-  constructor() {}
+  constructor(meta: Partial<PackageDocumentMeta> = {}) {
+    this.opfs[0].update(meta);
+  }
 
-  public packageDocuments(): PackageDocument[] {
+  public packages(): PackageDocument[] {
     return this.opfs;
   }
 
-  public mainPackageDocument() {
+  public main() {
     return this.opfs[0];
   }
 

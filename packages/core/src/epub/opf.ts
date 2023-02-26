@@ -11,6 +11,24 @@ const defu = createDefu((obj: any, key, value: any) => {
   }
 });
 
+export interface PackageDocumentMeta {
+  title: string;
+  language: string;
+  contributor: string[];
+  coverage: string;
+  creator: string;
+  date: Date;
+  description: string;
+  format: string;
+  publisher: string;
+  relation: string;
+  rights: string;
+  source: string;
+  subject: string;
+  type: string;
+  lastModified: Date;
+}
+
 export class PackageDocument {
   private readonly file: string;
 
@@ -20,7 +38,7 @@ export class PackageDocument {
 
   private _identifier = randomUUID();
 
-  private _metadata = {
+  private _metadata: PackageDocumentMeta = {
     title: '',
     language: 'zh-CN',
     contributor: [] as string[],
@@ -57,7 +75,7 @@ export class PackageDocument {
   }
 
   // --- metadata ---
-  public update(info: Partial<typeof this._metadata>) {
+  public update(info: Partial<PackageDocumentMeta>) {
     // TODO: valiate input data
     this._metadata = defu(info, this._metadata);
     return this;

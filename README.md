@@ -6,6 +6,12 @@ It will support the generation of the [latest epub standard](https://www.w3.org/
 
 > 👷‍♂️ Still work in progress.
 
+## Installation
+
+```bash
+npm i -g epubook
+```
+
 ## Resources
 
 + [EPUB 3.2 specification](https://www.w3.org/publishing/epub32/)

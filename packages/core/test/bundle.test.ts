@@ -21,7 +21,7 @@ describe('Bundle Epub', () => {
   it('generate opf', () => {
     const epub = new Epubook();
 
-    const opf = epub.mainPackageDocument();
+    const opf = epub.main();
     opf.setIdentifier('test-book-id', 'BookId');
     opf.update({
       title: 'Test Book',
@@ -63,11 +63,7 @@ describe('Bundle Epub', () => {
   });
 
   it('write epub', async () => {
-    const epub = new Epubook();
-
-    const opf = epub.mainPackageDocument();
-    opf.setIdentifier('test-book-id', 'BookId');
-    opf.update({
+    const epub = new Epubook({
       title: 'Test Book',
       date: new Date('2023-02-01T11:00:00.000Z'),
       lastModified: new Date('2023-02-26T11:00:00.000Z'),
@@ -75,6 +71,9 @@ describe('Bundle Epub', () => {
       description: 'for test usage',
       source: 'imagine'
     });
+
+    const opf = epub.main();
+    opf.setIdentifier('test-book-id', 'BookId');
 
     const content = `<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
   <head>

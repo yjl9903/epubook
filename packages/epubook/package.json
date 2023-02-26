@@ -14,6 +14,7 @@
   "license": "MIT",
   "author": "XLor",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -24,7 +25,11 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "epubook": "epubook.mjs"
+  },
   "files": [
+    "*.mjs",
     "dist"
   ],
   "scripts": {
@@ -35,7 +40,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@epubook/core": "workspace:*"
+    "@epubook/core": "workspace:*",
+    "breadc": "^0.8.8"
   },
   "devDependencies": {
     "vitest": "^0.29.1"
