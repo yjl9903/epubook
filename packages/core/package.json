@@ -2,7 +2,11 @@
   "name": "@epubook/core",
   "version": "0.0.1",
   "description": "",
-  "keywords": [],
+  "keywords": [
+    "epub",
+    "epub-gen",
+    "cli"
+  ],
   "homepage": "https://github.com/yjl9903/epubook#readme",
   "bugs": {
     "url": "https://github.com/yjl9903/epubook/issues"
