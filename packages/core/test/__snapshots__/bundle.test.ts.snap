@@ -56,7 +56,7 @@ PackageDocument {
   "_spine": [],
   "_toc": Html {
     "_properties": "nav",
-    "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+    "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
   <head>
     <title>Toc</title>
   </head>

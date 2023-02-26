@@ -144,7 +144,7 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder();
     const res = builder.build();
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title></title>
         </head>
@@ -158,7 +158,7 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder();
     const res = builder.title('with style').style('123').style('456').build();
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>with style</title>
           <link href=\\"123\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
@@ -181,7 +181,7 @@ describe('XHTML Builder', () => {
       ]
     });
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>Hello</title>
         </head>

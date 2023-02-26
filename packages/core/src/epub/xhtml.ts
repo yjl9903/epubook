@@ -88,7 +88,8 @@ export class XHTMLBuilder {
     return builder.build({
       html: {
         '@_xmlns': 'http://www.w3.org/1999/xhtml',
-        '@_xmlns:epub': 'http://www.w3.org/1999/xhtml',
+        '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
+        '@_lang': this.info.language,
         '@_xml:lang': this.info.language,
         head: {
           title: this.info.title,
