@@ -1,6 +1,7 @@
 import * as path from 'pathe';
 import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
+import { Item } from './item';
 import { PackageDocument, PackageDocumentMeta } from './opf';
 
 export class Epub {
@@ -23,6 +24,10 @@ export class Epub {
 
   public main() {
     return this.opfs[0];
+  }
+
+  public addItem(item: Item) {
+    this.opfs[0].addItem(item);
   }
 
   async bundle() {
