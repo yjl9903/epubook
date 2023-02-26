@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epubook } from '../src/epub';
+import { Epubook } from '../src';
 import { makeContainer } from '../src/bundle';
 
 describe('Bundle Epub', () => {
