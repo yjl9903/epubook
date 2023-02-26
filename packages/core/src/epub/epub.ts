@@ -1,4 +1,4 @@
-import * as path from 'node:path';
+import * as path from 'pathe';
 import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
 import { PackageDocument } from './opf';

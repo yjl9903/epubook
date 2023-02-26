@@ -40,15 +40,15 @@ describe('Bundle Epub', () => {
     expect(res).toMatchInlineSnapshot(`
       "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
       <package xmlns=\\"http://www.idpf.org/2007/opf\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" unique-identifier=\\"BookId\\" version=\\"3.0\\">
-        <metadata>
-          <dc:identifier>test-book-id</dc:identifier>
+        <metadata xmlns:dc=\\"http://purl.org/dc/elements/1.1/\\">
+          <dc:identifier id=\\"BookId\\">test-book-id</dc:identifier>
           <dc:title>Test Book</dc:title>
           <dc:language>zh-CN</dc:language>
-          <dc:creator id=\\"creator\\" opf:role=\\"aut\\" opf:file-as=\\"XLor\\">XLor</dc:creator>
-          <dc:date>2023-02-01T11:00:00.000Z</dc:date>
+          <dc:creator id=\\"creator\\">XLor</dc:creator>
+          <dc:date>2023-02-01T11:00:00Z</dc:date>
           <dc:description>for test usage</dc:description>
           <dc:source>imagine</dc:source>
-          <meta property=\\"dcterms:modified\\">2023-02-26T11:00:00.000Z</meta>
+          <meta property=\\"dcterms:modified\\">2023-02-26T11:00:00Z</meta>
           <meta refines=\\"#creator\\" property=\\"file-as\\">XLor</meta>
         </metadata>
         <manifest>

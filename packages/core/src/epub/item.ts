@@ -1,4 +1,4 @@
-import * as path from 'node:path';
+import * as path from 'pathe';
 import { type PathLike, promises as fs } from 'node:fs';
 
 import { strToU8 } from 'fflate';

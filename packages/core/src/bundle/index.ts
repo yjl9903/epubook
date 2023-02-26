@@ -1,12 +1,12 @@
+import * as path from 'pathe';
 import * as fflate from 'fflate';
-import * as path from 'node:path';
 import { XMLBuilder } from 'fast-xml-parser';
 
 import type { Epubook, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
 
-import { BundleError } from '../error';
-
 import { MIMETYPE } from '../constant';
+import { BundleError } from '../error';
+import { toISO8601String } from '../utils';
 
 /**
  * Bundle epub to zip archive
@@ -134,22 +134,24 @@ export function makePackageDocument(opf: PackageDocument): string {
     }
   }
   const metadata = {
-    'dc:identifier': opf.identifier(),
+    '@_xmlns:dc': 'http://purl.org/dc/elements/1.1/',
+    'dc:identifier': {
+      '@_id': opf.uniqueIdentifier(),
+      '#text': opf.identifier()
+    },
     'dc:title': opf.title(),
     'dc:language': opf.language(),
     'dc:creator': {
       '@_id': 'creator',
-      '@_opf:role': 'aut',
-      '@_opf:file-as': opf.creator(),
       '#text': opf.creator()
     },
-    'dc:date': opf.metadata().date.toISOString(),
+    'dc:date': toISO8601String(opf.metadata().date),
     'dc:description': opf.metadata().description,
     ...optionalMetadata,
     meta: [
       {
         '@_property': 'dcterms:modified',
-        '#text': opf.metadata().lastModified.toISOString()
+        '#text': toISO8601String(opf.metadata().lastModified)
       },
       {
         '@_refines': '#creator',
