@@ -1,5 +1,5 @@
 {
-  "name": "epubook",
+  "name": "@epubook/core",
   "version": "0.0.1",
   "description": "",
   "keywords": [],
@@ -33,9 +33,6 @@
     "test": "vitest",
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@epubook/core": "workspace:*"
   },
   "devDependencies": {
     "vitest": "^0.29.1"
