@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import { Epubook } from '../src';
-import { makeContainer } from '../src/bundle';
+import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
   it('generate container.xml', () => {
@@ -15,5 +15,23 @@ describe('Bundle Epub', () => {
       </container>
       "
     `);
+  });
+
+  it('generate opf', () => {
+    const epub = new Epubook();
+
+    const opf = epub.mainPackageDocument();
+    opf.setIdentifier('test-book-id', 'BookId');
+    opf.update({
+      title: 'Test Book',
+      date: new Date('2023-02-01T11:00:00.000Z'),
+      lastModified: new Date('2023-02-26T11:00:00.000Z'),
+      creator: 'XLor',
+      description: 'for test usage',
+      source: 'imagine'
+    });
+
+    const res = makePackageDocument(opf);
+    console.log(res);
   });
 });
