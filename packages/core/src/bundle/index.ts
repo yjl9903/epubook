@@ -2,7 +2,7 @@ import * as path from 'pathe';
 import * as fflate from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import type { Epubook, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
+import type { Epub, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
 
 import { MIMETYPE } from '../constant';
 import { BundleError } from '../error';
@@ -14,7 +14,7 @@ import { toISO8601String } from '../utils';
  * @param epub
  * @returns
  */
-export async function bundle(epub: Epubook): Promise<Uint8Array> {
+export async function bundle(epub: Epub): Promise<Uint8Array> {
   return new Promise(async (res, rej) => {
     const opfs = epub
       .packages()
@@ -69,7 +69,7 @@ export async function bundle(epub: Epubook): Promise<Uint8Array> {
  * @param epub
  * @returns xml string
  */
-export function makeContainer(epub: Epubook): string {
+export function makeContainer(epub: Epub): string {
   const builder = new XMLBuilder({
     format: true,
     ignoreAttributes: false,

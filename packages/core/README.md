@@ -13,9 +13,9 @@ npm i @epubook/core
 ## Usage
 
 ```ts
-import { Epubook } from '@epubook/core'
+import { Epub } from '@epubook/core'
 
-const book = new Epubook({
+const book = new Epub({
   title: 'Test Book',
   date: new Date('2023-02-01T11:00:00.000Z'),
   lastModified: new Date('2023-02-26T11:00:00.000Z'),

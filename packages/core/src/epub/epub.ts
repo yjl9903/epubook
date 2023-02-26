@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
 import { PackageDocument, PackageDocumentMeta } from './opf';
 
-export class Epubook {
+export class Epub {
   /**
    * See: https://www.w3.org/TR/epub-33/#sec-package-doc
    *

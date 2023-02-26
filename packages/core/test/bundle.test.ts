@@ -1,12 +1,12 @@
 import { Html } from './../src/epub/item';
 import { describe, it, expect } from 'vitest';
 
-import { Epubook, ManifestItem, ManifestItemRef } from '../src';
+import { Epub, ManifestItem, ManifestItemRef } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
   it('generate container.xml', () => {
-    const res = makeContainer(new Epubook());
+    const res = makeContainer(new Epub());
     expect(res).toMatchInlineSnapshot(`
       "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
       <container version=\\"1.0\\" xmlns=\\"urn:oasis:names:tc:opendocument:xmlns:container\\">
@@ -19,7 +19,7 @@ describe('Bundle Epub', () => {
   });
 
   it('generate opf', () => {
-    const epub = new Epubook();
+    const epub = new Epub();
 
     const opf = epub.main();
     opf.setIdentifier('test-book-id', 'BookId');
@@ -63,7 +63,7 @@ describe('Bundle Epub', () => {
   });
 
   it('write epub', async () => {
-    const epub = new Epubook({
+    const epub = new Epub({
       title: 'Test Book',
       date: new Date('2023-02-01T11:00:00.000Z'),
       lastModified: new Date('2023-02-26T11:00:00.000Z'),
