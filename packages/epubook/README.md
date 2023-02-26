@@ -16,6 +16,8 @@ npm i -g epubook
 
 + [EPUB 3.2 specification](https://www.w3.org/publishing/epub32/)
 + [EPUB 3.3 specification](https://www.w3.org/TR/epub-33/)
++ [epubcheck](https://github.com/w3c/epubcheck)
++ [epub-tests](https://w3c.github.io/epub-tests/)
 + [EbookLib](https://github.com/aerkalov/ebooklib)
 
 ## License
