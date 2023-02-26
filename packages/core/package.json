@@ -34,6 +34,9 @@
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "fflate": "^0.7.4"
+  },
   "devDependencies": {
     "vitest": "^0.29.1"
   },
