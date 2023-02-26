@@ -1,3 +1,4 @@
+import { Html } from './../src/epub/item';
 import { describe, it, expect } from 'vitest';
 
 import { Epubook, ManifestItem, ManifestItemRef } from '../src';
@@ -31,17 +32,14 @@ describe('Bundle Epub', () => {
       source: 'imagine'
     });
 
-    opf
-      .manifest()
-      .push(
-        new ManifestItem('Text/cover.xhtml', 'cover.xhtml').update({ properties: 'cover-image' })
-      );
-    opf.spine().push(new ManifestItemRef('cover.xhtml'));
+    const cover = new Html('cover.xhtml', '');
+    opf.addItem(cover);
+    opf.spine().push(cover.manifest().ref());
 
     const res = makePackageDocument(opf);
     expect(res).toMatchInlineSnapshot(`
       "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-      <package unique-identifier=\\"BookId\\" version=\\"3.0\\">
+      <package xmlns=\\"http://www.idpf.org/2007/opf\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" unique-identifier=\\"BookId\\" version=\\"3.0\\">
         <metadata>
           <dc:identifier>test-book-id</dc:identifier>
           <dc:title>Test Book</dc:title>
@@ -54,13 +52,49 @@ describe('Bundle Epub', () => {
           <meta refines=\\"#creator\\" property=\\"file-as\\">XLor</meta>
         </metadata>
         <manifest>
-          <item href=\\"Text/cover.xhtml\\" id=\\"cover.xhtml\\" properties=\\"cover-image\\"/>
+          <item href=\\"cover.xhtml\\" id=\\"cover\\" media-type=\\"application/xhtml+xml\\"/>
         </manifest>
         <spine>
-          <itemref idref=\\"cover.xhtml\\"/>
+          <itemref idref=\\"cover\\"/>
         </spine>
       </package>
       "
     `);
+  });
+
+  it('write epub', async () => {
+    const epub = new Epubook();
+
+    const opf = epub.mainPackageDocument();
+    opf.setIdentifier('test-book-id', 'BookId');
+    opf.update({
+      title: 'Test Book',
+      date: new Date('2023-02-01T11:00:00.000Z'),
+      lastModified: new Date('2023-02-26T11:00:00.000Z'),
+      creator: 'XLor',
+      description: 'for test usage',
+      source: 'imagine'
+    });
+
+    const content = `<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+  <head>
+    <title>Data URL does not open in top-level context</title>
+    <style>
+      code {
+        color: #c63501;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data URL does not open in top-level context</h1>
+    <p>The following jpeg is contained within a <code>data:</code> URL, which is used as the <code>src</code> attribute for an <code>img</code> element.</p>
+    <p>The test passes if you are able to see the image below inside this ebook.</p>
+  </body>
+</html>`;
+    const cover = new Html('cover.xhtml', content);
+    opf.addItem(cover);
+    opf.spine().push(cover.itemref());
+
+    await epub.writeFile('.output/test.epub');
   });
 });

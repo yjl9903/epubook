@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 import { createDefu } from 'defu';
 
-import type { MediaType } from '../bundle/constant';
+import { Item, ManifestItem, ManifestItemRef } from './item';
 
 const defu = createDefu((obj: any, key, value: any) => {
   if (obj[key] instanceof Date && value instanceof Date) {
@@ -37,6 +37,8 @@ export class PackageDocument {
     type: '',
     lastModified: new Date()
   };
+
+  private _items: Item[] = [];
 
   private _manifest: ManifestItem[] = [];
 
@@ -78,6 +80,15 @@ export class PackageDocument {
   }
 
   // --- manifest ---
+  public addItem(item: Item) {
+    this._items.push(item);
+    this._manifest.push(item.manifest());
+  }
+
+  public items() {
+    return this._items;
+  }
+
   public manifest() {
     return this._manifest;
   }
@@ -98,97 +109,5 @@ export class PackageDocument {
   public setIdentifier(identifier: string, uniqueIdentifier: string) {
     this._identifier = identifier;
     this._uniqueIdentifier = uniqueIdentifier;
-  }
-}
-
-export class ManifestItem {
-  private _href: string;
-
-  private _id: string;
-
-  private optional: {
-    fallback?: string;
-    mediaOverlay?: string;
-    mediaType?: MediaType;
-    properties?: string;
-  } = {};
-
-  constructor(href: string, id: string) {
-    this._href = href;
-    this._id = id;
-  }
-
-  public update(info: typeof this.optional) {
-    for (const [key, value] of Object.entries(info)) {
-      if (!!value) {
-        this.optional[key as keyof typeof this.optional] = value as any;
-      }
-    }
-    return this;
-  }
-
-  public href() {
-    return this._href;
-  }
-
-  public id() {
-    return this._id;
-  }
-
-  public fallback() {
-    return this.optional.fallback;
-  }
-
-  public mediaOverlay() {
-    return this.optional.mediaOverlay;
-  }
-
-  public mediaType() {
-    return this.optional.mediaType;
-  }
-
-  public properties() {
-    return this.optional.properties;
-  }
-}
-
-export class ManifestItemRef {
-  private _idref: string;
-
-  private optional: {
-    id?: string;
-
-    linear?: string;
-
-    properties?: string;
-  } = {};
-
-  constructor(idref: string) {
-    this._idref = idref;
-  }
-
-  public update(info: typeof this.optional) {
-    for (const [key, value] of Object.entries(info)) {
-      if (!!value) {
-        this.optional[key as keyof typeof this.optional] = value as any;
-      }
-    }
-    return this;
-  }
-
-  public idref() {
-    return this._idref;
-  }
-
-  public id() {
-    return this.optional.id;
-  }
-
-  public linear() {
-    return this.optional.linear;
-  }
-
-  public properties() {
-    return this.optional.properties;
   }
 }

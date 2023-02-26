@@ -1,13 +1,12 @@
 import * as fflate from 'fflate';
+import * as path from 'node:path';
 import { XMLBuilder } from 'fast-xml-parser';
 
 import type { Epubook, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
 
 import { BundleError } from '../error';
 
-import { MIMETYPE } from './constant';
-
-export * from './constant';
+import { MIMETYPE } from '../constant';
 
 /**
  * Bundle epub to zip archive
@@ -16,17 +15,31 @@ export * from './constant';
  * @returns
  */
 export async function bundle(epub: Epubook): Promise<Uint8Array> {
-  return new Promise((res, rej) => {
+  return new Promise(async (res, rej) => {
     const opfs = epub
       .packageDocuments()
       .map((opf) => [opf.filename(), fflate.strToU8(makePackageDocument(opf))] as const);
+
+    const items: Record<string, Uint8Array> = {};
+    for (const opf of epub.packageDocuments()) {
+      const base = path.dirname(opf.filename());
+      for (const item of opf.items()) {
+        const name = path.join(base, item.filename());
+        if (name in items) {
+          continue;
+        }
+        // TODO: parallel here
+        items[name] = await item.bundle();
+      }
+    }
 
     const abstractContainer: fflate.AsyncZippable = {
       mimetype: fflate.strToU8(MIMETYPE),
       'META-INF': {
         'container.xml': fflate.strToU8(makeContainer(epub))
       },
-      ...Object.fromEntries(opfs)
+      ...Object.fromEntries(opfs),
+      ...items
     };
 
     fflate.zip(
@@ -166,6 +179,8 @@ export function makePackageDocument(opf: PackageDocument): string {
   return builder.build({
     '?xml': { '#text': '', '@_version': '1.0', '@_encoding': 'UTF-8' },
     package: {
+      '@_xmlns': 'http://www.idpf.org/2007/opf',
+      '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
       '@_unique-identifier': opf.uniqueIdentifier(),
       '@_version': opf.version(),
       metadata,

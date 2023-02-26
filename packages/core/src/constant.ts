@@ -6,7 +6,12 @@ export const ImagePng = 'image/png';
 export const ImageSvg = 'image/svg+xml';
 export const ImageWebp = 'image/webp';
 
-export type ImageMediaType = typeof ImageGif | typeof ImageJpeg | typeof ImagePng;
+export type ImageMediaType =
+  | typeof ImageGif
+  | typeof ImageJpeg
+  | typeof ImagePng
+  | typeof ImageSvg
+  | typeof ImageWebp;
 
 export const TextCSS = 'text/css';
 

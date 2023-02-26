@@ -1,4 +1,5 @@
-import { type PathLike, promises as fs } from 'node:fs';
+import * as path from 'node:path';
+import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
 import { PackageDocument } from './opf';
 
@@ -27,8 +28,12 @@ export class Epubook {
     return await bundle(this);
   }
 
-  async writeFile(file: PathLike) {
+  async writeFile(file: string) {
     const buffer = await this.bundle();
+    const dir = path.dirname(file);
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
     await fs.writeFile(file, buffer);
   }
 }
