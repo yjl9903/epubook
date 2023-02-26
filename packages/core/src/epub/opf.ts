@@ -2,7 +2,8 @@ import { randomUUID } from 'node:crypto';
 
 import { createDefu } from 'defu';
 
-import { Item, ManifestItem, ManifestItemRef } from './item';
+import { Html, Item, ManifestItem, ManifestItemRef } from './item';
+import { buildTocNav } from './nav';
 
 const defu = createDefu((obj: any, key, value: any) => {
   if (obj[key] instanceof Date && value instanceof Date) {
@@ -56,9 +57,9 @@ export class PackageDocument {
     lastModified: new Date()
   };
 
-  private _items: Item[] = [];
+  private _toc: Html | undefined;
 
-  private _manifest: ManifestItem[] = [];
+  private _items: Item[] = [];
 
   private _spine: ManifestItemRef[] = [];
 
@@ -100,19 +101,37 @@ export class PackageDocument {
   // --- manifest ---
   public addItem(item: Item) {
     this._items.push(item);
-    this._manifest.push(item.manifest());
   }
 
   public items() {
-    return this._items;
+    const l = [...this._items];
+    if (this._toc) {
+      l.push(this._toc);
+    }
+    return l;
   }
 
   public manifest() {
-    return this._manifest;
+    return this.items().map((i) => i.manifest());
   }
 
   public spine() {
     return this._spine;
+  }
+
+  // --- navigation ---
+  public toc(nav: NavOption, title?: string) {
+    const content = buildTocNav({
+      heading: 2,
+      title,
+      list: nav.map((i) =>
+        Array.isArray(i.item)
+          ? { text: i.text, list: i.item.map((i) => ({ href: i.item.filename(), text: i.text })) }
+          : { href: i.item.filename(), text: i.text }
+      )
+    });
+    this._toc = new Html('nav.xhtml', content).update({ properties: 'nav' });
+    return this;
   }
 
   // --- identifier ---
@@ -129,3 +148,5 @@ export class PackageDocument {
     this._uniqueIdentifier = uniqueIdentifier;
   }
 }
+
+export type NavOption = Array<{ text: string; item: Html | Array<{ text: string; item: Html }> }>;

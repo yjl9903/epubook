@@ -2,7 +2,7 @@ import * as path from 'pathe';
 import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
 import { Item } from './item';
-import { PackageDocument, PackageDocumentMeta } from './opf';
+import { NavOption, PackageDocument, PackageDocumentMeta } from './opf';
 
 export class Epub {
   /**
@@ -26,8 +26,16 @@ export class Epub {
     return this.opfs[0];
   }
 
-  public addItem(item: Item) {
-    this.opfs[0].addItem(item);
+  public addItem(...items: Item[]) {
+    for (const item of items) {
+      this.opfs[0].addItem(item);
+    }
+    return this;
+  }
+
+  public toc(nav: NavOption, title?: string) {
+    this.opfs[0].toc(nav, title);
+    return this;
   }
 
   async bundle() {

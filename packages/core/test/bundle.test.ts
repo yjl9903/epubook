@@ -1,8 +1,10 @@
 import { Html } from './../src/epub/item';
 import { describe, it, expect } from 'vitest';
 
-import { Epub, ManifestItem, ManifestItemRef } from '../src';
+import { Epub } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
+import { buildTocNav } from '../src/epub/nav';
+import { XHTMLBuilder } from '../src/epub/xhtml';
 
 describe('Bundle Epub', () => {
   it('generate container.xml', () => {
@@ -91,9 +93,121 @@ describe('Bundle Epub', () => {
   </body>
 </html>`;
     const cover = new Html('cover.xhtml', content);
-    epub.addItem(cover);
+    epub.addItem(cover).toc([{ text: 'cover', item: cover }]);
     epub.main().spine().push(cover.itemref());
 
     await epub.writeFile('.output/test.epub');
+  });
+
+  it('generate toc', async () => {
+    const epub = new Epub({
+      title: 'Test Book',
+      date: new Date('2023-02-01T11:00:00.000Z'),
+      lastModified: new Date('2023-02-26T11:00:00.000Z'),
+      creator: 'XLor',
+      description: 'for test usage',
+      source: 'imagine'
+    });
+    epub.main().setIdentifier('12345', 'book-id');
+
+    const item1 = new Html('page1.xhtml', '1');
+    const item2 = new Html('page2.xhtml', '2');
+    const item3 = new Html('page3.xhtml', '3');
+    const item4 = new Html('page4.xhtml', '4');
+    const item5 = new Html('page5.xhtml', '5');
+
+    await epub
+      .addItem(item1, item2, item3, item4, item5)
+      .toc(
+        [
+          { text: '1', item: item1 },
+          { text: '2', item: item2 },
+          {
+            text: 'Sub',
+            item: [
+              { text: '3', item: item3 },
+              { text: '4', item: item4 }
+            ]
+          },
+          { text: '5', item: item5 }
+        ],
+        'Toc'
+      )
+      .bundle();
+
+    expect(epub.main()).toMatchSnapshot();
+  });
+});
+
+describe('XHTML Builder', () => {
+  it('should build empty', () => {
+    const builder = new XHTMLBuilder();
+    const res = builder.build();
+    expect(res).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+        <head>
+          <title></title>
+        </head>
+        <body></body>
+      </html>
+      "
+    `);
+  });
+
+  it('should build styles', () => {
+    const builder = new XHTMLBuilder();
+    const res = builder.title('with style').style('123').style('456').build();
+    expect(res).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+        <head>
+          <title>with style</title>
+          <link href=\\"123\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
+          <link href=\\"456\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
+        </head>
+        <body></body>
+      </html>
+      "
+    `);
+  });
+
+  it('should build nav toc', () => {
+    const res = buildTocNav({
+      heading: 1,
+      title: 'Hello',
+      list: [
+        { href: '1', text: 'page 1' },
+        { href: '2', text: 'page 2' },
+        { text: 'page 3', list: [{ href: '4', text: 'page 4' }] }
+      ]
+    });
+    expect(res).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.w3.org/1999/xhtml\\" xml:lang=\\"en\\">
+        <head>
+          <title>Hello</title>
+        </head>
+        <body>
+          <nav epub:type=\\"toc\\">
+            <h1>Hello</h1>
+            <ol>
+              <li>
+                <a href=\\"1\\">page 1</a>
+              </li>
+              <li>
+                <a href=\\"2\\">page 2</a>
+              </li>
+              <li>
+                <span>page 3</span>
+                <ol>
+                  <li>
+                    <a href=\\"4\\">page 4</a>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </nav>
+        </body>
+      </html>
+      "
+    `);
   });
 });

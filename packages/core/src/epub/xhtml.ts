@@ -1,0 +1,101 @@
+import { XMLBuilder } from 'fast-xml-parser';
+
+import { TextCSS } from '../constant';
+
+const builder = new XMLBuilder({
+  format: true,
+  ignoreAttributes: false,
+  suppressUnpairedNode: false,
+  unpairedTags: ['link']
+});
+
+export interface XHTMLNode {
+  tag: string;
+  attrs: Record<string, string>;
+  children?: string | Array<XHTMLNode>;
+}
+
+export class XHTMLBuilder {
+  private info = {
+    language: 'en',
+    title: ''
+  };
+
+  private _head: XHTMLNode[] = [];
+
+  private _body: XHTMLNode[] = [];
+
+  constructor() {}
+
+  language(value: string) {
+    this.info.language = value;
+    return this;
+  }
+
+  title(value: string) {
+    this.info.title = value;
+    return this;
+  }
+
+  style(href: string) {
+    this._head.push({
+      tag: 'link',
+      attrs: {
+        href,
+        rel: 'stylesheet',
+        type: TextCSS
+      },
+      children: ''
+    });
+    return this;
+  }
+
+  body(node: XHTMLNode) {
+    this._body.push(node);
+    return this;
+  }
+
+  public build(): string {
+    function build(node: XHTMLNode) {
+      const attrs = Object.fromEntries(
+        Object.entries(node.attrs).map(([key, value]) => ['@_' + key, value])
+      );
+
+      const obj: any = {
+        ...attrs
+      };
+      if (typeof node.children === 'string') {
+        obj['#text'] = node.children;
+      } else if (Array.isArray(node.children)) {
+        Object.assign(obj, list(node.children));
+      }
+
+      return obj;
+    }
+
+    function list(nodes: XHTMLNode[]) {
+      const obj: any = {};
+      for (const c of nodes) {
+        if (c.tag in obj) {
+          obj[c.tag].push(build(c));
+        } else {
+          obj[c.tag] = [build(c)];
+        }
+      }
+      return obj;
+    }
+
+    return builder.build({
+      html: {
+        '@_xmlns': 'http://www.w3.org/1999/xhtml',
+        '@_xmlns:epub': 'http://www.w3.org/1999/xhtml',
+        '@_xml:lang': this.info.language,
+        head: {
+          title: this.info.title,
+          ...list(this._head)
+        },
+        body: list(this._body)
+      }
+    });
+  }
+}
