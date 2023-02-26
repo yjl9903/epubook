@@ -19,6 +19,17 @@ jobs:
           node-version: 16.x
           cache: pnpm
 
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: robinraju/release-downloader@v1.7
+        with:
+          repository: w3c/epubcheck
+          tag: v5.0.0
+          fileName: epubcheck-5.0.0.zip
+
       - name: Install
         run: pnpm install
 
@@ -26,4 +37,8 @@ jobs:
         run: pnpm build
 
       - name: Test
-        run: pnpm test:ci
+        run: |
+          pnpm test:ci
+          unzip epubcheck-5.0.0.zip
+          ls .
+          # java -jar  packages/core/.output/test.epub
