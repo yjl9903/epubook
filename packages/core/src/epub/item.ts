@@ -113,6 +113,8 @@ export abstract class Item {
 
   private readonly mediaType: MediaType;
 
+  private _properties?: string;
+
   constructor(file: string, mediaType: MediaType) {
     this.file = file;
     this.mediaType = mediaType;
@@ -122,12 +124,22 @@ export abstract class Item {
     return this.file;
   }
 
+  public update(info: Partial<{ properties: string }>) {
+    if (info.properties) {
+      this._properties = info.properties;
+    }
+    return this;
+  }
+
   public id() {
     return this.file.replace(/\/|\\/g, '_').replace(/\.[\w]+$/, '');
   }
 
   public manifest() {
-    return new ManifestItem(this.file, this.id()).update({ mediaType: this.mediaType });
+    return new ManifestItem(this.file, this.id()).update({
+      mediaType: this.mediaType,
+      properties: this._properties
+    });
   }
 
   public itemref() {
