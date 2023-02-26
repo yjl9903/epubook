@@ -11,7 +11,7 @@ const builder = new XMLBuilder({
 
 export interface XHTMLNode {
   tag: string;
-  attrs: Record<string, string>;
+  attrs?: Record<string, string>;
   children?: string | Array<XHTMLNode>;
 }
 
@@ -58,7 +58,7 @@ export class XHTMLBuilder {
   public build(): string {
     function build(node: XHTMLNode) {
       const attrs = Object.fromEntries(
-        Object.entries(node.attrs).map(([key, value]) => ['@_' + key, value])
+        Object.entries(node.attrs ?? {}).map(([key, value]) => ['@_' + key, value])
       );
 
       const obj: any = {
@@ -99,4 +99,12 @@ export class XHTMLBuilder {
       }
     });
   }
+}
+
+export function h(tag: string, attrs: XHTMLNode['attrs'], children: XHTMLNode['children']) {
+  return {
+    tag,
+    attrs,
+    children
+  } satisfies XHTMLNode;
 }

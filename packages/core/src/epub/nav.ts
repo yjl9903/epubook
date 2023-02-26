@@ -1,4 +1,4 @@
-import { XHTMLBuilder, XHTMLNode } from './xhtml';
+import { XHTMLBuilder, XHTMLNode, h } from '../bundle/xhtml';
 
 interface NavRoot {
   heading?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -30,37 +30,19 @@ export function buildTocNav(nav: NavRoot) {
   } satisfies XHTMLNode;
 
   if (nav.title && nav.heading) {
-    root.children.push({
-      tag: 'h' + nav.heading,
-      attrs: {},
-      children: nav.title
-    });
+    root.children.push(h('h' + nav.heading, {}, nav.title));
   }
-  root.children.push({
-    tag: 'ol',
-    attrs: {},
-    children: list(nav.list)
-  });
+  root.children.push(h('ol', {}, list(nav.list)));
 
-  return builder
-    .title(nav.title ?? 'Toc')
-    .body(root)
-    .build();
+  return builder.title(nav.title ?? 'Toc').body(root);
 
   function list(items: Array<SubNavItem | NavItem>): XHTMLNode[] {
     return items.map((i) => ({
       tag: 'li',
       attrs: {},
       children: [
-        i.href
-          ? { tag: 'a', attrs: { href: i.href }, children: i.text }
-          : { tag: 'span', attrs: {}, children: i.text },
-        'list' in i &&
-          i.list && {
-            tag: 'ol',
-            attrs: {},
-            children: list(i.list)
-          }
+        i.href ? h('a', { href: i.href }, i.text) : h('span', {}, i.text),
+        'list' in i && i.list && h('ol', {}, list(i.list))
       ].filter(Boolean) as XHTMLNode[]
     }));
   }

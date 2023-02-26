@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 import { Epub } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 import { buildTocNav } from '../src/epub/nav';
-import { XHTMLBuilder } from '../src/epub/xhtml';
+import { XHTMLBuilder } from '../src/bundle/xhtml';
 
 describe('Bundle Epub', () => {
   it('generate container.xml', () => {
@@ -179,7 +179,7 @@ describe('XHTML Builder', () => {
         { href: '2', text: 'page 2' },
         { text: 'page 3', list: [{ href: '4', text: 'page 4' }] }
       ]
-    });
+    }).build();
     expect(res).toMatchInlineSnapshot(`
       "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>

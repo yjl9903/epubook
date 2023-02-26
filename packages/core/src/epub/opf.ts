@@ -2,8 +2,8 @@ import { randomUUID } from 'node:crypto';
 
 import { createDefu } from 'defu';
 
-import { Html, Item, ManifestItem, ManifestItemRef } from './item';
 import { buildTocNav } from './nav';
+import { Html, Item, ManifestItemRef } from './item';
 
 const defu = createDefu((obj: any, key, value: any) => {
   if (obj[key] instanceof Date && value instanceof Date) {
@@ -129,7 +129,9 @@ export class PackageDocument {
           ? { text: i.text, list: i.item.map((i) => ({ href: i.item.filename(), text: i.text })) }
           : { href: i.item.filename(), text: i.text }
       )
-    });
+    })
+      .language(this._metadata.language)
+      .build();
     this._toc = new Html('nav.xhtml', content).update({ properties: 'nav' });
     return this;
   }
