@@ -1,5 +1,5 @@
 import * as path from 'pathe';
-import { type PathLike, promises as fs } from 'node:fs';
+import { promises as fs } from 'node:fs';
 
 import { strToU8 } from 'fflate';
 
@@ -7,6 +7,7 @@ import {
   type MediaType,
   type ImageMediaType,
   XHTML,
+  TextCSS,
   ImageJpeg,
   ImagePng,
   ImageWebp
@@ -157,10 +158,34 @@ export class Html extends Item {
     this.content = content;
   }
 
-  static async read(src: PathLike, dst: string) {
-    // TODO: check src extension
+  static async read(src: string, dst: string) {
+    if (!src.endsWith('.xhtml')) {
+      return undefined;
+    }
     const content = await fs.readFile(src, 'utf-8');
     return new Html(dst, content);
+  }
+
+  async bundle(): Promise<Uint8Array> {
+    // TODO: check encode format
+    return strToU8(this.content);
+  }
+}
+
+export class Style extends Item {
+  private content: string;
+
+  constructor(file: string, content: string) {
+    super(file, TextCSS);
+    this.content = content;
+  }
+
+  static async read(src: string, dst: string) {
+    if (!src.endsWith('.css')) {
+      return undefined;
+    }
+    const content = await fs.readFile(src, 'utf-8');
+    return new Style(dst, content);
   }
 
   async bundle(): Promise<Uint8Array> {
