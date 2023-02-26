@@ -6,6 +6,10 @@ It will support the generation of the [latest epub standard](https://www.w3.org/
 
 > 👷‍♂️ Still work in progress.
 
+## Resources
+
++ [EPUB 3.3 specification](https://www.w3.org/TR/epub-33/)
+
 ## License
 
 MIT License © 2023 [XLor](https://github.com/yjl9903)
