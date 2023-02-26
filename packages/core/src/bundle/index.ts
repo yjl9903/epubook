@@ -1,10 +1,13 @@
 import * as fflate from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import type { Epubook, PackageDocument } from '../epub';
+import type { Epubook, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
+
 import { BundleError } from '../error';
 
-const MIMETYPE = 'application/epub+zip';
+import { MIMETYPE } from './constant';
+
+export * from './constant';
 
 /**
  * Bundle epub to zip archive
@@ -96,7 +99,7 @@ export function makePackageDocument(opf: PackageDocument): string {
     format: true,
     ignoreAttributes: false,
     suppressUnpairedNode: false,
-    unpairedTags: ['rootfile']
+    unpairedTags: ['item', 'itemref']
   });
 
   const optionalMetadata: Record<string, any> = {};
@@ -143,14 +146,35 @@ export function makePackageDocument(opf: PackageDocument): string {
     ]
   };
 
+  function makeManifestItem(item: ManifestItem) {
+    return {
+      '@_fallback': item.fallback(),
+      '@_href': item.href(),
+      '@_id': item.id(),
+      '@_media-overlay': item.mediaOverlay(),
+      '@_media-type': item.mediaType(),
+      '@_properties': item.properties()
+    };
+  }
+
+  function makeManifestItemRef(item: ManifestItemRef) {
+    return {
+      '@_idref': item.idref()
+    };
+  }
+
   return builder.build({
     '?xml': { '#text': '', '@_version': '1.0', '@_encoding': 'UTF-8' },
     package: {
       '@_unique-identifier': opf.uniqueIdentifier(),
       '@_version': opf.version(),
       metadata,
-      manifest: {},
-      spine: {}
+      manifest: {
+        item: opf.manifest().map((i) => makeManifestItem(i))
+      },
+      spine: {
+        itemref: opf.spine().map((ir) => makeManifestItemRef(ir))
+      }
     }
   });
 }

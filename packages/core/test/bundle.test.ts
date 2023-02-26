@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epubook } from '../src';
+import { Epubook, ManifestItem, ManifestItemRef } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
@@ -31,7 +31,36 @@ describe('Bundle Epub', () => {
       source: 'imagine'
     });
 
+    opf
+      .manifest()
+      .push(
+        new ManifestItem('Text/cover.xhtml', 'cover.xhtml').update({ properties: 'cover-image' })
+      );
+    opf.spine().push(new ManifestItemRef('cover.xhtml'));
+
     const res = makePackageDocument(opf);
-    console.log(res);
+    expect(res).toMatchInlineSnapshot(`
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      <package unique-identifier=\\"BookId\\" version=\\"3.0\\">
+        <metadata>
+          <dc:identifier>test-book-id</dc:identifier>
+          <dc:title>Test Book</dc:title>
+          <dc:language>zh-CN</dc:language>
+          <dc:creator id=\\"creator\\" opf:role=\\"aut\\" opf:file-as=\\"XLor\\">XLor</dc:creator>
+          <dc:date>2023-02-01T11:00:00.000Z</dc:date>
+          <dc:description>for test usage</dc:description>
+          <dc:source>imagine</dc:source>
+          <meta property=\\"dcterms:modified\\">2023-02-26T11:00:00.000Z</meta>
+          <meta refines=\\"#creator\\" property=\\"file-as\\">XLor</meta>
+        </metadata>
+        <manifest>
+          <item href=\\"Text/cover.xhtml\\" id=\\"cover.xhtml\\" properties=\\"cover-image\\"/>
+        </manifest>
+        <spine>
+          <itemref idref=\\"cover.xhtml\\"/>
+        </spine>
+      </package>
+      "
+    `);
   });
 });
