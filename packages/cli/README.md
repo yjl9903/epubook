@@ -1,4 +1,4 @@
-# epubook
+# @epubook/cli
 
 A Node EPUB generation library.
 

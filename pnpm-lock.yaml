@@ -20,6 +20,17 @@ importers:
       vite: 4.1.4_@types+node@18.11.19
       vitest: 0.29.1
 
+  packages/cli:
+    specifiers:
+      '@epubook/core': workspace:*
+      breadc: ^0.8.8
+      vitest: ^0.29.1
+    dependencies:
+      '@epubook/core': link:../core
+      breadc: 0.8.8
+    devDependencies:
+      vitest: 0.29.1
+
   packages/core:
     specifiers:
       defu: ^6.1.2

@@ -1,5 +1,5 @@
 {
-  "name": "epubook",
+  "name": "@epubook/cli",
   "version": "0.0.1",
   "description": "",
   "keywords": [
@@ -29,7 +29,11 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "epubook": "epubook.mjs"
+  },
   "files": [
+    "*.mjs",
     "dist"
   ],
   "scripts": {

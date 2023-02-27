@@ -9,7 +9,7 @@ It will support the generation of the [latest epub standard](https://www.w3.org/
 ## Installation
 
 ```bash
-npm i -g epubook
+npm i epubook
 ```
 
 ## Resources
