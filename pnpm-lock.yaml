@@ -57,6 +57,12 @@ importers:
     devDependencies:
       vitest: 0.29.1
 
+  packages/theme-default:
+    specifiers:
+      '@epubook/core': workspace:*
+    dependencies:
+      '@epubook/core': link:../core
+
 packages:
 
   /@ampproject/remapping/2.1.2:

@@ -1,0 +1,54 @@
+{
+  "name": "@epubook/theme-default",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "epub",
+    "epub-gen",
+    "epubook",
+    "epubook-theme"
+  ],
+  "homepage": "https://github.com/yjl9903/epubook#readme",
+  "bugs": {
+    "url": "https://github.com/yjl9903/epubook/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yjl9903/epubook.git"
+  },
+  "license": "MIT",
+  "author": "XLor",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "styles"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "format": "prettier --write src/**/*.ts test/**/*.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@epubook/core": "workspace:*"
+  },
+  "engines": {
+    "node": ">=v16.19.0"
+  },
+  "epubook": {
+    "pages": [],
+    "styles": [
+      "styles/main.css"
+    ]
+  }
+}
