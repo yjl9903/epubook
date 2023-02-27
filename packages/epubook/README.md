@@ -12,6 +12,14 @@ It will support the generation of the [latest epub standard](https://www.w3.org/
 npm i epubook
 ```
 
+## Usage
+
+```ts
+import { Epubook } from 'epubook'
+
+await Epubook.create({ title: 'test' })
+```
+
 ## Resources
 
 + [EPUB 3.2 specification](https://www.w3.org/publishing/epub32/)
