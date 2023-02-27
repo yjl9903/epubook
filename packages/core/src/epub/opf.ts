@@ -101,6 +101,7 @@ export class PackageDocument {
   // --- manifest ---
   public addItem(item: Item) {
     this._items.push(item);
+    return this;
   }
 
   public items() {
@@ -113,6 +114,11 @@ export class PackageDocument {
 
   public manifest() {
     return this.items().map((i) => i.manifest());
+  }
+
+  public setSpine(items: Item[]) {
+    this._spine.splice(0, this._spine.length, ...items.map((i) => i.itemref()));
+    return this;
   }
 
   public spine() {

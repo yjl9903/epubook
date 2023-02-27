@@ -38,6 +38,11 @@ export class Epub {
     return this;
   }
 
+  public spine(...items: Item[]) {
+    this.opfs[0].setSpine(items);
+    return this;
+  }
+
   async bundle() {
     const { bundle } = await import('../bundle');
     return await bundle(this);

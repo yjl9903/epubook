@@ -53,7 +53,28 @@ PackageDocument {
     "title": "Test Book",
     "type": "",
   },
-  "_spine": [],
+  "_spine": [
+    ManifestItemRef {
+      "_idref": "page1",
+      "optional": {},
+    },
+    ManifestItemRef {
+      "_idref": "page2",
+      "optional": {},
+    },
+    ManifestItemRef {
+      "_idref": "page3",
+      "optional": {},
+    },
+    ManifestItemRef {
+      "_idref": "page4",
+      "optional": {},
+    },
+    ManifestItemRef {
+      "_idref": "page5",
+      "optional": {},
+    },
+  ],
   "_toc": Html {
     "_properties": "nav",
     "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"zh-CN\\" xml:lang=\\"zh-CN\\">
