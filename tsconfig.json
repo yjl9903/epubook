@@ -12,5 +12,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true
   },
-  "exclude": ["node_modules"]
+  "paths": {
+    "@epubook/core": ["./packages/core/src/index.ts"],
+    "epubook": ["./packages/epubook/src/index.ts"]
+  },
+  "exclude": [
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
 }

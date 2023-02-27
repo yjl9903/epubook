@@ -49,10 +49,12 @@ importers:
   packages/epubook:
     specifiers:
       '@epubook/core': workspace:*
+      '@epubook/theme-default': workspace:*
       breadc: ^0.8.8
       vitest: ^0.29.1
     dependencies:
       '@epubook/core': link:../core
+      '@epubook/theme-default': link:../theme-default
       breadc: 0.8.8
     devDependencies:
       vitest: 0.29.1
