@@ -39,7 +39,11 @@ PackageDocument {
   "_metadata": {
     "contributor": [],
     "coverage": "",
-    "creator": "XLor",
+    "creator": {
+      "fileAs": "XLor",
+      "name": "XLor",
+      "uid": "creator",
+    },
     "date": 2023-02-01T11:00:00.000Z,
     "description": "for test usage",
     "format": "",

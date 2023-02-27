@@ -1,10 +1,10 @@
-import { Html } from './../src/epub/item';
 import { describe, it, expect } from 'vitest';
 
 import { Epub } from '../src';
-import { makeContainer, makePackageDocument } from '../src/bundle';
+import { Html } from '../src/epub/item';
 import { buildTocNav } from '../src/epub/nav';
 import { XHTMLBuilder } from '../src/bundle/xhtml';
+import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
   it('generate container.xml', () => {
@@ -30,7 +30,7 @@ describe('Bundle Epub', () => {
       language: 'zh-CN',
       date: new Date('2023-02-01T11:00:00.000Z'),
       lastModified: new Date('2023-02-26T11:00:00.000Z'),
-      creator: 'XLor',
+      creator: { name: 'XLor', fileAs: 'XLor' },
       description: 'for test usage',
       source: 'imagine'
     });
@@ -69,7 +69,7 @@ describe('Bundle Epub', () => {
       title: 'Test Book',
       date: new Date('2023-02-01T11:00:00.000Z'),
       lastModified: new Date('2023-02-26T11:00:00.000Z'),
-      creator: 'XLor',
+      creator: { name: 'XLor', fileAs: 'XLor' },
       description: 'for test usage',
       source: 'imagine'
     });
@@ -105,7 +105,10 @@ describe('Bundle Epub', () => {
       title: 'Test Book',
       date: new Date('2023-02-01T11:00:00.000Z'),
       lastModified: new Date('2023-02-26T11:00:00.000Z'),
-      creator: 'XLor',
+      creator: {
+        name: 'XLor',
+        fileAs: 'XLor'
+      },
       description: 'for test usage',
       source: 'imagine'
     });

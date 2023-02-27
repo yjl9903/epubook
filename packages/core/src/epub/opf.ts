@@ -12,12 +12,22 @@ const defu = createDefu((obj: any, key, value: any) => {
   }
 });
 
+export interface Author {
+  name: string;
+
+  fileAs?: string;
+
+  role?: string;
+
+  uid?: string;
+}
+
 export interface PackageDocumentMeta {
   title: string;
   language: string;
-  contributor: string[];
+  contributor: Author[];
   coverage: string;
-  creator: string;
+  creator: Author;
   date: Date;
   description: string;
   format: string;
@@ -42,9 +52,12 @@ export class PackageDocument {
   private _metadata: PackageDocumentMeta = {
     title: '',
     language: 'zh-CN',
-    contributor: [] as string[],
+    contributor: [],
     coverage: '',
-    creator: 'unknown',
+    creator: {
+      name: 'unknown',
+      uid: 'creator'
+    },
     date: new Date(),
     description: '',
     format: '',
@@ -151,7 +164,7 @@ export class PackageDocument {
     return this._identifier;
   }
 
-  public setIdentifier(identifier: string, uniqueIdentifier: string) {
+  public setIdentifier(identifier: string, uniqueIdentifier: string = 'uuid') {
     this._identifier = identifier;
     this._uniqueIdentifier = uniqueIdentifier;
   }

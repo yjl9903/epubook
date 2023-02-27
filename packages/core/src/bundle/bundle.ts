@@ -142,8 +142,8 @@ export function makePackageDocument(opf: PackageDocument): string {
     'dc:title': opf.title(),
     'dc:language': opf.language(),
     'dc:creator': {
-      '@_id': 'creator',
-      '#text': opf.creator()
+      '@_id': opf.creator().uid,
+      '#text': opf.creator().name
     },
     'dc:date': toISO8601String(opf.metadata().date),
     'dc:description': opf.metadata().description,
@@ -154,9 +154,9 @@ export function makePackageDocument(opf: PackageDocument): string {
         '#text': toISO8601String(opf.metadata().lastModified)
       },
       {
-        '@_refines': '#creator',
+        '@_refines': '#' + opf.creator().uid,
         '@_property': 'file-as',
-        '#text': opf.creator()
+        '#text': opf.creator()?.fileAs ?? ''
       }
     ]
   };
