@@ -4,9 +4,20 @@ declare global {
   }
 }
 
+export interface XHTMLNode {
+  tag: string;
+  attrs?: Record<string, string>;
+  children?: Array<string | XHTMLNode>;
+}
+
 export interface EpubIntrinsicElements {
-  li: {};
+  nav: {};
+  ul: {};
   ol: {};
+  li: {};
+  p: {};
+  pre: {};
   span: {};
+  code: {};
   a: { href: string };
 }

@@ -2,6 +2,8 @@ import { XMLBuilder } from 'fast-xml-parser';
 
 import { TextCSS } from '../constant';
 
+import type { XHTMLNode } from './types';
+
 export * from './types';
 
 const builder = new XMLBuilder({
@@ -10,12 +12,6 @@ const builder = new XMLBuilder({
   suppressUnpairedNode: false,
   unpairedTags: ['link']
 });
-
-export interface XHTMLNode {
-  tag: string;
-  attrs?: Record<string, string>;
-  children?: Array<XHTMLNode | string>;
-}
 
 export class XHTMLBuilder {
   private info = {
@@ -107,12 +103,18 @@ export class XHTMLBuilder {
   }
 }
 
+export const Fragment = 'Fragment';
+
 export function h(
   tag: string,
   attrs: Record<string, string> = {},
   ...children: Array<string | XHTMLNode | Array<string | XHTMLNode>>
 ) {
-  const sub = children.filter((c: any) => c !== undefined && c !== null && c !== false).flat();
+  const sub = children
+    .flatMap((c) =>
+      typeof c === 'object' && !Array.isArray(c) && c.tag === Fragment ? c.children ?? [] : c
+    )
+    .filter((c: any) => c !== undefined && c !== null && c !== false);
 
   const o = {
     tag,
@@ -121,9 +123,4 @@ export function h(
   } satisfies XHTMLNode;
 
   return o;
-}
-
-export function fragment(...args: any[]) {
-  console.log(args);
-  return {};
 }
