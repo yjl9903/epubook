@@ -1,10 +1,11 @@
 {
   "name": "@epubook/theme-default",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "keywords": [
+    "ebook",
     "epub",
-    "epub-gen",
+    "epub-generator",
     "epubook",
     "epubook-theme"
   ],
