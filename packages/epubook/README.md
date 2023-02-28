@@ -1,23 +1,38 @@
 # epubook
 
-A Node EPUB generation library.
+[![CI](https://github.com/yjl9903/epubook/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/epubook/actions/workflows/ci.yml)
 
-It will support the generation of the [latest epub standard](https://www.w3.org/TR/epub-33/) (3.3).
+A Node [EPUB 3](https://www.w3.org/publishing/epub32/) generation library which supports from **low-level API** to **high-level ebook abstraction** with **customizable themes**.
 
 > 👷‍♂️ Still work in progress.
 
-## Installation
++ Just use [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook) in your project to generate epub easily
++ [@epubook/core](https://github.com/yjl9903/epubook/tree/main/packages/core) provides low-level EPUB generation API
++ [@epubook/theme-default](https://github.com/yjl9903/epubook/tree/main/packages/theme-default) is the default theme used in [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook)
++ [@epubook/cli](https://github.com/yjl9903/epubook/tree/main/packages/cli) generates EPUB from local configuration and markdown content
+
+## Usage
+
+### Library
 
 ```bash
 npm i epubook
 ```
 
-## Usage
-
 ```ts
 import { Epubook } from 'epubook'
 
-await Epubook.create({ title: 'test' })
+const ebook = new Epubook({})
+```
+
+### CLI
+
+```bash
+npm i -g @epubook/cli
+
+epubook --version
+
+epubook --help
 ```
 
 ## Resources
