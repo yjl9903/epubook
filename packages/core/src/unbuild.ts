@@ -5,7 +5,9 @@ export const EsbuildOptions: Partial<RollupBuildOptions['esbuild']> = {
   jsxFactory: 'h',
   jsxFragment: 'fragment',
   loaders: {
+    '.js': 'js',
     '.ts': 'ts',
+    '.jsx': 'jsx',
     '.tsx': 'tsx'
   }
 };
