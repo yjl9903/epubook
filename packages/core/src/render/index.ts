@@ -2,6 +2,8 @@ import { XMLBuilder } from 'fast-xml-parser';
 
 import { TextCSS } from '../constant';
 
+export * from './types';
+
 const builder = new XMLBuilder({
   format: true,
   ignoreAttributes: false,
@@ -12,7 +14,7 @@ const builder = new XMLBuilder({
 export interface XHTMLNode {
   tag: string;
   attrs?: Record<string, string>;
-  children?: string | Array<XHTMLNode>;
+  children?: Array<XHTMLNode | string>;
 }
 
 export class XHTMLBuilder {
@@ -45,7 +47,7 @@ export class XHTMLBuilder {
         rel: 'stylesheet',
         type: TextCSS
       },
-      children: ''
+      children: ['']
     });
     return this;
   }
@@ -64,10 +66,14 @@ export class XHTMLBuilder {
       const obj: any = {
         ...attrs
       };
-      if (typeof node.children === 'string') {
-        obj['#text'] = node.children;
-      } else if (Array.isArray(node.children)) {
-        Object.assign(obj, list(node.children));
+
+      if (Array.isArray(node.children)) {
+        const text = node.children.filter((c): c is string => typeof c === 'string');
+        const nodes = node.children.filter((c): c is XHTMLNode => typeof c !== 'string');
+        if (text.length > 0) {
+          obj['#text'] = text[0];
+        }
+        Object.assign(obj, list(nodes));
       }
 
       return obj;
@@ -101,10 +107,23 @@ export class XHTMLBuilder {
   }
 }
 
-export function h(tag: string, attrs: XHTMLNode['attrs'], children: XHTMLNode['children']) {
-  return {
+export function h(
+  tag: string,
+  attrs: Record<string, string> = {},
+  ...children: Array<string | XHTMLNode | Array<string | XHTMLNode>>
+) {
+  const sub = children.filter((c: any) => c !== undefined && c !== null && c !== false).flat();
+
+  const o = {
     tag,
-    attrs,
-    children
+    attrs: attrs ?? {},
+    children: sub
   } satisfies XHTMLNode;
+
+  return o;
+}
+
+export function fragment(...args: any[]) {
+  console.log(args);
+  return {};
 }

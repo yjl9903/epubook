@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 
 import { Epub } from '../src';
 import { Html } from '../src/epub/item';
+import { XHTMLBuilder } from '../src/render';
 import { buildTocNav } from '../src/epub/nav';
-import { XHTMLBuilder } from '../src/bundle/xhtml';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
