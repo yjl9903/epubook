@@ -1,16 +1,30 @@
 import type { Plugin } from 'rollup';
-import type { RollupBuildOptions } from 'unbuild';
+import type { BuildConfig } from 'unbuild';
 
-export const EsbuildOptions: Partial<RollupBuildOptions['esbuild']> = {
-  jsxFactory: 'h',
-  jsxFragment: 'fragment',
-  loaders: {
-    '.js': 'js',
-    '.ts': 'ts',
-    '.jsx': 'jsx',
-    '.tsx': 'tsx'
+export const UnbuildPreset: (options?: { inject?: boolean }) => BuildConfig = ({
+  inject = true
+} = {}) => ({
+  rollup: {
+    esbuild: {
+      jsxFactory: 'h',
+      jsxFragment: 'fragment',
+      loaders: {
+        '.js': 'js',
+        '.ts': 'ts',
+        '.jsx': 'jsx',
+        '.tsx': 'tsx'
+      }
+    }
+  },
+  hooks: {
+    'rollup:options'(_options, config) {
+      const plugins = config.plugins;
+      if (inject && Array.isArray(plugins)) {
+        plugins.push(Rollup());
+      }
+    }
   }
-};
+});
 
 export function Rollup(): Plugin {
   return {

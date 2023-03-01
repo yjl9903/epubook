@@ -1,19 +1,14 @@
 import { defineBuildConfig } from 'unbuild';
 
+import { UnbuildPreset } from './src/unbuild';
+
 export default defineBuildConfig({
   entries: ['src/index'],
   declaration: true,
   clean: true,
   externals: ['unbuild', 'rollup'],
   rollup: {
-    emitCJS: true,
-    esbuild: {
-      jsxFactory: 'h',
-      jsxFragment: 'fragment',
-      loaders: {
-        '.ts': 'ts',
-        '.tsx': 'tsx'
-      }
-    }
-  }
+    emitCJS: true
+  },
+  preset: UnbuildPreset({ inject: false })
 });
