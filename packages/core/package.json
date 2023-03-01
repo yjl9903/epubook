@@ -46,7 +46,7 @@
     "pathe": "^1.1.0"
   },
   "devDependencies": {
-    "rollup": "^3.17.3",
+    "rollup": "^3.18.0",
     "vitest": "^0.29.2"
   },
   "engines": {
