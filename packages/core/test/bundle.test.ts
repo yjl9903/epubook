@@ -97,7 +97,7 @@ describe('Bundle Epub', () => {
       .spine(cover)
       .toc([{ text: 'cover', item: cover }]);
 
-    await epub.writeFile('.output/test.epub');
+    await epub.writeFile('../../.output/test-core.epub');
   });
 
   it('generate toc', async () => {

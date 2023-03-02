@@ -8,9 +8,7 @@ import {
   type ImageMediaType,
   XHTML,
   TextCSS,
-  ImageJpeg,
-  ImagePng,
-  ImageWebp
+  getImageMediaType
 } from '../constant';
 
 export class ManifestItem {
@@ -202,11 +200,11 @@ export class Image extends Item {
     this.data = data;
   }
 
-  static async read(src: string, dst: string) {
+  static async read(file: string, src: string) {
     const content = await fs.readFile(src);
-    const media = this.getExtMediaType(src);
+    const media = getImageMediaType(src);
     if (media) {
-      return new Image(dst, media, content);
+      return new Image(file, media, content);
     } else {
       return undefined;
     }
@@ -214,18 +212,5 @@ export class Image extends Item {
 
   async bundle(): Promise<Uint8Array> {
     return this.data;
-  }
-
-  private static getExtMediaType(file: string): ImageMediaType | undefined {
-    const ext = path.extname(file);
-    if (ext === 'jpg' || ext === 'jpeg') {
-      return ImageJpeg;
-    } else if (ext === 'png') {
-      return ImagePng;
-    } else if (ext === 'webp') {
-      return ImageWebp;
-    } else {
-      return undefined;
-    }
   }
 }

@@ -6,4 +6,6 @@ export * from './theme';
 
 export * from './render';
 
+export * from './constant';
+
 export * from './unbuild';

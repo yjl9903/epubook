@@ -1,7 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
-describe('hello', () => {
-  it('should work', () => {
-    expect('Hello').toEqual('Hello');
+import { Epubook } from '../src';
+
+describe('epubook', () => {
+  it('should write epub with cover', async () => {
+    const book = await Epubook.create({
+      title: 'cover'
+    });
+
+    await book.cover('../../assets/cover.jpg');
+
+    await book.writeFile('../../.output/test-cover.epub');
   });
 });

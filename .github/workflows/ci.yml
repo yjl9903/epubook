@@ -40,4 +40,4 @@ jobs:
         run: |
           pnpm test:ci
           unzip epubcheck-5.0.0.zip
-          java -jar ./epubcheck-5.0.0/epubcheck.jar packages/core/.output/test.epub
+          java -jar ./epubcheck-5.0.0/epubcheck.jar .output/test-core.epub
