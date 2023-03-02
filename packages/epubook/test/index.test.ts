@@ -5,7 +5,8 @@ import { Epubook } from '../src';
 describe('epubook', () => {
   it('should write epub with cover', async () => {
     const book = await Epubook.create({
-      title: 'cover'
+      title: 'cover',
+      description: 'This is generated for testing cover image'
     });
 
     await book.cover('../../assets/cover.jpg');

@@ -156,7 +156,7 @@ export function makePackageDocument(opf: PackageDocument): string {
       {
         '@_refines': '#' + opf.creator().uid,
         '@_property': 'file-as',
-        '#text': opf.creator()?.fileAs ?? ''
+        '#text': opf.creator()?.fileAs ?? opf.creator().name
       }
     ]
   };

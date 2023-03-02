@@ -123,6 +123,10 @@ export abstract class Item {
     return this.file;
   }
 
+  public relative(from: string) {
+    return path.relative(path.dirname(from), this.file);
+  }
+
   public update(info: Partial<{ properties: string }>) {
     if (info.properties) {
       this._properties = info.properties;
