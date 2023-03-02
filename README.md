@@ -22,7 +22,14 @@ npm i epubook
 ```ts
 import { Epubook } from 'epubook'
 
-const ebook = new Epubook({})
+const ebook = await Epubook.create({
+  title: 'title',
+  description: 'something'
+})
+
+await ebook.cover('./assets/cover.jpg')
+
+await ebook.writeFile('./output.epub')
 ```
 
 ### CLI
