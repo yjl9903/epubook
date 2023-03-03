@@ -1,10 +1,10 @@
+import * as path from 'pathe';
 import { XMLBuilder } from 'fast-xml-parser';
 
+import { Style } from '../epub';
 import { TextCSS } from '../constant';
 
 import type { XHTMLNode } from './types';
-
-export * from './types';
 
 const builder = new XMLBuilder({
   format: true,
@@ -19,37 +19,59 @@ export class XHTMLBuilder {
     title: ''
   };
 
+  private _filename: string;
+
   private _head: XHTMLNode[] = [];
 
   private _body: XHTMLNode[] = [];
 
-  constructor() {}
+  constructor(filename: string) {
+    this._filename = filename;
+    this.info.title = path.basename(filename);
+  }
 
-  language(value: string) {
+  public language(value: string) {
     this.info.language = value;
     return this;
   }
 
-  title(value: string) {
+  public title(value: string) {
     this.info.title = value;
     return this;
   }
 
-  style(href: string) {
-    this._head.push({
-      tag: 'link',
-      attrs: {
-        href,
-        rel: 'stylesheet',
-        type: TextCSS
-      },
-      children: ['']
-    });
+  public style(href: string | Style) {
+    if (typeof href === 'string') {
+      this._head.push({
+        tag: 'link',
+        attrs: {
+          href,
+          rel: 'stylesheet',
+          type: TextCSS
+        },
+        children: ['']
+      });
+    } else {
+      this._head.push({
+        tag: 'link',
+        attrs: {
+          href: href.relative(this._filename),
+          rel: 'stylesheet',
+          type: TextCSS
+        },
+        children: ['']
+      });
+    }
     return this;
   }
 
-  body(node: XHTMLNode) {
-    this._body.push(node);
+  public head(...node: XHTMLNode[]) {
+    this._head.push(...node);
+    return this;
+  }
+
+  public body(...node: XHTMLNode[]) {
+    this._body.push(...node);
     return this;
   }
 
@@ -101,26 +123,4 @@ export class XHTMLBuilder {
       }
     });
   }
-}
-
-export const Fragment = 'Fragment';
-
-export function h(
-  tag: string,
-  attrs: Record<string, string> = {},
-  ...children: Array<string | XHTMLNode | Array<string | XHTMLNode>>
-) {
-  const sub = children
-    .flatMap((c) =>
-      typeof c === 'object' && !Array.isArray(c) && c.tag === Fragment ? c.children ?? [] : c
-    )
-    .filter((c: any) => c !== undefined && c !== null && c !== false);
-
-  const o = {
-    tag,
-    attrs: attrs ?? {},
-    children: sub
-  } satisfies XHTMLNode;
-
-  return o;
 }

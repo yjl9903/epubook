@@ -150,7 +150,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   private async preBundle() {
-    this.container.toc(this.content.map((c) => ({ text: c.id(), item: c })));
+    this.container.toc(this.content.map((c) => ({ title: c.id(), page: c })));
     this.container.spine(...this.content);
   }
 

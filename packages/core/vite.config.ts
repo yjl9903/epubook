@@ -13,7 +13,7 @@ export default defineConfig({
             loader: 'tsx',
             sourcefile: id,
             jsxFactory: 'h',
-            jsxFragment: 'fragment'
+            jsxFragment: 'Fragment'
           });
         }
       }

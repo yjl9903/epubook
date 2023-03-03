@@ -6,8 +6,8 @@ export const UnbuildPreset: (options?: { inject?: boolean }) => BuildConfig = ({
 } = {}) => ({
   rollup: {
     esbuild: {
-      jsxFactory: 'h',
-      jsxFragment: 'fragment',
+      jsxFactory: inject ? '__epubook_core.h' : 'h',
+      jsxFragment: inject ? '__epubook_core.Fragment' : 'Fragment',
       loaders: {
         '.js': 'js',
         '.ts': 'ts',
@@ -31,7 +31,7 @@ export function Rollup(): Plugin {
     name: 'epubook:inject-tsx',
     transform(code, id) {
       if (id.endsWith('.tsx')) {
-        return `import { h, fragment } from '@epubook/core';\n` + code;
+        return `import * as __epubook_core from '@epubook/core';\n` + code;
       }
     }
   };

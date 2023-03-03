@@ -13,11 +13,11 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true
-  },
-  "paths": {
-    "@epubook/core": ["./packages/core/src/index.ts"],
-    "epubook": ["./packages/epubook/src/index.ts"]
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "@epubook/core": ["./packages/core/src/index.ts"],
+      "epubook": ["./packages/epubook/src/index.ts"]
+    }
   },
   "exclude": [
     "**/dist/**",

@@ -7,7 +7,7 @@ export async function loadTheme(pkg: string): Promise<Theme<{}>> {
     styles: [],
     pages: {
       cover(file, { image }) {
-        return new XHTMLBuilder()
+        return new XHTMLBuilder(file)
           .title('cover')
           .body({ tag: 'img', attrs: { src: image.relative(file) } });
       }

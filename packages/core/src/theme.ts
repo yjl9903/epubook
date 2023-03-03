@@ -1,9 +1,7 @@
-import { Image } from './epub';
-import { XHTMLBuilder } from './render';
+import type { Prettify } from './utils';
 
-type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & {};
+import { Image } from './epub';
+import { XHTMLBuilder } from './xhtml';
 
 export type PageTemplate<T = any> = (file: string, props: T) => XHTMLBuilder;
 

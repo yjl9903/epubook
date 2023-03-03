@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epub } from '../src';
-import { Html } from '../src/epub/item';
-import { XHTMLBuilder } from '../src/render';
-import { buildTocNav } from '../src/epub/nav';
+import { Epub, Toc, Html, XHTMLBuilder } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
@@ -95,7 +92,7 @@ describe('Bundle Epub', () => {
     epub
       .addItem(cover)
       .spine(cover)
-      .toc([{ text: 'cover', item: cover }]);
+      .toc([{ title: 'cover', page: cover }]);
 
     await epub.writeFile('../../.output/test-core.epub');
   });
@@ -125,18 +122,21 @@ describe('Bundle Epub', () => {
       .spine(item1, item2, item3, item4, item5)
       .toc(
         [
-          { text: '1', item: item1 },
-          { text: '2', item: item2 },
+          { title: '1', page: item1 },
+          { title: '2', page: item2 },
           {
-            text: 'Sub',
-            item: [
-              { text: '3', item: item3 },
-              { text: '4', item: item4 }
+            title: 'Sub',
+            list: [
+              { title: '3', page: item3 },
+              { title: '4', page: item4 }
             ]
           },
-          { text: '5', item: item5 }
+          { title: '5', page: item5 }
         ],
-        'Toc'
+        {
+          heading: 2,
+          title: 'Toc'
+        }
       )
       .bundle();
 
@@ -146,12 +146,12 @@ describe('Bundle Epub', () => {
 
 describe('XHTML Builder', () => {
   it('should build empty', () => {
-    const builder = new XHTMLBuilder();
+    const builder = new XHTMLBuilder('a.xhtml');
     const res = builder.build();
     expect(res).toMatchInlineSnapshot(`
       "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
-          <title></title>
+          <title>a.xhtml</title>
         </head>
         <body></body>
       </html>
@@ -160,7 +160,7 @@ describe('XHTML Builder', () => {
   });
 
   it('should build styles', () => {
-    const builder = new XHTMLBuilder();
+    const builder = new XHTMLBuilder('a.xhtml');
     const res = builder.title('with style').style('123').style('456').build();
     expect(res).toMatchInlineSnapshot(`
       "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
@@ -176,35 +176,38 @@ describe('XHTML Builder', () => {
   });
 
   it('should build nav toc', () => {
-    const res = buildTocNav({
-      heading: 1,
-      title: 'Hello',
-      list: [
-        { href: '1', text: 'page 1' },
-        { href: '2', text: 'page 2' },
-        { text: 'page 3', list: [{ href: '4', text: 'page 4' }] }
-      ]
-    }).build();
+    const toc = new Toc('nav.xhtml');
+    const page1 = new Html('a.xhtml', '');
+    const page2 = new Html('b.xhtml', '');
+    const page4 = new Html('d.xhtml', '');
+    const res = toc
+      .generate([
+        { title: 'page 1', page: page1 },
+        { title: 'page 2', page: page2 },
+        { title: 'page 3', list: [{ title: 'page 4', page: page4 }] }
+      ])
+      .build();
+
     expect(res).toMatchInlineSnapshot(`
       "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
-          <title>Hello</title>
+          <title>Nav</title>
         </head>
         <body>
           <nav epub:type=\\"toc\\">
-            <h1>Hello</h1>
+            <h1>Nav</h1>
             <ol>
               <li>
-                <a href=\\"1\\">page 1</a>
+                <a href=\\"a.xhtml\\">page 1</a>
               </li>
               <li>
-                <a href=\\"2\\">page 2</a>
+                <a href=\\"b.xhtml\\">page 2</a>
               </li>
               <li>
                 <span>page 3</span>
                 <ol>
                   <li>
-                    <a href=\\"4\\">page 4</a>
+                    <a href=\\"d.xhtml\\">page 4</a>
                   </li>
                 </ol>
               </li>

@@ -1,8 +1,10 @@
 import * as path from 'pathe';
 import { existsSync, mkdirSync, promises as fs } from 'node:fs';
 
+import type { NavList, NavOption } from './nav';
+
 import { Item } from './item';
-import { NavOption, PackageDocument, PackageDocumentMeta } from './opf';
+import { PackageDocument, PackageDocumentMeta } from './opf';
 
 export class Epub {
   /**
@@ -33,8 +35,8 @@ export class Epub {
     return this;
   }
 
-  public toc(nav: NavOption, title?: string) {
-    this.opfs[0].toc(nav, title);
+  public toc(nav: NavList, option: Partial<NavOption> = {}) {
+    this.opfs[0].setToc(nav, option);
     return this;
   }
 

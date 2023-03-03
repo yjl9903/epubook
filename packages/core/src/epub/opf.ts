@@ -2,8 +2,9 @@ import { randomUUID } from 'node:crypto';
 
 import { createDefu } from 'defu';
 
-import { buildTocNav } from './nav';
-import { Html, Item, ManifestItemRef } from './item';
+import { Item } from './item';
+import { ManifestItemRef } from './manifest';
+import { type NavList, type NavOption, Toc } from './nav';
 
 const defu = createDefu((obj: any, key, value: any) => {
   if (obj[key] instanceof Date && value instanceof Date) {
@@ -70,7 +71,7 @@ export class PackageDocument {
     lastModified: new Date()
   };
 
-  private _toc: Html | undefined;
+  private _toc: Toc | undefined;
 
   private _items: Item[] = [];
 
@@ -129,29 +130,24 @@ export class PackageDocument {
     return this.items().map((i) => i.manifest());
   }
 
+  // --- navigation ---
+  public spine() {
+    return this._spine;
+  }
+
   public setSpine(items: Item[]) {
     this._spine.splice(0, this._spine.length, ...items.map((i) => i.itemref()));
     return this;
   }
 
-  public spine() {
-    return this._spine;
+  public toc() {
+    return this._toc;
   }
 
-  // --- navigation ---
-  public toc(nav: NavOption, title?: string) {
-    const content = buildTocNav({
-      heading: 2,
-      title,
-      list: nav.map((i) =>
-        Array.isArray(i.item)
-          ? { text: i.text, list: i.item.map((i) => ({ href: i.item.filename(), text: i.text })) }
-          : { href: i.item.filename(), text: i.text }
-      )
-    })
-      .language(this._metadata.language)
-      .build();
-    this._toc = new Html('nav.xhtml', content).update({ properties: 'nav' });
+  public setToc(nav: NavList, option: Partial<NavOption> = {}) {
+    const toc = new Toc('nav.xhtml');
+    toc.generate(nav, option).language(this._metadata.language).build();
+    this._toc = toc;
     return this;
   }
 
@@ -169,5 +165,3 @@ export class PackageDocument {
     this._uniqueIdentifier = uniqueIdentifier;
   }
 }
-
-export type NavOption = Array<{ text: string; item: Html | Array<{ text: string; item: Html }> }>;

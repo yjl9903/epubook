@@ -4,7 +4,7 @@ export * from './error';
 
 export * from './theme';
 
-export * from './render';
+export * from './xhtml';
 
 export * from './constant';
 
