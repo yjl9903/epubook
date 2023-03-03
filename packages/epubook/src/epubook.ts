@@ -3,7 +3,6 @@ import {
   type Theme,
   type PageTemplate,
   type ImageMediaType,
-  HTML,
   Epub,
   XHTML,
   Image,
