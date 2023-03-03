@@ -28,11 +28,11 @@ importers:
   packages/cli:
     specifiers:
       '@epubook/core': workspace:*
-      breadc: ^0.8.8
+      breadc: ^0.8.9
       vitest: ^0.29.2
     dependencies:
       '@epubook/core': link:../core
-      breadc: 0.8.8
+      breadc: 0.8.9
     devDependencies:
       vitest: 0.29.2
 
@@ -282,6 +282,10 @@ packages:
 
   /@breadc/color/0.8.8:
     resolution: {integrity: sha512-a3MT+0zpmAHkQACN4NyHSlmVehKt0bo5GiM6Sxe428+ZznUysbTxQHsXfOUoktpvJ8OMVoMUwCxnjf1gKn/0+A==}
+    dev: false
+
+  /@breadc/color/0.8.9:
+    resolution: {integrity: sha512-CIebG7OsOgNixe//W1drSXjEbc01Et6L4Y/VQRGulfecDcrxH9/RjqwMDZ+40G+iZVELIVMDDBAQcuYvOlFU1g==}
     dev: false
 
   /@esbuild/android-arm/0.16.17:
@@ -953,6 +957,12 @@ packages:
     resolution: {integrity: sha512-UeaCfZcTye2WLEO38FPXYjYiNQNG5eeDlLvyJiKX4wwMx/J00FD/Su5f5KQT3m8eOSd1PeZA4V5ZOTaGNeOZtA==}
     dependencies:
       '@breadc/color': 0.8.8
+    dev: false
+
+  /breadc/0.8.9:
+    resolution: {integrity: sha512-+Ui7PuGd2+gkqtzBYi8fsmrg8sskyZ09uNAF9yMpU7FbACOFScEwNtJeAq6lHl0hgvVtS4XrMe86jj5EV6C70g==}
+    dependencies:
+      '@breadc/color': 0.8.9
     dev: false
 
   /browserslist/4.21.4:
