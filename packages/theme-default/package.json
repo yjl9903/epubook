@@ -44,7 +44,7 @@
     "@epubook/core": "workspace:*"
   },
   "engines": {
-    "node": ">=v16.19.0"
+    "node": ">=v18.14.2"
   },
   "epubook": {
     "pages": [],
