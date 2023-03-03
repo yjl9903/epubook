@@ -28,7 +28,7 @@ export class Epub {
     return this.opfs[0];
   }
 
-  public addItem(...items: Item[]) {
+  public item(...items: Item[]) {
     for (const item of items) {
       this.opfs[0].addItem(item);
     }

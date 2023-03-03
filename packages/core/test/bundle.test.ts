@@ -33,7 +33,7 @@ describe('Bundle Epub', () => {
     });
 
     const cover = new HTML('cover.xhtml', '');
-    epub.addItem(cover).spine(cover);
+    epub.item(cover).spine(cover);
 
     const res = makePackageDocument(opf);
     expect(res).toMatchInlineSnapshot(`
@@ -90,7 +90,7 @@ describe('Bundle Epub', () => {
 </html>`;
     const cover = new HTML('cover.xhtml', content);
     epub
-      .addItem(cover)
+      .item(cover)
       .spine(cover)
       .toc([{ title: 'cover', page: cover }]);
 
@@ -118,7 +118,7 @@ describe('Bundle Epub', () => {
     const item5 = new HTML('page5.xhtml', '5');
 
     await epub
-      .addItem(item1, item2, item3, item4, item5)
+      .item(item1, item2, item3, item4, item5)
       .spine(item1, item2, item3, item4, item5)
       .toc(
         [

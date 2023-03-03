@@ -84,7 +84,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       image = new Image(file, ext, img);
     }
     if (image) {
-      this.container.addItem(image);
+      this.container.item(image);
     }
     return image;
   }
@@ -137,7 +137,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     } else {
       this.counter[template]++;
     }
-    this.container.addItem(xhtml);
+    this.container.item(xhtml);
     return xhtml;
   }
 
