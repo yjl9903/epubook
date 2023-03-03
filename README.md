@@ -1,6 +1,6 @@
 # epubook
 
-[![CI](https://github.com/yjl9903/epubook/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/epubook/actions/workflows/ci.yml)
+[![version](https://img.shields.io/npm/v/epubook?color=rgb%2850%2C203%2C86%29&label=epubook)](https://www.npmjs.com/package/epubook) [![CI](https://github.com/yjl9903/epubook/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/epubook/actions/workflows/ci.yml)
 
 A Node [EPUB 3](https://www.w3.org/publishing/epub32/) generation library which supports from **low-level API** to **high-level ebook abstraction** with **customizable themes**.
 
