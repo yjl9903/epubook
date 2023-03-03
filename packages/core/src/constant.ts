@@ -19,9 +19,9 @@ export type ImageExtension = 'gif' | 'jpg' | 'jpeg' | 'png' | 'svg' | 'webp';
 
 export const TextCSS = 'text/css';
 
-export const XHTML = 'application/xhtml+xml';
+export const TextXHTML = 'application/xhtml+xml';
 
-export type MediaType = ImageMediaType | typeof TextCSS | typeof XHTML;
+export type MediaType = ImageMediaType | typeof TextCSS | typeof TextXHTML;
 
 export function getImageMediaType(file: string): ImageMediaType | undefined {
   const ext = path.extname(file);

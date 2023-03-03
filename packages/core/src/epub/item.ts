@@ -6,7 +6,7 @@ import { strToU8 } from 'fflate';
 import {
   type MediaType,
   type ImageMediaType,
-  XHTML,
+  TextXHTML,
   TextCSS,
   getImageMediaType
 } from '../constant';
@@ -103,11 +103,11 @@ export class Image extends Item {
   }
 }
 
-export class Html extends Item {
+export class HTML extends Item {
   private content: string;
 
   constructor(file: string, content: string) {
-    super(file, XHTML);
+    super(file, TextXHTML);
     this.content = content;
   }
 
@@ -116,7 +116,7 @@ export class Html extends Item {
       return undefined;
     }
     const content = await fs.readFile(src, 'utf-8');
-    return new Html(dst, content);
+    return new HTML(dst, content);
   }
 
   async bundle(): Promise<Uint8Array> {

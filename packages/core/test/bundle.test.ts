@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epub, Toc, Html, XHTMLBuilder } from '../src';
+import { Epub, Toc, HTML, XHTMLBuilder } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
@@ -32,7 +32,7 @@ describe('Bundle Epub', () => {
       source: 'imagine'
     });
 
-    const cover = new Html('cover.xhtml', '');
+    const cover = new HTML('cover.xhtml', '');
     epub.addItem(cover).spine(cover);
 
     const res = makePackageDocument(opf);
@@ -88,7 +88,7 @@ describe('Bundle Epub', () => {
     <p>The test passes if you are able to see the image below inside this ebook.</p>
   </body>
 </html>`;
-    const cover = new Html('cover.xhtml', content);
+    const cover = new HTML('cover.xhtml', content);
     epub
       .addItem(cover)
       .spine(cover)
@@ -111,11 +111,11 @@ describe('Bundle Epub', () => {
     });
     epub.main().setIdentifier('12345', 'book-id');
 
-    const item1 = new Html('page1.xhtml', '1');
-    const item2 = new Html('page2.xhtml', '2');
-    const item3 = new Html('page3.xhtml', '3');
-    const item4 = new Html('page4.xhtml', '4');
-    const item5 = new Html('page5.xhtml', '5');
+    const item1 = new HTML('page1.xhtml', '1');
+    const item2 = new HTML('page2.xhtml', '2');
+    const item3 = new HTML('page3.xhtml', '3');
+    const item4 = new HTML('page4.xhtml', '4');
+    const item5 = new HTML('page5.xhtml', '5');
 
     await epub
       .addItem(item1, item2, item3, item4, item5)
@@ -149,13 +149,22 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder('a.xhtml');
     const res = builder.build();
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+      XHTML {
+        "_properties": undefined,
+        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>a.xhtml</title>
         </head>
         <body></body>
       </html>
-      "
+      ",
+        "file": "a.xhtml",
+        "mediaType": "application/xhtml+xml",
+        "meta": {
+          "language": "en",
+          "title": "a.xhtml",
+        },
+      }
     `);
   });
 
@@ -163,7 +172,9 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder('a.xhtml');
     const res = builder.title('with style').style('123').style('456').build();
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+      XHTML {
+        "_properties": undefined,
+        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>with style</title>
           <link href=\\"123\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
@@ -171,15 +182,22 @@ describe('XHTML Builder', () => {
         </head>
         <body></body>
       </html>
-      "
+      ",
+        "file": "a.xhtml",
+        "mediaType": "application/xhtml+xml",
+        "meta": {
+          "language": "en",
+          "title": "with style",
+        },
+      }
     `);
   });
 
   it('should build nav toc', () => {
     const toc = new Toc('nav.xhtml');
-    const page1 = new Html('a.xhtml', '');
-    const page2 = new Html('b.xhtml', '');
-    const page4 = new Html('d.xhtml', '');
+    const page1 = new HTML('a.xhtml', '');
+    const page2 = new HTML('b.xhtml', '');
+    const page4 = new HTML('d.xhtml', '');
     const res = toc
       .generate([
         { title: 'page 1', page: page1 },
@@ -189,7 +207,9 @@ describe('XHTML Builder', () => {
       .build();
 
     expect(res).toMatchInlineSnapshot(`
-      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+      XHTML {
+        "_properties": undefined,
+        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>Nav</title>
         </head>
@@ -215,7 +235,14 @@ describe('XHTML Builder', () => {
           </nav>
         </body>
       </html>
-      "
+      ",
+        "file": "nav.xhtml",
+        "mediaType": "application/xhtml+xml",
+        "meta": {
+          "language": "en",
+          "title": "Nav",
+        },
+      }
     `);
   });
 });

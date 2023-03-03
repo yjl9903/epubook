@@ -1,8 +1,9 @@
 import * as path from 'pathe';
+import { strToU8 } from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import { Style } from '../epub';
-import { TextCSS } from '../constant';
+import { Item, Style } from '../epub/item';
+import { TextCSS, TextXHTML } from '../constant';
 
 import type { XHTMLNode } from './types';
 
@@ -13,8 +14,38 @@ const builder = new XMLBuilder({
   unpairedTags: ['link']
 });
 
+interface HTMLMeta {
+  language: string;
+  title: string;
+}
+
+export class XHTML extends Item {
+  private meta: HTMLMeta;
+
+  private content: string;
+
+  public constructor(file: string, meta: HTMLMeta, content: string) {
+    super(file, TextXHTML);
+    this.meta = meta;
+    this.content = content;
+  }
+
+  public title() {
+    return this.meta.title;
+  }
+
+  public language() {
+    return this.meta.language;
+  }
+
+  public async bundle(): Promise<Uint8Array> {
+    // TODO: check encode format
+    return strToU8(this.content);
+  }
+}
+
 export class XHTMLBuilder {
-  private info = {
+  private meta: HTMLMeta = {
     language: 'en',
     title: ''
   };
@@ -25,18 +56,18 @@ export class XHTMLBuilder {
 
   private _body: XHTMLNode[] = [];
 
-  constructor(filename: string) {
+  public constructor(filename: string) {
     this._filename = filename;
-    this.info.title = path.basename(filename);
+    this.meta.title = path.basename(filename);
   }
 
   public language(value: string) {
-    this.info.language = value;
+    this.meta.language = value;
     return this;
   }
 
   public title(value: string) {
-    this.info.title = value;
+    this.meta.title = value;
     return this;
   }
 
@@ -75,7 +106,23 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public build(): string {
+  public build(): XHTML {
+    const content = builder.build({
+      html: {
+        '@_xmlns': 'http://www.w3.org/1999/xhtml',
+        '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
+        '@_lang': this.meta.language,
+        '@_xml:lang': this.meta.language,
+        head: {
+          title: this.meta.title,
+          ...list(this._head)
+        },
+        body: list(this._body)
+      }
+    });
+
+    return new XHTML(this._filename, this.meta, content);
+
     function build(node: XHTMLNode) {
       const attrs = Object.fromEntries(
         Object.entries(node.attrs ?? {}).map(([key, value]) => ['@_' + key, value])
@@ -108,19 +155,5 @@ export class XHTMLBuilder {
       }
       return obj;
     }
-
-    return builder.build({
-      html: {
-        '@_xmlns': 'http://www.w3.org/1999/xhtml',
-        '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
-        '@_lang': this.info.language,
-        '@_xml:lang': this.info.language,
-        head: {
-          title: this.info.title,
-          ...list(this._head)
-        },
-        body: list(this._body)
-      }
-    });
   }
 }

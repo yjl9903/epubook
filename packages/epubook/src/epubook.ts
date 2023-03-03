@@ -3,8 +3,9 @@ import {
   type Theme,
   type PageTemplate,
   type ImageMediaType,
-  Html,
+  HTML,
   Epub,
+  XHTML,
   Image,
   ImageExtension
 } from '@epubook/core';
@@ -35,7 +36,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   private theme!: Theme<P>;
 
-  private content: Html[] = [];
+  private content: Array<XHTML> = [];
 
   private counter: Record<string, number> = {
     image: 1
@@ -114,7 +115,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
         : await this.loadImage(`${ImageDir}/cover.${ext}`, ext!);
     if (image) {
       image.update({ properties: 'cover-image' });
-      const page = this.page('cover', { image }, { file: `${TextDir}/cover.xhtml` });
+      const page = this.page('cover', { image }, { file: `cover.xhtml` });
       this.content.unshift(page);
       return image;
     } else {
@@ -130,13 +131,12 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     const render: Theme<P>['pages'][T] = this.theme.pages[template];
     const file = option.file ?? `${TextDir}/${template}-${this.counter[template] ?? 1}.xhtml`;
     const builder = render(file, props);
-    const content = builder.build();
+    const xhtml = builder.build();
     if (!this.counter[template]) {
       this.counter[template] = 2;
     } else {
       this.counter[template]++;
     }
-    const xhtml = new Html(file, content);
     this.container.addItem(xhtml);
     return xhtml;
   }
@@ -150,7 +150,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   private async preBundle() {
-    this.container.toc(this.content.map((c) => ({ title: c.id(), page: c })));
+    this.container.toc(this.content.map((c) => ({ title: c.title(), page: c })));
     this.container.spine(...this.content);
   }
 

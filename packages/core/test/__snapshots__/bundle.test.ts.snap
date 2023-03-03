@@ -5,31 +5,31 @@ PackageDocument {
   "SpecVersion": "3.0",
   "_identifier": "12345",
   "_items": [
-    Html {
+    HTML {
       "_properties": undefined,
       "content": "1",
       "file": "page1.xhtml",
       "mediaType": "application/xhtml+xml",
     },
-    Html {
+    HTML {
       "_properties": undefined,
       "content": "2",
       "file": "page2.xhtml",
       "mediaType": "application/xhtml+xml",
     },
-    Html {
+    HTML {
       "_properties": undefined,
       "content": "3",
       "file": "page3.xhtml",
       "mediaType": "application/xhtml+xml",
     },
-    Html {
+    HTML {
       "_properties": undefined,
       "content": "4",
       "file": "page4.xhtml",
       "mediaType": "application/xhtml+xml",
     },
-    Html {
+    HTML {
       "_properties": undefined,
       "content": "5",
       "file": "page5.xhtml",
@@ -200,7 +200,7 @@ PackageDocument {
       ],
       "_filename": "nav.xhtml",
       "_head": [],
-      "info": {
+      "meta": {
         "language": "zh-CN",
         "title": "Toc",
       },

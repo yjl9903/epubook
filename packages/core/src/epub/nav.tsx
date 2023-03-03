@@ -1,15 +1,13 @@
-import { strToU8 } from 'fflate';
-
 import type { Prettify } from '../utils';
 
-import { XHTML } from '../constant';
-import { XHTMLBuilder, XHTMLNode, h } from '../xhtml';
+import { TextXHTML } from '../constant';
+import { XHTMLBuilder, XHTMLNode, h, XHTML } from '../xhtml';
 
-import { Item, Html } from './item';
+import { Item, HTML } from './item';
 
 type NavItem = { title: string; attrs?: Record<string, string> };
 
-type NavLink = Prettify<NavItem & { page: Html }>;
+type NavLink = Prettify<NavItem & { page: HTML | XHTML }>;
 
 type NavSubList = Prettify<NavItem & { list: NavLink[] }>;
 
@@ -27,7 +25,7 @@ export class Toc extends Item {
   private _builder: XHTMLBuilder;
 
   constructor(file: string) {
-    super(file, XHTML);
+    super(file, TextXHTML);
     this._builder = new XHTMLBuilder(this.filename());
     this.update({ properties: 'nav' });
   }
@@ -76,7 +74,6 @@ export class Toc extends Item {
   }
 
   public async bundle(): Promise<Uint8Array> {
-    // TODO: check encode format
-    return strToU8(this._builder.build());
+    return this._builder.build().bundle();
   }
 }
