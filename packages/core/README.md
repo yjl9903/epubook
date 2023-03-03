@@ -13,7 +13,7 @@ npm i @epubook/core
 ## Usage
 
 ```ts
-import { Epub } from '@epubook/core'
+import { Epub, HTML } from '@epubook/core'
 
 const book = new Epub({
   title: 'Test Book',
@@ -24,7 +24,9 @@ const book = new Epub({
   source: 'imagine'
 })
 
-// ...
+const page = new HTML('start.xhtml', '...')
+
+book.item(page).spine(page).toc([{ title: 'Start', page }])
 
 await book.writeFile('./test.epub')
 ```
