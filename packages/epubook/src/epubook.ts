@@ -132,28 +132,37 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
         : await this.loadImage(`${ImageDir}/cover.${ext}`, ext!);
     if (image) {
       image.update({ properties: 'cover-image' });
-      const page = this.page('cover', { image }, { file: `cover.xhtml` });
-      this._cover = Cover.from(image, page);
+      const builder = this.pageBuilder('cover', { image }, { file: `cover.xhtml` });
+      this._cover = Cover.from(image, builder.build());
       return this._cover;
     } else {
       throw new EpubookError('Can not load image');
     }
   }
 
-  public page<T extends string & keyof Theme<P>['pages']>(
+  private pageBuilder<T extends string & keyof Theme<P>['pages']>(
     template: T,
     props: Parameters<Theme<P>['pages'][T]>[1],
     option: { file?: string } = {}
   ) {
     const render: Theme<P>['pages'][T] = this.theme.pages[template];
     const file = option.file ?? `${TextDir}/${template}-${this.counter[template] ?? 1}.xhtml`;
-    const builder = render(file, props);
-    const xhtml = builder.build();
-    if (!this.counter[template]) {
-      this.counter[template] = 2;
-    } else {
-      this.counter[template]++;
+    if (!option.file) {
+      if (!this.counter[template]) {
+        this.counter[template] = 2;
+      } else {
+        this.counter[template]++;
+      }
     }
+    return render(file, props);
+  }
+
+  public page<T extends string & keyof Theme<P>['pages']>(
+    template: T,
+    props: Parameters<Theme<P>['pages'][T]>[1]
+  ) {
+    const builder = this.pageBuilder(template, props);
+    const xhtml = builder.build();
     this._container.item(xhtml);
     return xhtml;
   }
@@ -167,7 +176,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     );
 
     const option: Partial<NavOption> = {};
-    option.builder = this.theme.pages.nav('nav.xhtml', { nav, option });
+    option.builder = this.pageBuilder('nav', { nav, option }, { file: 'nav.xhtml' });
     this._container.toc(nav, option);
 
     const spine = items.flatMap((i) => (i instanceof XHTML ? [i] : i.list));
