@@ -1,3 +1,4 @@
+import { NavList, NavOption } from './../../core/src/epub/nav';
 import {
   type Theme,
   type Author,
@@ -159,15 +160,15 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   // TODO: add toc page self to toc
   public toc(...items: Array<XHTML | { title: string; list: XHTML[] }>) {
-    const nav = items.map((i) =>
+    const nav: NavList = items.map((i) =>
       i instanceof XHTML
         ? { title: i.title(), page: i }
         : { title: i.title, list: i.list.map((i) => ({ title: i.title(), page: i })) }
     );
 
-    this._container.toc(nav, {
-      builder: this.theme.pages.nav('nav.xhtml', { nav })
-    });
+    const option: Partial<NavOption> = {};
+    option.builder = this.theme.pages.nav('nav.xhtml', { nav, option });
+    this._container.toc(nav, option);
 
     const spine = items.flatMap((i) => (i instanceof XHTML ? [i] : i.list));
     this.spine(...spine);

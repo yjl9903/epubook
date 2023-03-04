@@ -13,7 +13,10 @@ export async function DefaultTheme(): Promise<Theme<{}>> {
           .title(title)
           .body({ tag: 'img', attrs: { src: image.relative(file) } });
       },
-      nav(file, { nav }) {
+      nav(file, { nav, option }) {
+        if (!option.title) {
+          option.title = '目录';
+        }
         return new XHTMLBuilder(file).title('目录');
       }
     }
