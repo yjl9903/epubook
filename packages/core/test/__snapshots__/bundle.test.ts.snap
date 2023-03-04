@@ -80,15 +80,6 @@ PackageDocument {
     },
   ],
   "_toc": Toc {
-    "_builder": XHTMLBuilder {
-      "_body": [],
-      "_filename": "nav.xhtml",
-      "_head": [],
-      "_meta": {
-        "language": "en",
-        "title": "nav.xhtml",
-      },
-    },
     "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"zh-CN\\" xml:lang=\\"zh-CN\\">
   <head>
     <title>Toc</title>
