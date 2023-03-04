@@ -28,8 +28,9 @@ const ebook = await Epubook.create({
 })
 
 const cover = await ebook.cover('./assets/cover.jpg')
+const main = ebook.page('chapter', { title: 'Main', content: 'Hello, World!' })
 
-ebook.toc(cover)
+ebook.toc(cover, main)
 
 await ebook.writeFile('./output.epub')
 ```
