@@ -42,8 +42,7 @@
   },
   "dependencies": {
     "@epubook/core": "workspace:*",
-    "@epubook/theme-default": "workspace:*",
-    "breadc": "^0.8.8"
+    "@epubook/theme-default": "workspace:*"
   },
   "devDependencies": {
     "vitest": "^0.29.2"
