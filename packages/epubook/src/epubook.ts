@@ -1,6 +1,6 @@
 import {
-  type Author,
   type Theme,
+  type Author,
   type PageTemplate,
   type ImageMediaType,
   Epub,
@@ -9,11 +9,11 @@ import {
   ImageExtension
 } from '@epubook/core';
 
+import type { DefaultTheme } from '@epubook/theme-default';
+
 import * as path from 'node:path';
 
-import { loadTheme } from './theme';
-
-export interface EpubookOption {
+export interface EpubookOption<T extends Theme<{}> = Awaited<ReturnType<typeof DefaultTheme>>> {
   title: string;
 
   description: string;
@@ -22,7 +22,7 @@ export interface EpubookOption {
 
   author: Author[];
 
-  theme: string;
+  theme: T;
 }
 
 const TextDir = 'text';
@@ -31,7 +31,7 @@ const ImageDir = 'images';
 export class Epubook<P extends Record<string, PageTemplate> = {}> {
   private container: Epub;
 
-  private option: EpubookOption;
+  private option: Omit<EpubookOption, 'theme'>;
 
   private theme!: Theme<P>;
 
@@ -47,7 +47,6 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       description: 'unknown',
       language: 'zh-CN',
       author: [{ name: 'unknown' }],
-      theme: '@epubook/theme-default',
       ...option
     };
 
@@ -55,14 +54,20 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   public static async create<P extends Record<string, PageTemplate> = {}>(
-    option: Partial<EpubookOption>
+    option: Partial<EpubookOption<Theme<P>>>
   ): Promise<Epubook<P>> {
-    const epubook = new Epubook(option);
-    return (await epubook.loadTheme()) as Epubook<P>;
+    const epubook = new Epubook<P>(option);
+    await epubook.loadTheme(option.theme);
+    return epubook;
   }
 
-  private async loadTheme() {
-    this.theme = (await loadTheme(this.option.theme)) as Theme<P>;
+  private async loadTheme(theme?: Theme<P>) {
+    if (theme) {
+      this.theme = theme as Theme<P>;
+    } else {
+      const { DefaultTheme } = await import('@epubook/theme-default');
+      this.theme = (await DefaultTheme()) as Theme<P>;
+    }
     return this;
   }
 

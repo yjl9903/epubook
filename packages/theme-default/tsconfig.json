@@ -1,7 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "types": ["@epubook/core"]
-  },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
-}

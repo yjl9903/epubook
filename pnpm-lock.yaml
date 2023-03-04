@@ -69,8 +69,11 @@ importers:
   packages/theme-default:
     specifiers:
       '@epubook/core': workspace:*
+      '@types/node': ^18.14.5
     dependencies:
       '@epubook/core': link:../core
+    devDependencies:
+      '@types/node': 18.14.5
 
 packages:
 

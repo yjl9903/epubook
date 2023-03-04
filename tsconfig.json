@@ -15,8 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
+      "epubook": ["./packages/epubook/src/index.ts"],
       "@epubook/core": ["./packages/core/src/index.ts"],
-      "epubook": ["./packages/epubook/src/index.ts"]
+      "@epubook/theme-default": ["./packages/theme-default/src/index.ts"]
     }
   },
   "exclude": [
