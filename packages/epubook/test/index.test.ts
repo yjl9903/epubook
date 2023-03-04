@@ -9,7 +9,8 @@ describe('epubook', () => {
       description: 'This is generated for testing cover image'
     });
 
-    await book.cover('../../assets/cover.jpg');
+    const cover = await book.cover('../../assets/cover.jpg');
+    book.toc(cover);
 
     await book.writeFile('../../.output/test-cover.epub');
   });

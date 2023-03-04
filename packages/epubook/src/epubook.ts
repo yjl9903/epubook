@@ -13,6 +13,9 @@ import type { DefaultTheme } from '@epubook/theme-default';
 
 import * as path from 'node:path';
 
+import { Cover } from './pages';
+import { EpubookError } from './error';
+
 export interface EpubookOption<T extends Theme<{}> = Awaited<ReturnType<typeof DefaultTheme>>> {
   title: string;
 
@@ -35,7 +38,13 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   private theme!: Theme<P>;
 
-  private content: Array<XHTML> = [];
+  private _toc: XHTML | undefined;
+
+  private _cover: XHTML | undefined;
+
+  private _pages: Array<XHTML> = [];
+
+  private _spine: Array<XHTML> = [];
 
   private counter: Record<string, number> = {
     image: 1
@@ -107,9 +116,9 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     return image;
   }
 
-  public async cover(img: string): Promise<Image | undefined>;
-  public async cover(img: Uint8Array, ext: ImageExtension): Promise<Image | undefined>;
-  public async cover(img: string | Uint8Array, ext?: ImageExtension) {
+  public async cover(img: string): Promise<Cover>;
+  public async cover(img: Uint8Array, ext: ImageExtension): Promise<Cover>;
+  public async cover(img: string | Uint8Array, ext?: ImageExtension): Promise<Cover> {
     if (typeof img === 'string') {
       ext = path.extname(img).slice(1) as ImageExtension;
     }
@@ -120,10 +129,11 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     if (image) {
       image.update({ properties: 'cover-image' });
       const page = this.page('cover', { image }, { file: `cover.xhtml` });
-      this.content.unshift(page);
-      return image;
+      this._cover = page;
+      this._pages.unshift(page);
+      return Cover.from(image, page);
     } else {
-      return undefined;
+      throw new EpubookError('Can not load image');
     }
   }
 
@@ -145,17 +155,27 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     return xhtml;
   }
 
-  public toc() {
-    return this;
+  public toc(...items: Array<XHTML | { title: string; list: XHTML[] }>) {
+    this.container.toc(
+      items.map((i) =>
+        i instanceof XHTML
+          ? { title: i.title(), page: i }
+          : { title: i.title, list: i.list.map((i) => ({ title: i.title(), page: i })) }
+      )
+    );
+
+    const spine = items.flatMap((i) => (i instanceof XHTML ? [i] : i.list));
+    this.spine(...spine);
   }
 
-  public spine() {
+  public spine(...items: Array<XHTML>) {
+    this._spine.splice(0, this._spine.length, ...items);
     return this;
   }
 
   private async preBundle() {
-    this.container.toc(this.content.map((c) => ({ title: c.title(), page: c })));
-    this.container.spine(...this.content);
+    this.container.toc(this._pages.map((c) => ({ title: c.title(), page: c })));
+    this.container.spine(...this._spine);
   }
 
   public async bundle() {

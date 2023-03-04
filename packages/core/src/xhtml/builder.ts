@@ -14,33 +14,41 @@ const builder = new XMLBuilder({
   unpairedTags: ['link']
 });
 
-interface HTMLMeta {
+export interface HTMLMeta {
   language: string;
   title: string;
 }
 
 export class XHTML extends Item {
-  private meta: HTMLMeta;
+  private _meta: HTMLMeta;
 
-  private content: string;
+  private _content: string;
 
   public constructor(file: string, meta: HTMLMeta, content: string) {
     super(file, TextXHTML);
-    this.meta = meta;
-    this.content = content;
+    this._meta = meta;
+    this._content = content;
+  }
+
+  public meta() {
+    return this._meta;
   }
 
   public title() {
-    return this.meta.title;
+    return this._meta.title;
   }
 
   public language() {
-    return this.meta.language;
+    return this._meta.language;
+  }
+
+  public content() {
+    return this._content;
   }
 
   public async bundle(): Promise<Uint8Array> {
     // TODO: check encode format
-    return strToU8(this.content);
+    return strToU8(this._content);
   }
 }
 

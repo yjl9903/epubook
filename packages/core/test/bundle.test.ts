@@ -150,20 +150,20 @@ describe('XHTML Builder', () => {
     const res = builder.build();
     expect(res).toMatchInlineSnapshot(`
       XHTML {
-        "_properties": undefined,
-        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>a.xhtml</title>
         </head>
         <body></body>
       </html>
       ",
-        "file": "a.xhtml",
-        "mediaType": "application/xhtml+xml",
-        "meta": {
+        "_meta": {
           "language": "en",
           "title": "a.xhtml",
         },
+        "_properties": undefined,
+        "file": "a.xhtml",
+        "mediaType": "application/xhtml+xml",
       }
     `);
   });
@@ -173,8 +173,7 @@ describe('XHTML Builder', () => {
     const res = builder.title('with style').style('123').style('456').build();
     expect(res).toMatchInlineSnapshot(`
       XHTML {
-        "_properties": undefined,
-        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>with style</title>
           <link href=\\"123\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
@@ -183,12 +182,13 @@ describe('XHTML Builder', () => {
         <body></body>
       </html>
       ",
-        "file": "a.xhtml",
-        "mediaType": "application/xhtml+xml",
-        "meta": {
+        "_meta": {
           "language": "en",
           "title": "with style",
         },
+        "_properties": undefined,
+        "file": "a.xhtml",
+        "mediaType": "application/xhtml+xml",
       }
     `);
   });
@@ -208,8 +208,7 @@ describe('XHTML Builder', () => {
 
     expect(res).toMatchInlineSnapshot(`
       XHTML {
-        "_properties": undefined,
-        "content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>Nav</title>
         </head>
@@ -236,12 +235,13 @@ describe('XHTML Builder', () => {
         </body>
       </html>
       ",
-        "file": "nav.xhtml",
-        "mediaType": "application/xhtml+xml",
-        "meta": {
+        "_meta": {
           "language": "en",
           "title": "Nav",
         },
+        "_properties": undefined,
+        "file": "nav.xhtml",
+        "mediaType": "application/xhtml+xml",
       }
     `);
   });
