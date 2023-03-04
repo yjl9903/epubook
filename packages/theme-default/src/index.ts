@@ -12,6 +12,9 @@ export async function DefaultTheme(): Promise<Theme<{}>> {
         return new XHTMLBuilder(file)
           .title(title)
           .body({ tag: 'img', attrs: { src: image.relative(file) } });
+      },
+      theme(file, { nav }) {
+        return new XHTMLBuilder(file);
       }
     }
   };

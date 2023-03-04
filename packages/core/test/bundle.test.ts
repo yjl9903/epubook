@@ -147,33 +147,24 @@ describe('Bundle Epub', () => {
 describe('XHTML Builder', () => {
   it('should build empty', () => {
     const builder = new XHTMLBuilder('a.xhtml');
-    const res = builder.build();
-    expect(res).toMatchInlineSnapshot(`
-      XHTML {
-        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+    const xhtml = builder.build();
+    expect(xhtml.content()).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>a.xhtml</title>
         </head>
         <body></body>
       </html>
-      ",
-        "_meta": {
-          "language": "en",
-          "title": "a.xhtml",
-        },
-        "_properties": undefined,
-        "file": "a.xhtml",
-        "mediaType": "application/xhtml+xml",
-      }
+      "
     `);
   });
 
   it('should build styles', () => {
     const builder = new XHTMLBuilder('a.xhtml');
-    const res = builder.title('with style').style('123').style('456').build();
-    expect(res).toMatchInlineSnapshot(`
-      XHTML {
-        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+    const xhtml = builder.title('with style').style('123').style('456').build();
+
+    expect(xhtml.content()).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>with style</title>
           <link href=\\"123\\" rel=\\"stylesheet\\" type=\\"text/css\\"/>
@@ -181,34 +172,24 @@ describe('XHTML Builder', () => {
         </head>
         <body></body>
       </html>
-      ",
-        "_meta": {
-          "language": "en",
-          "title": "with style",
-        },
-        "_properties": undefined,
-        "file": "a.xhtml",
-        "mediaType": "application/xhtml+xml",
-      }
+      "
     `);
   });
 
   it('should build nav toc', () => {
-    const toc = new Toc('nav.xhtml');
     const page1 = new HTML('a.xhtml', '');
     const page2 = new HTML('b.xhtml', '');
     const page4 = new HTML('d.xhtml', '');
-    const res = toc
-      .generate([
-        { title: 'page 1', page: page1 },
-        { title: 'page 2', page: page2 },
-        { title: 'page 3', list: [{ title: 'page 4', page: page4 }] }
-      ])
+    const toc = Toc.generate('nav.xhtml', [
+      { title: 'page 1', page: page1 },
+      { title: 'page 2', page: page2 },
+      { title: 'page 3', list: [{ title: 'page 4', page: page4 }] }
+    ])
+      .title('Nav')
       .build();
 
-    expect(res).toMatchInlineSnapshot(`
-      XHTML {
-        "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+    expect(toc.content()).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
         <head>
           <title>Nav</title>
         </head>
@@ -234,15 +215,7 @@ describe('XHTML Builder', () => {
           </nav>
         </body>
       </html>
-      ",
-        "_meta": {
-          "language": "en",
-          "title": "Nav",
-        },
-        "_properties": undefined,
-        "file": "nav.xhtml",
-        "mediaType": "application/xhtml+xml",
-      }
+      "
     `);
   });
 });

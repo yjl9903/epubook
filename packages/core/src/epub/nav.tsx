@@ -1,9 +1,8 @@
 import type { Prettify } from '../utils';
 
-import { TextXHTML } from '../constant';
-import { XHTMLBuilder, XHTMLNode, h, XHTML } from '../xhtml';
+import { XHTMLBuilder, XHTMLNode, XHTML, HTMLMeta, h } from '../xhtml';
 
-import { Item, HTML } from './item';
+import { HTML } from './item';
 
 type NavItem = { title: string; attrs?: Record<string, string> };
 
@@ -17,24 +16,30 @@ export interface NavOption {
   title: string;
   heading: 1 | 2 | 3 | 4 | 5 | 6;
   titleAttrs: Record<string, string>;
-  head: XHTMLNode[];
-  body: XHTMLNode[];
+  builder?: XHTMLBuilder;
 }
 
-export class Toc extends Item {
+export class Toc extends XHTML {
   private _builder: XHTMLBuilder;
 
-  constructor(file: string) {
-    super(file, TextXHTML);
+  constructor(file: string, meta: HTMLMeta, content: string) {
+    super(file, meta, content);
     this._builder = new XHTMLBuilder(this.filename());
     this.update({ properties: 'nav' });
   }
 
-  public generate(
+  public static from(xhtml: XHTML) {
+    return new Toc(xhtml.filename(), xhtml.meta(), xhtml.content());
+  }
+
+  public static generate(
+    file: string,
     nav: NavList,
-    { title = 'Nav', heading = 1, titleAttrs = {}, head = [], body = [] }: Partial<NavOption> = {}
+    { title = 'Nav', heading = 1, titleAttrs = {}, builder }: Partial<NavOption> = {}
   ) {
-    const builder = new XHTMLBuilder(this.filename());
+    if (!builder) {
+      builder = new XHTMLBuilder(file);
+    }
 
     const root = {
       tag: 'nav',
@@ -47,13 +52,7 @@ export class Toc extends Item {
     root.children.push(h('h' + heading, titleAttrs, title));
     root.children.push(<ol>{list(nav)}</ol>);
 
-    builder
-      .title(title)
-      .body(root)
-      .head(...head)
-      .body(...body);
-
-    return (this._builder = builder);
+    return builder.body(root);
 
     function list(items: Array<NavLink | NavSubList>): XHTMLNode[] {
       return items.map((i) =>

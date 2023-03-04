@@ -1,7 +1,7 @@
 import type { Prettify } from './utils';
 
-import { Image } from './epub';
-import { XHTMLBuilder } from './xhtml';
+import type { XHTMLBuilder } from './xhtml';
+import type { Image, NavList } from './epub';
 
 export type PageTemplate<T = any> = (file: string, props: T) => XHTMLBuilder;
 
@@ -15,6 +15,7 @@ export interface Theme<P extends Record<string, PageTemplate<any>>> {
   pages: Prettify<
     {
       cover(file: string, props: { image: Image; title?: string }): XHTMLBuilder;
+      theme(file: string, props: { nav: NavList }): XHTMLBuilder;
     } & P
   >;
 }

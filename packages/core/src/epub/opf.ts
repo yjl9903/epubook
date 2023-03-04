@@ -145,9 +145,10 @@ export class PackageDocument {
   }
 
   public setToc(nav: NavList, option: Partial<NavOption> = {}) {
-    const toc = new Toc('nav.xhtml');
-    toc.generate(nav, option).language(this._metadata.language).build();
-    this._toc = toc;
+    const toc = Toc.generate('nav.xhtml', nav, option)
+      .title(option.title ?? 'Nav')
+      .language(this._metadata.language);
+    this._toc = Toc.from(toc.build());
     return this;
   }
 

@@ -2,11 +2,12 @@ import {
   type Theme,
   type Author,
   type PageTemplate,
+  type ImageExtension,
   type ImageMediaType,
+  type PackageDocumentMeta,
   Epub,
   XHTML,
-  Image,
-  ImageExtension
+  Image
 } from '@epubook/core';
 
 import type { DefaultTheme } from '@epubook/theme-default';
@@ -32,8 +33,6 @@ const TextDir = 'text';
 const ImageDir = 'images';
 
 export class Epubook<P extends Record<string, PageTemplate> = {}> {
-  private option: Omit<EpubookOption, 'theme'>;
-
   private theme!: Theme<P>;
 
   private _container: Epub;
@@ -51,7 +50,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   };
 
   private constructor(option: Partial<EpubookOption>) {
-    this.option = {
+    const _option = {
       title: 'unknown',
       description: 'unknown',
       language: 'zh-CN',
@@ -59,7 +58,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       ...option
     };
 
-    this._container = new Epub(this.option);
+    this._container = new Epub(_option);
   }
 
   public static async create<P extends Record<string, PageTemplate> = {}>(
@@ -82,6 +81,11 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   public epub() {
     return this._container;
+  }
+
+  public meta(info: Partial<PackageDocumentMeta>) {
+    this._container.main().update(info);
+    return this;
   }
 
   private async loadImage(
@@ -156,16 +160,19 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   public toc(...items: Array<XHTML | { title: string; list: XHTML[] }>) {
-    this._container.toc(
-      items.map((i) =>
-        i instanceof XHTML
-          ? { title: i.title(), page: i }
-          : { title: i.title, list: i.list.map((i) => ({ title: i.title(), page: i })) }
-      )
+    const nav = items.map((i) =>
+      i instanceof XHTML
+        ? { title: i.title(), page: i }
+        : { title: i.title, list: i.list.map((i) => ({ title: i.title(), page: i })) }
     );
+    this._container.toc(nav, {
+      builder: this.theme.pages.theme('nav.xhtml', { nav })
+    });
 
     const spine = items.flatMap((i) => (i instanceof XHTML ? [i] : i.list));
     this.spine(...spine);
+
+    return this._container.main().toc()!;
   }
 
   public spine(...items: Array<XHTML>) {

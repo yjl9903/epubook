@@ -81,129 +81,50 @@ PackageDocument {
   ],
   "_toc": Toc {
     "_builder": XHTMLBuilder {
-      "_body": [
-        {
-          "attrs": {
-            "epub:type": "toc",
-          },
-          "children": [
-            {
-              "attrs": {},
-              "children": [
-                "Toc",
-              ],
-              "tag": "h2",
-            },
-            {
-              "attrs": {},
-              "children": [
-                {
-                  "attrs": {},
-                  "children": [
-                    {
-                      "attrs": {
-                        "href": "page1.xhtml",
-                      },
-                      "children": [
-                        "1",
-                      ],
-                      "tag": "a",
-                    },
-                  ],
-                  "tag": "li",
-                },
-                {
-                  "attrs": {},
-                  "children": [
-                    {
-                      "attrs": {
-                        "href": "page2.xhtml",
-                      },
-                      "children": [
-                        "2",
-                      ],
-                      "tag": "a",
-                    },
-                  ],
-                  "tag": "li",
-                },
-                {
-                  "attrs": {},
-                  "children": [
-                    {
-                      "attrs": {},
-                      "children": [
-                        "Sub",
-                      ],
-                      "tag": "span",
-                    },
-                    {
-                      "attrs": {},
-                      "children": [
-                        {
-                          "attrs": {},
-                          "children": [
-                            {
-                              "attrs": {
-                                "href": "page3.xhtml",
-                              },
-                              "children": [
-                                "3",
-                              ],
-                              "tag": "a",
-                            },
-                          ],
-                          "tag": "li",
-                        },
-                        {
-                          "attrs": {},
-                          "children": [
-                            {
-                              "attrs": {
-                                "href": "page4.xhtml",
-                              },
-                              "children": [
-                                "4",
-                              ],
-                              "tag": "a",
-                            },
-                          ],
-                          "tag": "li",
-                        },
-                      ],
-                      "tag": "ol",
-                    },
-                  ],
-                  "tag": "li",
-                },
-                {
-                  "attrs": {},
-                  "children": [
-                    {
-                      "attrs": {
-                        "href": "page5.xhtml",
-                      },
-                      "children": [
-                        "5",
-                      ],
-                      "tag": "a",
-                    },
-                  ],
-                  "tag": "li",
-                },
-              ],
-              "tag": "ol",
-            },
-          ],
-          "tag": "nav",
-        },
-      ],
+      "_body": [],
       "_filename": "nav.xhtml",
       "_head": [],
-      "meta": {
-        "language": "zh-CN",
-        "title": "Toc",
+      "_meta": {
+        "language": "en",
+        "title": "nav.xhtml",
       },
+    },
+    "_content": "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"zh-CN\\" xml:lang=\\"zh-CN\\">
+  <head>
+    <title>Toc</title>
+  </head>
+  <body>
+    <nav epub:type=\\"toc\\">
+      <h2>Toc</h2>
+      <ol>
+        <li>
+          <a href=\\"page1.xhtml\\">1</a>
+        </li>
+        <li>
+          <a href=\\"page2.xhtml\\">2</a>
+        </li>
+        <li>
+          <span>Sub</span>
+          <ol>
+            <li>
+              <a href=\\"page3.xhtml\\">3</a>
+            </li>
+            <li>
+              <a href=\\"page4.xhtml\\">4</a>
+            </li>
+          </ol>
+        </li>
+        <li>
+          <a href=\\"page5.xhtml\\">5</a>
+        </li>
+      </ol>
+    </nav>
+  </body>
+</html>
+",
+    "_meta": {
+      "language": "zh-CN",
+      "title": "Toc",
     },
     "_properties": "nav",
     "file": "nav.xhtml",

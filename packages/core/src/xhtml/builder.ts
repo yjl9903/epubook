@@ -53,7 +53,7 @@ export class XHTML extends Item {
 }
 
 export class XHTMLBuilder {
-  private meta: HTMLMeta = {
+  private _meta: HTMLMeta = {
     language: 'en',
     title: ''
   };
@@ -66,16 +66,16 @@ export class XHTMLBuilder {
 
   public constructor(filename: string) {
     this._filename = filename;
-    this.meta.title = path.basename(filename);
+    this._meta.title = path.basename(filename);
   }
 
   public language(value: string) {
-    this.meta.language = value;
+    this._meta.language = value;
     return this;
   }
 
   public title(value: string) {
-    this.meta.title = value;
+    this._meta.title = value;
     return this;
   }
 
@@ -119,17 +119,17 @@ export class XHTMLBuilder {
       html: {
         '@_xmlns': 'http://www.w3.org/1999/xhtml',
         '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
-        '@_lang': this.meta.language,
-        '@_xml:lang': this.meta.language,
+        '@_lang': this._meta.language,
+        '@_xml:lang': this._meta.language,
         head: {
-          title: this.meta.title,
+          title: this._meta.title,
           ...list(this._head)
         },
         body: list(this._body)
       }
     });
 
-    return new XHTML(this._filename, this.meta, content);
+    return new XHTML(this._filename, this._meta, content);
 
     function build(node: XHTMLNode) {
       const attrs = Object.fromEntries(
