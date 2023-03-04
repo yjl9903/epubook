@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epub, Toc, HTML, XHTMLBuilder } from '../src';
+import { Epub, Toc, HTML, XHTMLBuilder, Fragment } from '../src';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
@@ -213,6 +213,25 @@ describe('XHTML Builder', () => {
               </li>
             </ol>
           </nav>
+        </body>
+      </html>
+      "
+    `);
+  });
+
+  it('should build fragment', () => {
+    const builder = new XHTMLBuilder('a.xhtml');
+    const xhtml = builder
+      .title('fragment')
+      .body({ tag: Fragment, children: ['123', { tag: 'span', children: ['456'] }] })
+      .build();
+    expect(xhtml.content()).toMatchInlineSnapshot(`
+      "<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+        <head>
+          <title>fragment</title>
+        </head>
+        <body>
+      123    <span>456</span>
         </body>
       </html>
       "

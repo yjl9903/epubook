@@ -6,6 +6,7 @@ import { Item, Style } from '../epub/item';
 import { TextCSS, TextXHTML } from '../constant';
 
 import type { XHTMLNode } from './types';
+import { Fragment } from './render';
 
 const builder = new XMLBuilder({
   format: true,
@@ -152,10 +153,17 @@ export class XHTMLBuilder {
       return obj;
     }
 
-    function list(nodes: XHTMLNode[]) {
+    function list(list: XHTMLNode[]) {
       const obj: any = {};
+      const nodes = list.flatMap((n) => (n.tag === Fragment ? n.children ?? [] : [n]));
       for (const c of nodes) {
-        if (c.tag in obj) {
+        if (typeof c === 'string') {
+          if (obj['#text']) {
+            obj['#text'] += c;
+          } else {
+            obj['#text'] = c;
+          }
+        } else if (c.tag in obj) {
           obj[c.tag].push(build(c));
         } else {
           obj[c.tag] = [build(c)];
