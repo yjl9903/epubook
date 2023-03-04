@@ -12,7 +12,7 @@ import {
   Image
 } from '@epubook/core';
 
-import type { DefaultTheme } from '@epubook/theme-default';
+import type { DefaultTheme, DefaultThemePageTemplate } from '@epubook/theme-default';
 
 import * as path from 'node:path';
 
@@ -34,8 +34,10 @@ export interface EpubookOption<T extends Theme<{}> = Awaited<ReturnType<typeof D
 const TextDir = 'text';
 const ImageDir = 'images';
 
-export class Epubook<P extends Record<string, PageTemplate> = {}> {
+export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTemplate> {
   private theme!: Theme<P>;
+
+  private _option: Omit<EpubookOption<Theme<P>>, 'theme'>;
 
   private _container: Epub;
 
@@ -49,8 +51,8 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     image: 1
   };
 
-  private constructor(option: Partial<EpubookOption>) {
-    const _option = {
+  private constructor(option: Partial<EpubookOption<Theme<P>>>) {
+    this._option = {
       title: 'unknown',
       description: 'unknown',
       language: 'zh-CN',
@@ -58,10 +60,10 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       ...option
     };
 
-    this._container = new Epub(_option);
+    this._container = new Epub(this._option);
   }
 
-  public static async create<P extends Record<string, PageTemplate> = {}>(
+  public static async create<P extends Record<string, PageTemplate> = DefaultThemePageTemplate>(
     option: Partial<EpubookOption<Theme<P>>>
   ): Promise<Epubook<P>> {
     const epubook = new Epubook<P>(option);
@@ -71,9 +73,10 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   private async loadTheme(theme?: Theme<P>) {
     if (theme) {
-      this.theme = theme as Theme<P>;
+      this.theme = theme;
     } else {
       const { DefaultTheme } = await import('@epubook/theme-default');
+      // @ts-ignore
       this.theme = (await DefaultTheme()) as Theme<P>;
     }
     return this;
@@ -84,6 +87,9 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   public meta(info: Partial<PackageDocumentMeta>) {
+    if (info.language) {
+      this._option.language = info.language;
+    }
     this._container.main().update(info);
     return this;
   }
@@ -163,7 +169,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
         this.counter[template]++;
       }
     }
-    return render(file, props);
+    return render(file, props).language(this._option.language);
   }
 
   public page<T extends string & keyof Theme<P>['pages']>(

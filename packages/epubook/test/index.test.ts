@@ -6,11 +6,14 @@ describe('epubook', () => {
   it('should write epub with cover', async () => {
     const book = await Epubook.create({
       title: 'cover',
-      description: 'This is generated for testing cover image'
+      description: 'This is generated for testing cover image',
+      language: 'zh-CN'
     });
 
     const cover = await book.cover('../../assets/cover.jpg');
-    book.toc(cover);
+    const p1 = book.page('chapter', { title: '第一章', content: '你好，这是第一章。' });
+    const p2 = book.page('chapter', { title: '第二章', content: '你好，这是第二章。' });
+    book.toc(cover, p1, p2);
 
     await book.writeFile('../../.output/test-cover.epub');
   });

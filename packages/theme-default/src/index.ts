@@ -1,8 +1,12 @@
 import { Theme, XHTMLBuilder } from '@epubook/core';
 
+import { Chapter } from './chapter';
+import { DefaultThemePageTemplate } from './types';
+
+export * from './types';
 export * from './chapter';
 
-export async function DefaultTheme(): Promise<Theme<{}>> {
+export async function DefaultTheme(): Promise<Theme<DefaultThemePageTemplate>> {
   return {
     name: '@epubook/theme-default',
     styles: [],
@@ -18,7 +22,8 @@ export async function DefaultTheme(): Promise<Theme<{}>> {
           option.title = '目录';
         }
         return new XHTMLBuilder(file).title('目录');
-      }
+      },
+      chapter: Chapter
     }
   };
 }
