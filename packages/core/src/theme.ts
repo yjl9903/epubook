@@ -15,7 +15,7 @@ export interface Theme<P extends Record<string, PageTemplate<any>>> {
   pages: Prettify<
     {
       cover(file: string, props: { image: Image; title?: string }): XHTMLBuilder;
-      theme(file: string, props: { nav: NavList }): XHTMLBuilder;
+      nav(file: string, props: { nav: NavList }): XHTMLBuilder;
     } & P
   >;
 }

@@ -5,6 +5,7 @@ import {
   type ImageExtension,
   type ImageMediaType,
   type PackageDocumentMeta,
+  Toc,
   Epub,
   XHTML,
   Image
@@ -37,11 +38,9 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   private _container: Epub;
 
-  private _toc: XHTML | undefined;
+  private _toc: Toc | undefined;
 
-  private _cover: XHTML | undefined;
-
-  private _pages: Array<XHTML> = [];
+  private _cover: Cover | undefined;
 
   private _spine: Array<XHTML> = [];
 
@@ -133,9 +132,8 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     if (image) {
       image.update({ properties: 'cover-image' });
       const page = this.page('cover', { image }, { file: `cover.xhtml` });
-      this._cover = page;
-      this._pages.unshift(page);
-      return Cover.from(image, page);
+      this._cover = Cover.from(image, page);
+      return this._cover;
     } else {
       throw new EpubookError('Can not load image');
     }
@@ -159,20 +157,22 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     return xhtml;
   }
 
+  // TODO: add toc page self to toc
   public toc(...items: Array<XHTML | { title: string; list: XHTML[] }>) {
     const nav = items.map((i) =>
       i instanceof XHTML
         ? { title: i.title(), page: i }
         : { title: i.title, list: i.list.map((i) => ({ title: i.title(), page: i })) }
     );
+
     this._container.toc(nav, {
-      builder: this.theme.pages.theme('nav.xhtml', { nav })
+      builder: this.theme.pages.nav('nav.xhtml', { nav })
     });
 
     const spine = items.flatMap((i) => (i instanceof XHTML ? [i] : i.list));
     this.spine(...spine);
 
-    return this._container.main().toc()!;
+    return (this._toc = this._container.main().toc()!);
   }
 
   public spine(...items: Array<XHTML>) {

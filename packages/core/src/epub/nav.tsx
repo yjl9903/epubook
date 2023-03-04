@@ -20,11 +20,8 @@ export interface NavOption {
 }
 
 export class Toc extends XHTML {
-  private _builder: XHTMLBuilder;
-
   constructor(file: string, meta: HTMLMeta, content: string) {
     super(file, meta, content);
-    this._builder = new XHTMLBuilder(this.filename());
     this.update({ properties: 'nav' });
   }
 
@@ -70,9 +67,5 @@ export class Toc extends XHTML {
         )
       );
     }
-  }
-
-  public async bundle(): Promise<Uint8Array> {
-    return this._builder.build().bundle();
   }
 }

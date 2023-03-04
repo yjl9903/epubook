@@ -13,8 +13,8 @@ export async function DefaultTheme(): Promise<Theme<{}>> {
           .title(title)
           .body({ tag: 'img', attrs: { src: image.relative(file) } });
       },
-      theme(file, { nav }) {
-        return new XHTMLBuilder(file);
+      nav(file, { nav }) {
+        return new XHTMLBuilder(file).title('目录');
       }
     }
   };
