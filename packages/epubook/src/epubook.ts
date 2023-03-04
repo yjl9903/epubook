@@ -134,12 +134,21 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       image.update({ properties: 'cover-image' });
       const builder = this.pageBuilder('cover', { image }, { file: `cover.xhtml` });
       this._cover = Cover.from(image, builder.build());
+      this._container.item(this._cover);
       return this._cover;
     } else {
       throw new EpubookError('Can not load image');
     }
   }
 
+  /**
+   * Do not forget adding the generate page to container
+   *
+   * @param template Use specify template to generate XHTML
+   * @param props Generate props
+   * @param option
+   * @returns
+   */
   private pageBuilder<T extends string & keyof Theme<P>['pages']>(
     template: T,
     props: Parameters<Theme<P>['pages'][T]>[1],
