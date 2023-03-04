@@ -32,11 +32,11 @@ const TextDir = 'text';
 const ImageDir = 'images';
 
 export class Epubook<P extends Record<string, PageTemplate> = {}> {
-  private container: Epub;
-
   private option: Omit<EpubookOption, 'theme'>;
 
   private theme!: Theme<P>;
+
+  private _container: Epub;
 
   private _toc: XHTML | undefined;
 
@@ -59,7 +59,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       ...option
     };
 
-    this.container = new Epub(this.option);
+    this._container = new Epub(this.option);
   }
 
   public static async create<P extends Record<string, PageTemplate> = {}>(
@@ -81,7 +81,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
   }
 
   public epub() {
-    return this.container;
+    return this._container;
   }
 
   private async loadImage(
@@ -97,7 +97,7 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
       image = new Image(file, ext, img);
     }
     if (image) {
-      this.container.item(image);
+      this._container.item(image);
     }
     return image;
   }
@@ -151,12 +151,12 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
     } else {
       this.counter[template]++;
     }
-    this.container.item(xhtml);
+    this._container.item(xhtml);
     return xhtml;
   }
 
   public toc(...items: Array<XHTML | { title: string; list: XHTML[] }>) {
-    this.container.toc(
+    this._container.toc(
       items.map((i) =>
         i instanceof XHTML
           ? { title: i.title(), page: i }
@@ -170,21 +170,15 @@ export class Epubook<P extends Record<string, PageTemplate> = {}> {
 
   public spine(...items: Array<XHTML>) {
     this._spine.splice(0, this._spine.length, ...items);
+    this._container.spine(...this._spine);
     return this;
   }
 
-  private async preBundle() {
-    this.container.toc(this._pages.map((c) => ({ title: c.title(), page: c })));
-    this.container.spine(...this._spine);
-  }
-
   public async bundle() {
-    this.preBundle();
-    return this.container.bundle();
+    return this._container.bundle();
   }
 
   public async writeFile(file: string) {
-    this.preBundle();
-    return this.container.writeFile(file);
+    return this._container.writeFile(file);
   }
 }
