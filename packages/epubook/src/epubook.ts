@@ -9,7 +9,8 @@ import {
   Toc,
   Epub,
   XHTML,
-  Image
+  Image,
+  Style
 } from '@epubook/core';
 
 import type { DefaultTheme, DefaultThemePageTemplate } from '@epubook/theme-default';
@@ -47,6 +48,8 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
 
   private _spine: Array<XHTML> = [];
 
+  private _styles: Array<Style> = [];
+
   private counter: Record<string, number> = {
     image: 1
   };
@@ -79,6 +82,11 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
       // @ts-ignore
       this.theme = (await DefaultTheme()) as Theme<P>;
     }
+    this._styles =
+      this.theme.styles.length === 1
+        ? [new Style(`styles/style.css`, this.theme.styles[0])]
+        : this.theme.styles.map((s, idx) => new Style(`styles/style-${idx}.css`, s));
+    this._container.item(...this._styles);
     return this;
   }
 
@@ -169,7 +177,9 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
         this.counter[template]++;
       }
     }
-    return render(file, props).language(this._option.language);
+    return render(file, props)
+      .style(...this._styles)
+      .language(this._option.language);
   }
 
   public page<T extends string & keyof Theme<P>['pages']>(

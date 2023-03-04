@@ -80,27 +80,29 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public style(href: string | Style) {
-    if (typeof href === 'string') {
-      this._head.push({
-        tag: 'link',
-        attrs: {
-          href,
-          rel: 'stylesheet',
-          type: TextCSS
-        },
-        children: ['']
-      });
-    } else {
-      this._head.push({
-        tag: 'link',
-        attrs: {
-          href: href.relative(this._filename),
-          rel: 'stylesheet',
-          type: TextCSS
-        },
-        children: ['']
-      });
+  public style(...list: Array<string | Style>) {
+    for (const href of list) {
+      if (typeof href === 'string') {
+        this._head.push({
+          tag: 'link',
+          attrs: {
+            href,
+            rel: 'stylesheet',
+            type: TextCSS
+          },
+          children: ['']
+        });
+      } else {
+        this._head.push({
+          tag: 'link',
+          attrs: {
+            href: href.relative(this._filename),
+            rel: 'stylesheet',
+            type: TextCSS
+          },
+          children: ['']
+        });
+      }
     }
     return this;
   }
