@@ -18,6 +18,8 @@ import {
   Style
 } from '@epubook/core';
 
+import type { Prettify } from './utils';
+
 import { Cover } from './pages';
 import { EpubookError } from './error';
 
@@ -73,7 +75,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   }
 
   public static async create<P extends Record<string, PageTemplate> = DefaultThemePageTemplate>(
-    option: Partial<EpubookOption<Theme<P>>>
+    option: Prettify<Partial<EpubookOption<Theme<P>>>>
   ): Promise<Epubook<P>> {
     const epubook = new Epubook<P>(option);
     await epubook.loadTheme(option.theme);
@@ -93,6 +95,19 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
         ? [new Style(`styles/style.css`, this.theme.styles[0])]
         : this.theme.styles.map((s, idx) => new Style(`styles/style-${idx}.css`, s));
     this._container.item(...this._styles);
+    return this;
+  }
+
+  public extend<T extends Record<string, PageTemplate>>(
+    theme: Partial<Theme<T>>
+  ): Epubook<Prettify<P & T>> {
+    // TODO: Extend styles
+    // Extend page templates
+    this.theme.pages = {
+      ...this.theme.pages,
+      ...theme.pages
+    };
+    // @ts-ignore
     return this;
   }
 
