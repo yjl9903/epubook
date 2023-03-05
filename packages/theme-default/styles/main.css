@@ -1,74 +1,263 @@
-body {
-  padding: 0%;
-  margin-top: 0%;
-  margin-bottom: 0%;
-  margin-left: 1%;
-  margin-right: 1%;
-  line-height: 130%;
-  text-align: justify;
-}
+/* See: https://github.com/spajak/epub3-boilerplate */
 
-h1 {
-  line-height: 120%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.65em;
-  margin-top: 0.1em;
-  margin-bottom: 0.4em;
-}
+@charset "UTF-8";
 
-h2 {
-  font-size: 1.8em;
-  text-align: center;
-  line-height: 1.2em;
-  text-indent: 0em;
-  font-weight: bold;
-  margin-top: 0em;
-  margin-bottom: 2em;
-}
-
-h3 {
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 1.2em;
-  text-indent: 0em;
-  font-weight: bold;
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-}
-
-h4 {
-  font-weight: bold;
-  font-size: 1.2em;
-  text-indent: 0em;
-  margin-top: 0em;
-  margin-bottom: 0.3em;
-  border-bottom: 0.1em solid #000000;
-  padding: 0.3em 0 0.2em 0;
-}
-
-h5 {
-  font-weight: bold;
-  font-size: 1.1em;
-  text-indent: 0em;
-  margin-top: 0.4em;
-  margin-bottom: 0.4em;
-  border-left: 3px solid #ff00ff;
-  border-bottom: 1px solid #ff00ff;
+@page {
+  margin-left: 10pt;
+  margin-right: 10pt;
   padding: 0;
 }
 
-div {
-  margin: 0px;
-  padding: 0px;
-  text-align: justify;
-  font-family: 'DK-SYMBOL';
+.hidden, [hidden] {
+  display: none;
 }
 
-p {
-  text-indent: 2em;
+/* --- sections --- */
+article,
+aside,
+blockquote,
+figure,
+figcaption,
+footer,
+header,
+main,
+nav,
+section {
   display: block;
-  line-height: 1.3em;
-  margin-top: 0.4em;
-  margin-bottom: 0.4em;
+}
+
+body {
+  font-size: 100%;
+  font-weight: normal;
+  text-align: justify;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  widows: 2;
+  orphans: 2;
+}
+
+section, nav {
+  page-break-before: always;
+  page-break-after: always;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  line-height: 1.25;
+  font-weight: bold;
+  margin: 1.5em 0;
+  -epub-hyphens: none;
+  hyphens: none;
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.625em;
+  margin-top: 2.75em;
+}
+
+h3 {
+  font-size: 1.375em;
+  margin-top: 2em;
+  margin-bottom: 1.25em;
+}
+
+h4 {
+  font-size: 1.125em;
+  margin-bottom: 1em;
+}
+
+h5, h6 {
+  font-size: 1em;
+  margin-top: 1em;
+  margin-bottom: 0.75em;
+}
+
+h6 {
+  font-style: italic;
+}
+
+/* --- Content grouping --- */
+p, blockquote, figure, ol, ul, dl, pre {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-indent: 0;
+}
+
+p.classic,
+p.book,
+p.novel {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+p + p.classic,
+p + p.book,
+p + p.novel {
+  text-indent: 1.125em;
+}
+
+p.stanza, p.verses, p.verse, p.poetry {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: left;
+  text-indent: 0;
+}
+
+blockquote {
+  padding-left: 18pt;
+  padding-right: 18pt;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+blockquote.fancy {
+  padding-left: 10pt;
+  padding-right: 16pt;
+  border-left: 0.875rem solid #9F9F9F;
+}
+
+dt {
+  font-weight: bold;
+  text-align: left;
+  page-break-after: avoid;
+}
+
+dd {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0.25em;
+  padding-left: 22pt;
+  page-break-before: avoid;
+}
+
+figure {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figcaption {
+  margin: 0.25em auto;
+  line-height: 1.25;
+  font-size: 0.875em;
+  text-align: center;
+}
+
+hr {
+  height: 0;
+  width: auto;
+  padding: 0;
+  border: 0 none;
+  border-top: 0.125rem solid currentColor;
+  margin: 1.5em auto;
+  text-align: center;
+  page-break-after: avoid;
+}
+
+pre {
+  tab-size: 2;
+  text-align: left;
+  display: block;
+  white-space: pre-wrap;
+  font-size: 0.8125em;
+  line-height: 1.25;
+}
+
+/* --- List --- */
+ul, ol {
+  text-align: initial;
+  list-style-position: outside;
+  margin-left: 0;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 34pt;
+}
+
+ol.wide {
+  padding-left: 44pt;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 24pt;
+}
+
+ul ul {
+  list-style-type: circle;
+}
+
+li ol, li ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 24pt;
+}
+
+li ul {
+  padding-left: 16pt;
+}
+
+/* --- Image --- */
+img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  vertical-align: bottom;
+}
+
+/* --- Text --- */
+em, cite, q, i {
+  font-style: italic;
+}
+
+q {
+  quotes: none !important;
+  font-style: italic !important;
+}
+
+dfn {
+  font-style: normal;
+  font-weight: bold;
+}
+
+strong, b {
+  font-weight: bold;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+sub, sup {
+  font-size: 0.675em;
+  line-height: 1.2;
+}
+
+sub {
+  vertical-align: sub;
+  vertical-align: -20%;
+}
+
+sup {
+  vertical-align: super;
+  vertical-align: 35%;
+}
+
+code {
+  white-space: pre;
+  text-align: left;
+  font-family: monospace;
 }

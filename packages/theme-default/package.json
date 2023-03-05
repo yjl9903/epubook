@@ -50,9 +50,9 @@
     "node": ">=v18.14.2"
   },
   "epubook": {
-    "pages": [],
     "styles": [
-      "styles/main.css"
+      "styles/main.css",
+      "styles/cover.css"
     ],
     "images": []
   }

@@ -6,6 +6,7 @@ import { Item, Style } from '../epub/item';
 import { TextCSS, TextXHTML } from '../constant';
 
 import type { XHTMLNode } from './types';
+
 import { Fragment } from './render';
 
 const builder = new XMLBuilder({
@@ -65,6 +66,8 @@ export class XHTMLBuilder {
 
   private _body: XHTMLNode[] = [];
 
+  private _bodyAttrs: Record<string, string> = {};
+
   public constructor(filename: string) {
     this._filename = filename;
     this._meta.title = path.basename(filename);
@@ -117,6 +120,15 @@ export class XHTMLBuilder {
     return this;
   }
 
+  public bodyAttrs(attrs: Record<string, string> = {}) {
+    const a = Object.entries(attrs).map(([key, value]) => [`@_${key}`, value]);
+    this._bodyAttrs = {
+      ...this._bodyAttrs,
+      ...Object.fromEntries(a)
+    };
+    return this;
+  }
+
   public build(): XHTML {
     const content = builder.build({
       html: {
@@ -128,7 +140,10 @@ export class XHTMLBuilder {
           title: this._meta.title,
           ...list(this._head)
         },
-        body: list(this._body)
+        body: {
+          ...this._bodyAttrs,
+          ...list(this._body)
+        }
       }
     });
 

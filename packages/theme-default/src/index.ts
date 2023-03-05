@@ -10,7 +10,7 @@ import { DefaultThemePageTemplate } from './types';
 export * from './types';
 export * from './chapter';
 
-const styles = ['./styles/main.css'];
+const styles = ['./styles/main.css', './styles/cover.css'];
 
 export async function DefaultTheme(): Promise<Theme<DefaultThemePageTemplate>> {
   return {
@@ -21,6 +21,7 @@ export async function DefaultTheme(): Promise<Theme<DefaultThemePageTemplate>> {
       cover(file, { image, title = '封面' }) {
         return new XHTMLBuilder(file)
           .title(title)
+          .bodyAttrs({ class: 'cover' })
           .body({ tag: 'img', attrs: { src: image.relative(file) } });
       },
       nav(file, { nav, option }) {
