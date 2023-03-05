@@ -68,8 +68,8 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     };
 
     this._container = new Epub({
-      creator: this._option.author![0],
-      contributor: this._option.author!.slice(1),
+      creator: this._option.creator ?? this._option.author![0],
+      contributor: this._option.contributor ?? this._option.author!.slice(1),
       ...this._option
     });
   }

@@ -42,3 +42,4 @@ jobs:
           unzip epubcheck-5.0.0.zip
           java -jar ./epubcheck-5.0.0/epubcheck.jar .output/test-core.epub
           java -jar ./epubcheck-5.0.0/epubcheck.jar .output/test-cover.epub
+          java -jar ./epubcheck-5.0.0/epubcheck.jar .output/test-book.epub
