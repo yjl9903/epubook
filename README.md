@@ -35,6 +35,8 @@ ebook.toc(cover, main)
 await ebook.writeFile('./output.epub')
 ```
 
+You can see full generation demo [here](https://github.com/yjl9903/epubook/blob/main/packages/epubook/test/index.test.ts).
+
 ### CLI
 
 ```bash
