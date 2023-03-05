@@ -1,7 +1,12 @@
-import { NavList, NavOption } from './../../core/src/epub/nav';
+import * as path from 'node:path';
+
+import type { DefaultTheme, DefaultThemePageTemplate } from '@epubook/theme-default';
+
 import {
   type Theme,
   type Author,
+  type NavList,
+  type NavOption,
   type PageTemplate,
   type ImageExtension,
   type ImageMediaType,
@@ -13,14 +18,11 @@ import {
   Style
 } from '@epubook/core';
 
-import type { DefaultTheme, DefaultThemePageTemplate } from '@epubook/theme-default';
-
-import * as path from 'node:path';
-
 import { Cover } from './pages';
 import { EpubookError } from './error';
 
-export interface EpubookOption<T extends Theme<{}> = Awaited<ReturnType<typeof DefaultTheme>>> {
+export interface EpubookOption<T extends Theme<{}> = Awaited<ReturnType<typeof DefaultTheme>>>
+  extends PackageDocumentMeta {
   title: string;
 
   description: string;
@@ -38,7 +40,7 @@ const ImageDir = 'images';
 export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTemplate> {
   private theme!: Theme<P>;
 
-  private _option: Omit<EpubookOption<Theme<P>>, 'theme'>;
+  private _option: Partial<Omit<EpubookOption<Theme<P>>, 'theme'>>;
 
   private _container: Epub;
 
@@ -63,7 +65,11 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
       ...option
     };
 
-    this._container = new Epub(this._option);
+    this._container = new Epub({
+      creator: this._option.author![0],
+      contributor: this._option.author!.slice(1),
+      ...this._option
+    });
   }
 
   public static async create<P extends Record<string, PageTemplate> = DefaultThemePageTemplate>(
@@ -179,7 +185,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     }
     return render(file, props)
       .style(...this._styles)
-      .language(this._option.language);
+      .language(this._option.language ?? 'zh-CN');
   }
 
   public page<T extends string & keyof Theme<P>['pages']>(

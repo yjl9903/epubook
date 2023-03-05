@@ -5,9 +5,14 @@ import { Epubook } from '../src';
 describe('epubook', () => {
   it('should write epub with cover', async () => {
     const book = await Epubook.create({
-      title: 'cover',
+      title: 'epubook test',
       description: 'This is generated for testing cover image',
-      language: 'zh-CN'
+      language: 'zh-CN',
+      author: [{ name: 'XLor', fileAs: 'xlor' }],
+      date: new Date('2023-02-28'),
+      lastModified: new Date('2023-03-05'),
+      subject: 'novel',
+      publisher: 'XLor Books'
     });
 
     const cover = await book.cover('../../assets/cover.jpg');
