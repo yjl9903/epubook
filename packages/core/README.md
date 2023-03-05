@@ -1,8 +1,8 @@
 # @epubook/core
 
-The fundamental module of [epubook](https://github.com/yjl9903/epubook) for generating EPUB books.
+[![version](https://img.shields.io/npm/v/@epubook/core?color=rgb%2850%2C203%2C86%29&label=@epubook/core)](https://www.npmjs.com/package/@epubook/theme-core) [![CI](https://github.com/yjl9903/epubook/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/epubook/actions/workflows/ci.yml)
 
-> 👷‍♂️ Still work in progress.
+The fundamental module of [epubook](https://github.com/yjl9903/epubook). It provides low-level API for generating EPUB books.
 
 ## Installation
 

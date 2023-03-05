@@ -1,8 +1,8 @@
 # @epubook/cli
 
-A Node EPUB generation library.
+[![version](https://img.shields.io/npm/v/@epubook/cli?color=rgb%2850%2C203%2C86%29&label=@epubook/cli)](https://www.npmjs.com/package/@epubook/cli) [![CI](https://github.com/yjl9903/epubook/actions/workflows/ci.yml/badge.svg)](https://github.com/yjl9903/epubook/actions/workflows/ci.yml)
 
-It will support the generation of the [latest epub standard](https://www.w3.org/TR/epub-33/) (3.3).
+Generate EPUB from markdown powered by [epubook](https://github.com/yjl9903/epubook).
 
 > 👷‍♂️ Still work in progress.
 
@@ -10,15 +10,9 @@ It will support the generation of the [latest epub standard](https://www.w3.org/
 
 ```bash
 npm i -g @epubook/cli
+
+epubook content.md
 ```
-
-## Resources
-
-+ [EPUB 3.2 specification](https://www.w3.org/publishing/epub32/)
-+ [EPUB 3.3 specification](https://www.w3.org/TR/epub-33/)
-+ [epubcheck](https://github.com/w3c/epubcheck)
-+ [epub-tests](https://w3c.github.io/epub-tests/)
-+ [EbookLib](https://github.com/aerkalov/ebooklib)
 
 ## License
 
