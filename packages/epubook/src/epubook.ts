@@ -9,13 +9,13 @@ import {
   type NavOption,
   type PageTemplate,
   type ImageExtension,
-  type ImageMediaType,
   type PackageDocumentMeta,
   Toc,
   Epub,
   XHTML,
   Image,
-  Style
+  Style,
+  getImageMediaType
 } from '@epubook/core';
 
 import type { Prettify } from './utils';
@@ -55,7 +55,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   private _styles: Array<Style> = [];
 
   private counter: Record<string, number> = {
-    image: 1
+    image: 0
   };
 
   private constructor(option: Partial<EpubookOption<Theme<P>>>) {
@@ -126,14 +126,17 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   private async loadImage(
     file: string,
     img: string | Uint8Array,
-    ext?: ImageMediaType
+    ext?: ImageExtension
   ): Promise<Image | undefined> {
     let image: Image | undefined;
     if (typeof img === 'string') {
-      ext = path.extname(img) as ImageMediaType;
+      ext = path.extname(img) as ImageExtension;
       image = await Image.read(file, img);
     } else if (ext) {
-      image = new Image(file, ext, img);
+      const media = getImageMediaType(ext);
+      if (media) {
+        image = new Image(file, media, img);
+      }
     }
     if (image) {
       this._container.item(image);
@@ -147,11 +150,11 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     if (typeof img === 'string') {
       ext = path.extname(img).slice(1) as ImageExtension;
     }
+    this.counter.image++;
     const image =
       typeof img === 'string'
-        ? await this.loadImage(`${ImageDir}/image-${this.counter.image}.${ext}`, img)
-        : await this.loadImage(`${ImageDir}/image-${this.counter.image}.${ext}`, ext!);
-    this.counter.image++;
+        ? await this.loadImage(`${ImageDir}/${path.basename(img)}`, img)
+        : await this.loadImage(`${ImageDir}/image-${this.counter.image}.${ext}`, img, ext!);
     return image;
   }
 
@@ -164,7 +167,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     const image =
       typeof img === 'string'
         ? await this.loadImage(`${ImageDir}/cover.${ext}`, img)
-        : await this.loadImage(`${ImageDir}/cover.${ext}`, ext!);
+        : await this.loadImage(`${ImageDir}/cover.${ext}`, img, ext!);
     if (image) {
       image.update({ properties: 'cover-image' });
       const builder = this.pageBuilder('cover', { image }, { file: `cover.xhtml` });
