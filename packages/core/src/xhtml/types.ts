@@ -19,6 +19,8 @@ interface BaseElementAttrs {
 }
 
 export interface EpubIntrinsicElements {
+  div: BaseElementAttrs & {};
+
   nav: BaseElementAttrs & {};
   ul: BaseElementAttrs & {};
   ol: BaseElementAttrs & {};
