@@ -98,9 +98,9 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     return this;
   }
 
-  public extend<T extends Record<string, PageTemplate>>(
-    theme: Partial<Theme<T>>
-  ): Epubook<Prettify<P & T>> {
+  public extend<T extends Record<string, PageTemplate>>(theme: {
+    pages?: T;
+  }): Epubook<Prettify<P & T>> {
     // TODO: Extend styles
     // Extend page templates
     this.theme.pages = {
