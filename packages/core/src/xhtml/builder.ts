@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 import * as path from 'pathe';
 import { strToU8 } from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
@@ -130,7 +132,9 @@ export class XHTMLBuilder {
   }
 
   public build(): XHTML {
-    const content = builder.build({
+    const replacer: Record<string, string> = {};
+
+    let content = builder.build({
       html: {
         '@_xmlns': 'http://www.w3.org/1999/xhtml',
         '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
@@ -147,6 +151,10 @@ export class XHTMLBuilder {
       }
     });
 
+    for (const [key, value] of Object.entries(replacer)) {
+      content = content.replace(key, value);
+    }
+
     return new XHTML(this._filename, this._meta, content);
 
     function build(node: XHTMLNode) {
@@ -154,20 +162,26 @@ export class XHTMLBuilder {
         Object.entries(node.attrs ?? {}).map(([key, value]) => ['@_' + key, value])
       );
 
-      const obj: any = {
-        ...attrs
-      };
+      if (node.attrs && 'html' in node.attrs) {
+        const id = `____${randomUUID()}____`;
+        replacer[id] = node.attrs.html;
+        return { ...attrs, '@_html': undefined, '#text': id };
+      } else {
+        const obj: any = {
+          ...attrs
+        };
 
-      if (Array.isArray(node.children)) {
-        const text = node.children.filter((c): c is string => typeof c === 'string');
-        const nodes = node.children.filter((c): c is XHTMLNode => typeof c !== 'string');
-        if (text.length > 0) {
-          obj['#text'] = text[0];
+        if (Array.isArray(node.children)) {
+          const text = node.children.filter((c): c is string => typeof c === 'string');
+          const nodes = node.children.filter((c): c is XHTMLNode => typeof c !== 'string');
+          if (text.length > 0) {
+            obj['#text'] = text[0];
+          }
+          Object.assign(obj, list(nodes));
         }
-        Object.assign(obj, list(nodes));
-      }
 
-      return obj;
+        return obj;
+      }
     }
 
     function list(list: XHTMLNode[]) {

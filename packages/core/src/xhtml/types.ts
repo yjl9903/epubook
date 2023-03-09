@@ -10,23 +10,31 @@ export interface XHTMLNode {
   children?: Array<string | XHTMLNode>;
 }
 
+interface BaseElementAttrs {
+  class?: string;
+
+  id?: string;
+
+  html?: string;
+}
+
 export interface EpubIntrinsicElements {
-  nav: {};
-  ul: {};
-  ol: {};
-  li: {};
+  nav: BaseElementAttrs & {};
+  ul: BaseElementAttrs & {};
+  ol: BaseElementAttrs & {};
+  li: BaseElementAttrs & {};
 
-  h1: {};
-  h2: {};
-  h3: {};
-  h4: {};
-  h5: {};
-  h6: {};
+  h1: BaseElementAttrs & {};
+  h2: BaseElementAttrs & {};
+  h3: BaseElementAttrs & {};
+  h4: BaseElementAttrs & {};
+  h5: BaseElementAttrs & {};
+  h6: BaseElementAttrs & {};
 
-  p: {};
-  pre: {};
+  p: BaseElementAttrs & {};
+  pre: BaseElementAttrs & {};
 
-  span: {};
-  code: {};
-  a: { href: string };
+  span: BaseElementAttrs & {};
+  code: BaseElementAttrs & {};
+  a: BaseElementAttrs & { href: string };
 }
