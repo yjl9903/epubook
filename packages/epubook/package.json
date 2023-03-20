@@ -45,7 +45,7 @@
     "@epubook/theme-default": "workspace:*"
   },
   "devDependencies": {
-    "vitest": "^0.29.3"
+    "vitest": "^0.29.5"
   },
   "engines": {
     "node": ">=v18.15.0"
