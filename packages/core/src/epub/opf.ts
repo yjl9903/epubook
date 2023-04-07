@@ -48,7 +48,7 @@ export class PackageDocument {
 
   private _uniqueIdentifier = 'uuid';
 
-  private _identifier = randomUUID();
+  private _identifier: string = randomUUID();
 
   private _metadata: PackageDocumentMeta = {
     title: '',
