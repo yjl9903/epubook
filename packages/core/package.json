@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "rollup": "^3.20.2",
-    "vitest": "^0.29.8"
+    "vitest": "^0.30.0"
   },
   "engines": {
     "node": ">=v18.15.0"
