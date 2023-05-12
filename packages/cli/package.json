@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@epubook/core": "workspace:*",
-    "breadc": "^0.9.3"
+    "breadc": "^0.9.5"
   },
   "devDependencies": {
     "vitest": "^0.31.0"
