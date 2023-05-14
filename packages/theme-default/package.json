@@ -44,10 +44,10 @@
     "@epubook/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11"
+    "@types/node": "^18.16.9"
   },
   "engines": {
-    "node": ">=v18.15.0"
+    "node": ">=v18.16.0"
   },
   "epubook": {
     "styles": [
