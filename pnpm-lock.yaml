@@ -5,8 +5,8 @@ importers:
   .:
     devDependencies:
       '@types/node':
-        specifier: ^18.16.9
-        version: 18.16.9
+        specifier: ^18.16.10
+        version: 18.16.10
       bumpp:
         specifier: latest
         version: 9.1.0
@@ -21,7 +21,7 @@ importers:
         version: 1.2.1
       vite:
         specifier: ^4.3.6
-        version: 4.3.6(@types/node@18.16.9)
+        version: 4.3.6(@types/node@18.16.10)
       vitest:
         specifier: ^0.31.0
         version: 0.31.0
@@ -81,8 +81,8 @@ importers:
         version: link:../core
     devDependencies:
       '@types/node':
-        specifier: ^18.16.9
-        version: 18.16.9
+        specifier: ^18.16.10
+        version: 18.16.10
 
 packages:
 
@@ -666,8 +666,8 @@ packages:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: true
 
-  /@types/node@18.16.9:
-    resolution: {integrity: sha512-IeB32oIV4oGArLrd7znD2rkHQ6EDCM+2Sr76dJnrHwv9OHBTTM6nuDLK9bmikXzPa0ZlWMWtRGo/Uw4mrzQedA==}
+  /@types/node@18.16.10:
+    resolution: {integrity: sha512-sMo3EngB6QkMBlB9rBe1lFdKSLqljyWPPWv6/FzSxh/IDlyVWSzE9RiF4eAuerQHybrWdqBgAGb03PM89qOasA==}
     dev: true
 
   /@types/resolve@1.20.2:
@@ -1944,7 +1944,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite@4.3.6(@types/node@18.16.9):
+  /vite@4.3.6(@types/node@18.16.10):
     resolution: {integrity: sha512-cqIyLSbA6gornMS659AXTVKF7cvSHMdKmJJwQ9DXq3lwsT1uZSdktuBRlpHQ8VnOWx0QHtjDwxPpGtyo9Fh/Qg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -1969,7 +1969,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.16.9
+      '@types/node': 18.16.10
       esbuild: 0.17.16
       postcss: 8.4.23
       rollup: 3.21.7
