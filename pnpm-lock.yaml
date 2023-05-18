@@ -5,8 +5,8 @@ importers:
   .:
     devDependencies:
       '@types/node':
-        specifier: ^18.16.12
-        version: 18.16.12
+        specifier: ^18.16.13
+        version: 18.16.13
       bumpp:
         specifier: latest
         version: 9.1.0
@@ -21,7 +21,7 @@ importers:
         version: 1.2.1
       vite:
         specifier: ^4.3.8
-        version: 4.3.8(@types/node@18.16.12)
+        version: 4.3.8(@types/node@18.16.13)
       vitest:
         specifier: ^0.31.1
         version: 0.31.1
@@ -81,8 +81,8 @@ importers:
         version: link:../core
     devDependencies:
       '@types/node':
-        specifier: ^18.16.12
-        version: 18.16.12
+        specifier: ^18.16.13
+        version: 18.16.13
 
 packages:
 
@@ -664,6 +664,10 @@ packages:
 
   /@types/node@18.16.12:
     resolution: {integrity: sha512-tIRrjbY9C277MOfP8M3zjMIhtMlUJ6YVqkGgLjz+74jVsdf4/UjC6Hku4+1N0BS0qyC0JAS6tJLUk9H6JUKviQ==}
+    dev: true
+
+  /@types/node@18.16.13:
+    resolution: {integrity: sha512-uZRomboV1vBL61EBXneL4j9/hEn+1Yqa4LQdpGrKmXFyJmVfWc9JV9+yb2AlnOnuaDnb2PDO3hC6/LKmzJxP1A==}
     dev: true
 
   /@types/resolve@1.20.2:
@@ -1933,6 +1937,39 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.16.12
+      esbuild: 0.17.16
+      postcss: 8.4.23
+      rollup: 3.22.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite@4.3.8(@types/node@18.16.13):
+    resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.16.13
       esbuild: 0.17.16
       postcss: 8.4.23
       rollup: 3.22.0
