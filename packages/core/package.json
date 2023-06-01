@@ -43,7 +43,7 @@
     "defu": "^6.1.2",
     "fast-xml-parser": "^4.2.2",
     "fflate": "^0.8.0",
-    "pathe": "^1.1.0"
+    "pathe": "^1.1.1"
   },
   "devDependencies": {
     "rollup": "^3.23.0",
