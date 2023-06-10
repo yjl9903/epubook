@@ -44,7 +44,7 @@
     "@epubook/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^18.16.16"
+    "@types/node": "^18.16.17"
   },
   "engines": {
     "node": ">=v18.16.0"
