@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@types/node':
-        specifier: ^18.17.8
-        version: 18.17.8
+        specifier: ^18.17.9
+        version: 18.17.9
       bumpp:
         specifier: latest
         version: 9.2.0
@@ -25,7 +25,7 @@ importers:
         version: 2.0.0(typescript@5.1.6)
       vite:
         specifier: ^4.4.9
-        version: 4.4.9(@types/node@18.17.8)
+        version: 4.4.9(@types/node@18.17.9)
       vitest:
         specifier: ^0.33.0
         version: 0.33.0
@@ -85,8 +85,8 @@ importers:
         version: link:../core
     devDependencies:
       '@types/node':
-        specifier: ^18.17.8
-        version: 18.17.8
+        specifier: ^18.17.9
+        version: 18.17.9
 
 packages:
 
@@ -903,8 +903,8 @@ packages:
     resolution: {integrity: sha512-2x8HWtFk0S99zqVQABU9wTpr8wPoaDHZUcAkoTKH+nL7kPv3WUI9cRi/Kk5Mz4xdqXSqTkKP7IWNoQQYCnDsTA==}
     dev: true
 
-  /@types/node@18.17.8:
-    resolution: {integrity: sha512-Av/7MqX/iNKwT9Tr60V85NqMnsmh8ilfJoBlIVibkXfitk9Q22D9Y5mSpm+FvG5DET7EbVfB40bOiLzKgYFgPw==}
+  /@types/node@18.17.9:
+    resolution: {integrity: sha512-fxaKquqYcPOGwE7tC1anJaPJ0GHyOVzfA2oUoXECjBjrtsIz4YJvtNYsq8LUcjEUehEF+jGpx8Z+lFrtT6z0tg==}
     dev: true
 
   /@types/resolve@1.20.2:
@@ -1060,7 +1060,7 @@ packages:
       defu: 6.1.2
       dotenv: 16.3.1
       giget: 1.1.2
-      jiti: 1.19.1
+      jiti: 1.19.3
       mlly: 1.4.0
       ohash: 1.1.2
       pathe: 1.1.1
@@ -1533,11 +1533,6 @@ packages:
 
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
-    dev: true
-
-  /jiti@1.19.1:
-    resolution: {integrity: sha512-oVhqoRDaBXf7sjkll95LHVS6Myyyb1zaunVwk4Z0+WPSW4gjS0pl01zYKHScTuyEhQsFxV5L4DR5r+YqSyqyyg==}
-    hasBin: true
     dev: true
 
   /jiti@1.19.3:
@@ -2246,7 +2241,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite@4.4.9(@types/node@18.17.8):
+  /vite@4.4.9(@types/node@18.17.9):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -2274,7 +2269,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.17.8
+      '@types/node': 18.17.9
       esbuild: 0.18.18
       postcss: 8.4.27
       rollup: 3.28.1
