@@ -121,8 +121,7 @@ describe('XHTML Builder', () => {
           <title>a.xhtml</title>
         </head>
         <body>
-          <p>
-      abc<br>def<br>ghi    </p>
+          <p>abc<br>def<br>ghi</p>
         </body>
       </html>
       "
