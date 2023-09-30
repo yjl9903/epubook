@@ -18,10 +18,5 @@ export default defineConfig({
         }
       }
     }
-  ],
-  test: {
-    transformMode: {
-      web: [/\.[jt]sx$/]
-    }
-  }
+  ]
 });

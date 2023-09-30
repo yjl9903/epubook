@@ -50,7 +50,7 @@
     "breadc": "^0.9.6"
   },
   "devDependencies": {
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=v18.16.0"
