@@ -14,7 +14,7 @@ export const UnbuildPreset: (options?: { inject?: boolean }) => BuildConfig = ({
     'rollup:options'(_options, config) {
       const plugins = config.plugins;
       if (inject && Array.isArray(plugins)) {
-        plugins.push(Rollup());
+        plugins.push(Rollup() as any);
       }
     }
   }
