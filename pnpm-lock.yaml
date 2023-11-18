@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@types/node':
-        specifier: ^20.9.1
-        version: 20.9.1
+        specifier: ^20.9.2
+        version: 20.9.2
       bumpp:
         specifier: latest
         version: 9.2.0
@@ -25,7 +25,7 @@ importers:
         version: 2.0.0(typescript@5.2.2)
       vite:
         specifier: ^5.0.0
-        version: 5.0.0(@types/node@20.9.1)
+        version: 5.0.0(@types/node@20.9.2)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6
@@ -85,8 +85,8 @@ importers:
         version: link:../core
     devDependencies:
       '@types/node':
-        specifier: ^20.9.1
-        version: 20.9.1
+        specifier: ^20.9.2
+        version: 20.9.2
 
 packages:
 
@@ -974,8 +974,8 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@20.9.1:
-    resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==}
+  /@types/node@20.9.2:
+    resolution: {integrity: sha512-WHZXKFCEyIUJzAwh3NyyTHYSR35SevJ6mZ1nWwJafKtiQbqRTIKSRcw3Ma3acqgsent3RRDqeVwpHntMk+9irg==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2326,7 +2326,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.0.0(@types/node@20.9.1):
+  /vite@5.0.0(@types/node@20.9.2):
     resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2354,7 +2354,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.9.1
+      '@types/node': 20.9.2
       esbuild: 0.19.5
       postcss: 8.4.31
       rollup: 4.5.0
