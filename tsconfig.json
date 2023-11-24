@@ -1,9 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "noEmit": true,
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
@@ -15,9 +18,21 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "epubook": ["./packages/epubook/src/index.ts"],
-      "@epubook/core": ["./packages/core/src/index.ts"],
-      "@epubook/theme-default": ["./packages/theme-default/src/index.ts"]
+      "epubook": [
+        "./packages/epubook/src/index.ts"
+      ],
+      "@epubook/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@epubook/builder": [
+        "./packages/builder/src/index.ts"
+      ],
+      "@epubook/loader": [
+        "./packages/loader/src/index.ts"
+      ],
+      "@epubook/theme-default": [
+        "./packages/theme-default/src/index.ts"
+      ]
     }
   },
   "exclude": [
