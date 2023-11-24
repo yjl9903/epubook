@@ -41,7 +41,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@epubook/builder": "workspace:*",
     "@epubook/core": "workspace:*",
+    "@epubook/loader": "workspace:*",
     "@epubook/theme-default": "workspace:*"
   },
   "devDependencies": {

@@ -1,13 +1,12 @@
 {
-  "name": "@epubook/theme-default",
+  "name": "@epubook/builder",
   "version": "0.0.11",
   "description": "",
   "keywords": [
     "ebook",
     "epub",
     "epub-generator",
-    "epubook",
-    "epubook-theme"
+    "epubook"
   ],
   "homepage": "https://github.com/yjl9903/epubook#readme",
   "bugs": {
@@ -20,7 +19,6 @@
   "license": "MIT",
   "author": "XLor",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -32,29 +30,26 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "styles"
+    "dist"
   ],
   "scripts": {
     "build": "unbuild",
-    "format": "prettier --write src/**/*.{ts,tsx}",
+    "format": "prettier --write src/**/*.{ts,tsx} test/**/*.{ts,tsx}",
+    "test": "vitest",
+    "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@epubook/core": "workspace:*",
-    "@epubook/builder": "workspace:*"
+    "defu": "^6.1.3",
+    "fast-xml-parser": "^4.3.2",
+    "fflate": "^0.8.1",
+    "pathe": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0"
+    "rollup": "^4.5.2",
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=v18.16.0"
-  },
-  "epubook": {
-    "styles": [
-      "styles/main.css",
-      "styles/cover.css"
-    ],
-    "images": []
   }
 }
