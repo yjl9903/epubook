@@ -1,7 +1,3 @@
-export type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & {};
-
 export function toISO8601String(date: Date) {
   function pad(n: number) {
     if (n < 10) {

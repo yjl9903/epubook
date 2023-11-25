@@ -1,6 +1,6 @@
-import type { Prettify } from './utils';
+import type { XHTMLBuilder } from '@epubook/xml';
 
-import type { XHTMLBuilder } from './xhtml';
+import type { Prettify } from './types';
 import type { Image, NavList, NavOption } from './epub';
 
 export type PageTemplate<T = any> = (file: string, props: T) => XHTMLBuilder;

@@ -1,6 +1,3 @@
-import * as path from 'pathe';
-import { existsSync, mkdirSync, promises as fs } from 'node:fs';
-
 import type { NavList, NavOption } from './nav';
 
 import { Item } from './item';
@@ -43,19 +40,5 @@ export class Epub {
   public spine(...items: Item[]) {
     this.opfs[0].setSpine(items);
     return this;
-  }
-
-  async bundle() {
-    const { bundle } = await import('../bundle');
-    return await bundle(this);
-  }
-
-  async writeFile(file: string) {
-    const buffer = await this.bundle();
-    const dir = path.dirname(file);
-    if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true });
-    }
-    await fs.writeFile(file, buffer);
   }
 }

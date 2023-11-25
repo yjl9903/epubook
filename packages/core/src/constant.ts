@@ -1,4 +1,4 @@
-import * as path from 'node:path';
+import { extname } from 'pathe';
 
 export const MIMETYPE = 'application/epub+zip';
 
@@ -24,7 +24,7 @@ export const TextXHTML = 'application/xhtml+xml';
 export type MediaType = ImageMediaType | typeof TextCSS | typeof TextXHTML;
 
 export function getImageMediaType(file: string): ImageMediaType | undefined {
-  const ext = path.extname(file);
+  const ext = extname(file);
   switch (ext) {
     case '.gif':
       return ImageGif;

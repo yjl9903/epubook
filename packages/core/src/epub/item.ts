@@ -1,5 +1,4 @@
 import * as path from 'pathe';
-import { promises as fs } from 'node:fs';
 
 import { strToU8 } from 'fflate';
 
@@ -12,6 +11,7 @@ import {
 } from '../constant';
 
 import { ManifestItem } from './manifest';
+import { HTMLMeta } from '@epubook/xml';
 
 export abstract class Item {
   private readonly file: string;
@@ -66,14 +66,6 @@ export class Style extends Item {
     this.content = content;
   }
 
-  static async read(src: string, dst: string) {
-    if (!src.endsWith('.css')) {
-      return undefined;
-    }
-    const content = await fs.readFile(src, 'utf-8');
-    return new Style(dst, content);
-  }
-
   async bundle(): Promise<Uint8Array> {
     // TODO: check encode format
     return strToU8(this.content);
@@ -86,16 +78,6 @@ export class Image extends Item {
   constructor(file: string, type: ImageMediaType, data: Uint8Array) {
     super(file, type);
     this.data = data;
-  }
-
-  static async read(file: string, src: string) {
-    const content = await fs.readFile(src);
-    const media = getImageMediaType(src);
-    if (media) {
-      return new Image(file, media, content);
-    } else {
-      return undefined;
-    }
   }
 
   async bundle(): Promise<Uint8Array> {
@@ -111,16 +93,41 @@ export class HTML extends Item {
     this.content = content;
   }
 
-  static async read(src: string, dst: string) {
-    if (!src.endsWith('.xhtml')) {
-      return undefined;
-    }
-    const content = await fs.readFile(src, 'utf-8');
-    return new HTML(dst, content);
-  }
-
   async bundle(): Promise<Uint8Array> {
     // TODO: check encode format
     return strToU8(this.content);
+  }
+}
+
+export class XHTML extends Item {
+  private _meta: HTMLMeta;
+
+  private _content: string;
+
+  public constructor(file: string, meta: HTMLMeta, content: string) {
+    super(file, TextXHTML);
+    this._meta = meta;
+    this._content = content;
+  }
+
+  public meta() {
+    return this._meta;
+  }
+
+  public title() {
+    return this._meta.title;
+  }
+
+  public language() {
+    return this._meta.language;
+  }
+
+  public content() {
+    return this._content;
+  }
+
+  public async bundle(): Promise<Uint8Array> {
+    // TODO: check encode format
+    return strToU8(this._content);
   }
 }

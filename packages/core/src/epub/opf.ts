@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 import { createDefu } from 'defu';
 
-import { Item } from './item';
+import { Item, XHTML } from './item';
 import { ManifestItemRef } from './manifest';
 import { type NavList, type NavOption, Toc } from './nav';
 
@@ -90,7 +90,14 @@ export class PackageDocument {
   }
 
   // --- metadata ---
-  public update(info: Partial<PackageDocumentMeta>) {
+  public update(info: Partial<PackageDocumentMeta & { spine: Item[] }>) {
+    {
+      const spine = info.spine;
+      delete info.spine;
+      if (spine) {
+        this.setSpine(spine);
+      }
+    }
     // TODO: valiate input data
     this._metadata = defu(info, this._metadata);
     return this;
@@ -149,7 +156,8 @@ export class PackageDocument {
     if (!option.builder) {
       toc.title(option.title ?? 'Nav').language(this._metadata.language);
     }
-    this._toc = Toc.from(toc.build());
+    const res = toc.build();
+    this._toc = Toc.from(new XHTML(res.filename, res.meta, res.content));
     return this;
   }
 

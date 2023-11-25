@@ -1,11 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import * as path from 'pathe';
-import { strToU8 } from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
-
-import { Item, Style } from '../epub/item';
-import { TextCSS, TextXHTML } from '../constant';
 
 import type { XHTMLNode } from './types';
 
@@ -21,39 +17,6 @@ const builder = new XMLBuilder({
 export interface HTMLMeta {
   language: string;
   title: string;
-}
-
-export class XHTML extends Item {
-  private _meta: HTMLMeta;
-
-  private _content: string;
-
-  public constructor(file: string, meta: HTMLMeta, content: string) {
-    super(file, TextXHTML);
-    this._meta = meta;
-    this._content = content;
-  }
-
-  public meta() {
-    return this._meta;
-  }
-
-  public title() {
-    return this._meta.title;
-  }
-
-  public language() {
-    return this._meta.language;
-  }
-
-  public content() {
-    return this._content;
-  }
-
-  public async bundle(): Promise<Uint8Array> {
-    // TODO: check encode format
-    return strToU8(this._content);
-  }
 }
 
 export class XHTMLBuilder {
@@ -85,29 +48,17 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public style(...list: Array<string | Style>) {
+  public style(...list: string[]) {
     for (const href of list) {
-      if (typeof href === 'string') {
-        this._head.push({
-          tag: 'link',
-          attrs: {
-            href,
-            rel: 'stylesheet',
-            type: TextCSS
-          },
-          children: ['']
-        });
-      } else {
-        this._head.push({
-          tag: 'link',
-          attrs: {
-            href: href.relative(this._filename),
-            rel: 'stylesheet',
-            type: TextCSS
-          },
-          children: ['']
-        });
-      }
+      this._head.push({
+        tag: 'link',
+        attrs: {
+          href,
+          rel: 'stylesheet',
+          type: 'text/css'
+        },
+        children: ['']
+      });
     }
     return this;
   }
@@ -131,7 +82,7 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public build(): XHTML {
+  public build() {
     const replacer: Record<string, string> = {};
 
     let content = builder.build({
@@ -155,7 +106,11 @@ export class XHTMLBuilder {
       content = content.replace(key, value);
     }
 
-    return new XHTML(this._filename, this._meta, content);
+    return {
+      filename: this._filename,
+      meta: this._meta,
+      content
+    };
 
     function build(node: XHTMLNode) {
       const attrs = Object.fromEntries(

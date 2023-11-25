@@ -49,9 +49,6 @@
     "@epubook/core": "workspace:*",
     "breadc": "^0.9.7"
   },
-  "devDependencies": {
-    "vitest": "^0.34.6"
-  },
   "engines": {
     "node": ">=v18.16.0"
   }

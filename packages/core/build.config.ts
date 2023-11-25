@@ -1,6 +1,6 @@
 import { defineBuildConfig } from 'unbuild';
 
-import { UnbuildPreset } from './src/unbuild';
+import { UnbuildPreset } from '@epubook/xml';
 
 export default defineBuildConfig({
   entries: ['src/index'],

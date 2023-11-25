@@ -2,9 +2,10 @@ import * as path from 'pathe';
 import * as fflate from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import type { Epub, ManifestItem, ManifestItemRef, PackageDocument } from '../epub';
+import type { Epub, ManifestItem, ManifestItemRef, PackageDocument } from '@epubook/core';
 
-import { MIMETYPE } from '../constant';
+import { MIMETYPE } from '@epubook/core';
+
 import { BundleError } from '../error';
 import { toISO8601String } from '../utils';
 

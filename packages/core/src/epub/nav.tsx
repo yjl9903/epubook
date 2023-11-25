@@ -1,8 +1,8 @@
-import type { Prettify } from '../utils';
+import type { Prettify } from '../types';
 
-import { XHTMLBuilder, XHTMLNode, XHTML, HTMLMeta, h } from '../xhtml';
+import { XHTMLBuilder, HTMLMeta, XHTMLNode } from '@epubook/xml';
 
-import { HTML } from './item';
+import { HTML, XHTML } from './item';
 
 type NavItem = { title: string; attrs?: Record<string, string> };
 
@@ -46,7 +46,8 @@ export class Toc extends XHTML {
       children: [] as XHTMLNode[]
     } satisfies XHTMLNode;
 
-    root.children.push(h('h' + heading, titleAttrs, title));
+    const Head = `h${heading}`;
+    root.children.push(<Head {...titleAttrs}>{title}</Head>);
     root.children.push(<ol>{list(nav)}</ol>);
 
     return builder.body(root);

@@ -212,7 +212,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   ) {
     const builder = this.pageBuilder(template, props);
     const xhtml = builder.build();
-    this._container.item(xhtml);
+    this._container.item(new XHTML(xhtml.filename, xhtml.meta, xhtml.content));
     return xhtml;
   }
 
@@ -241,10 +241,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   }
 
   public async bundle() {
-    return this._container.bundle();
-  }
-
-  public async writeFile(file: string) {
-    return this._container.writeFile(file);
+    const { bundle } = await import('@epubook/builder');
+    return await bundle(this._container);
   }
 }

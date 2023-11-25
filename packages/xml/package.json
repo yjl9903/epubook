@@ -1,5 +1,5 @@
 {
-  "name": "epubook",
+  "name": "@epubook/xml",
   "version": "0.0.11",
   "description": "",
   "keywords": [
@@ -19,20 +19,11 @@
   "license": "MIT",
   "author": "XLor",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./*"
-      ]
     }
   },
   "main": "./dist/index.cjs",
@@ -43,16 +34,14 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "format": "prettier --write src/**/*.ts test/**/*.ts",
+    "format": "prettier --write src/**/*.{ts,tsx} test/**/*.{ts,tsx}",
     "test": "vitest",
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@epubook/builder": "workspace:*",
-    "@epubook/core": "workspace:*",
-    "@epubook/loader": "workspace:*",
-    "@epubook/theme-default": "workspace:*"
+    "fast-xml-parser": "^4.3.2",
+    "pathe": "^1.1.1"
   },
   "engines": {
     "node": ">=v18.16.0"

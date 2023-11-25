@@ -41,11 +41,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@epubook/builder": "workspace:*",
     "@epubook/core": "workspace:*",
-    "@epubook/builder": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.0"
+    "@epubook/xml": "workspace:*"
   },
   "engines": {
     "node": ">=v18.16.0"

@@ -21,6 +21,9 @@
       "epubook": [
         "./packages/epubook/src/index.ts"
       ],
+      "@epubook/xml": [
+        "./packages/xml/src/index.ts"
+      ],
       "@epubook/core": [
         "./packages/core/src/index.ts"
       ],
