@@ -1,11 +1,11 @@
-import type { XHTMLNode } from './types';
+import type { XMLNode } from './types';
 
 export const Fragment = 'Fragment';
 
 export function h(
   tag: string,
   attrs: Record<string, string> = {},
-  ...children: Array<string | XHTMLNode | Array<string | XHTMLNode>>
+  ...children: Array<string | XMLNode | Array<string | XMLNode>>
 ) {
   const sub = children
     .flatMap((c) =>
@@ -17,7 +17,7 @@ export function h(
     tag,
     attrs: attrs ?? {},
     children: sub
-  } satisfies XHTMLNode;
+  } satisfies XMLNode;
 
   return o;
 }

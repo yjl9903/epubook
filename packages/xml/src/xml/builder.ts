@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import * as path from 'pathe';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import type { XHTMLNode } from './types';
+import type { XMLNode } from './types';
 
 import { Fragment } from './render';
 
@@ -27,9 +27,9 @@ export class XHTMLBuilder {
 
   private _filename: string;
 
-  private _head: XHTMLNode[] = [];
+  private _head: XMLNode[] = [];
 
-  private _body: XHTMLNode[] = [];
+  private _body: XMLNode[] = [];
 
   private _bodyAttrs: Record<string, string> = {};
 
@@ -63,12 +63,12 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public head(...node: XHTMLNode[]) {
+  public head(...node: XMLNode[]) {
     this._head.push(...node);
     return this;
   }
 
-  public body(...node: XHTMLNode[]) {
+  public body(...node: XMLNode[]) {
     this._body.push(...node);
     return this;
   }
@@ -112,7 +112,7 @@ export class XHTMLBuilder {
       content
     };
 
-    function build(node: XHTMLNode) {
+    function build(node: XMLNode) {
       const attrs = Object.fromEntries(
         Object.entries(node.attrs ?? {}).map(([key, value]) => ['@_' + key, value])
       );
@@ -128,7 +128,7 @@ export class XHTMLBuilder {
 
         if (Array.isArray(node.children)) {
           const text = node.children.filter((c): c is string => typeof c === 'string');
-          const nodes = node.children.filter((c): c is XHTMLNode => typeof c !== 'string');
+          const nodes = node.children.filter((c): c is XMLNode => typeof c !== 'string');
           if (text.length > 0) {
             obj['#text'] = text[0];
           }
@@ -139,7 +139,7 @@ export class XHTMLBuilder {
       }
     }
 
-    function list(list: XHTMLNode[]) {
+    function list(list: XMLNode[]) {
       const obj: any = {};
       const nodes = list.flatMap((n) => (n.tag === Fragment ? n.children ?? [] : [n]));
       for (const c of nodes) {

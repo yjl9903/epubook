@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 
-import { Epubook } from '@epubook/xml/vite';
+import { Epubook } from './src/vite';
 
 export default defineConfig({
   plugins: [Epubook()]

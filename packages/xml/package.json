@@ -6,7 +6,8 @@
     "ebook",
     "epub",
     "epub-generator",
-    "epubook"
+    "epubook",
+    "xml"
   ],
   "homepage": "https://github.com/yjl9903/epubook#readme",
   "bugs": {
@@ -24,11 +25,27 @@
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
+    },
+    "./unbuild": {
+      "import": "./dist/unbuild.mjs",
+      "types": "./dist/unbuild.d.ts"
+    },
+    "./vite": {
+      "import": "./dist/vite.mjs",
+      "types": "./dist/vite.d.ts"
     }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],

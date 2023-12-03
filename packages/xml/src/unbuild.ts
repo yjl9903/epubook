@@ -7,7 +7,7 @@ export const UnbuildPreset: (options?: { inject?: boolean }) => BuildConfig = ({
   rollup: {
     esbuild: {
       jsxFactory: inject ? '__epubook_xml.h' : 'h',
-      jsxFragment: inject ? '__epubook_xml.Fragment' : 'Fragment'
+      jsxFragment: inject ? '__epubook_xml.Fragment' : 'Fragment',
     }
   },
   hooks: {
