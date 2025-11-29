@@ -1,13 +1,14 @@
 {
   "name": "@epubook/xml",
   "version": "0.0.11",
-  "description": "",
+  "description": "Epubook XML Supports",
   "keywords": [
     "ebook",
     "epub",
     "epub-generator",
     "epubook",
-    "xml"
+    "xml",
+    "jsx"
   ],
   "homepage": "https://github.com/yjl9903/epubook#readme",
   "bugs": {
@@ -20,24 +21,23 @@
   "license": "MIT",
   "author": "XLor",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
-    "./unbuild": {
-      "import": "./dist/unbuild.mjs",
-      "types": "./dist/unbuild.d.ts"
+    "./jsx-runtime": {
+      "types": "./dist/jsx-runtime.d.mts",
+      "import": "./dist/jsx-runtime.mjs"
     },
-    "./vite": {
-      "import": "./dist/vite.mjs",
-      "types": "./dist/vite.d.ts"
+    "./jsx-dev-runtime": {
+      "types": "./dist/jsx-dev-runtime.d.mts",
+      "import": "./dist/jsx-dev-runtime.mjs"
     }
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "typesVersions": {
     "*": {
       "*": [
@@ -50,17 +50,21 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
-    "format": "prettier --write src/**/*.{ts,tsx} test/**/*.{ts,tsx}",
+    "build": "tsdown",
     "test": "vitest",
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "fast-xml-parser": "^5.3.2",
-    "pathe": "^2.0.3"
+    "@types/hast": "^3.0.4",
+    "@types/xast": "^2.0.4",
+    "hast-util-from-html": "^2.0.3",
+    "pathe": "^2.0.3",
+    "property-information": "^7.1.0",
+    "xast-util-to-xml": "^4.0.0",
+    "xastscript": "^4.0.0"
   },
   "engines": {
-    "node": ">=v18.16.0"
+    "node": ">=v20.10.0"
   }
 }

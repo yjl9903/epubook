@@ -3,17 +3,16 @@
   "compilerOptions": {
     "baseUrl": ".",
     "noEmit": true,
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "esnext",
+    "module": "nodenext",
     "lib": [
       "ESNext"
     ],
-    "moduleResolution": "Node",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "strict": true,
-    // "jsx": "preserve",
-    // "jsxFactory": "h",
-    // "jsxFragmentFactory": "fragment",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@epubook/xml",
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -24,6 +23,9 @@
       ],
       "@epubook/xml": [
         "./packages/xml/src/index.ts"
+      ],
+      "@epubook/xml/jsx-runtime": [
+        "./packages/xml/src/jsx-runtime.ts"
       ],
       "@epubook/core": [
         "./packages/core/src/index.ts"

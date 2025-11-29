@@ -36,36 +36,16 @@ await book.writeFile('./test.epub')
 You can use jsx to create XHTML node.
 
 ```tsx
-// Your theme code ...
+/** @jsxImportSource @epubook/xml */
 
 import { XHTMLBuilder } from '@epubook/core'
 
 const builder = new XHTMLBuilder()
 
-builder
-  .body(<h1>Title</h1>)
-  .body(<p>This is a paragraph</p>)
+const xhtml = builder
+  .appendBody(<h1>Title</h1>)
+  .appendBody(<p>This is a paragraph</p>)
   .build()
-```
-
-Currently, it supports use [unbuild](https://github.com/unjs/unbuild) to transform JSX / TSX and bundle your library.
-
-```ts
-// build.config.ts
-
-import { defineBuildConfig } from 'unbuild';
-
-import { UnbuildPreset } from '@epubook/core';
-
-export default defineBuildConfig({
-  entries: ['src/index'],
-  declaration: true,
-  clean: true,
-  rollup: {
-    emitCJS: true
-  },
-  preset: UnbuildPreset()
-});
 ```
 
 You can see [@epubook/theme](https://github.com/yjl9903/epubook/tree/main/packages/theme) for more details.

@@ -10,20 +10,10 @@ npm i @epubook/xml
 
 ## Usage
 
+Add this config at the beginning of your epubook JSX / TSX file.
+
 ```ts
-import { defineBuildConfig } from 'unbuild';
-
-import { UnbuildPreset } from '@epubook/xml';
-
-export default defineBuildConfig({
-  entries: ['src/index'],
-  declaration: true,
-  clean: true,
-  rollup: {
-    emitCJS: true
-  },
-  preset: UnbuildPreset()
-})
+/** @jsxImportSource @epubook/xml */
 ```
 
 ## License

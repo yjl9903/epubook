@@ -1,16 +1,10 @@
+import type { Node } from 'xast';
+
 declare global {
   namespace JSX {
     interface IntrinsicElements extends HtmlIntrinsicElements {}
   }
 }
-
-export interface XMLNode {
-  tag: string;
-  attrs?: Record<string, string>;
-  children?: Array<string | XMLNode>;
-}
-
-export interface XHTMLNode extends XMLNode {}
 
 export interface ContainerIntrinsicElements {
   containter: {
@@ -26,12 +20,16 @@ export interface ContainerIntrinsicElements {
   };
 }
 
+export type XmlChild = Node | Node[] | string | number | boolean | null | undefined;
+
+export type XmlChildren = XmlChild | XmlChild[];
+
 export interface BaseHtmlElementAttrs {
   class?: string;
 
   id?: string;
 
-  html?: string;
+  children?: XmlChildren;
 }
 
 export interface HtmlIntrinsicElements {

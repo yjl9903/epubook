@@ -1,35 +1,25 @@
-import { randomUUID } from 'node:crypto';
-
 import * as path from 'pathe';
-import { XMLBuilder } from 'fast-xml-parser';
+import { toXml } from 'xast-util-to-xml';
+import { ElementContent } from 'xast';
 
-import type { XMLNode } from './types';
+import { normalizeChildren } from '../jsx/runtime.js';
 
-import { Fragment } from './render';
-
-const builder = new XMLBuilder({
-  format: true,
-  ignoreAttributes: false,
-  suppressUnpairedNode: false,
-  unpairedTags: ['link']
-});
-
-export interface HTMLMeta {
-  language: string;
+export interface XHTMLMeta {
   title: string;
+  language: string;
 }
 
 export class XHTMLBuilder {
-  private _meta: HTMLMeta = {
+  private _meta: XHTMLMeta = {
     language: 'en',
     title: ''
   };
 
   private _filename: string;
 
-  private _head: XMLNode[] = [];
+  private _head: ElementContent[] = [];
 
-  private _body: XMLNode[] = [];
+  private _body: ElementContent[] = [];
 
   private _bodyAttrs: Record<string, string> = {};
 
@@ -38,124 +28,99 @@ export class XHTMLBuilder {
     this._meta.title = path.basename(filename);
   }
 
-  public language(value: string) {
+  public get language() {
+    return this._meta.language;
+  }
+
+  public setLanguage(value: string) {
     this._meta.language = value;
     return this;
   }
 
-  public title(value: string) {
+  public get title() {
+    return this._meta.title;
+  }
+
+  public setTitle(value: string) {
     this._meta.title = value;
     return this;
   }
 
-  public style(...list: string[]) {
+  public appendStyleSheet(...list: string[]) {
     for (const href of list) {
       this._head.push({
-        tag: 'link',
-        attrs: {
+        type: 'element',
+        name: 'link',
+        attributes: {
           href,
           rel: 'stylesheet',
           type: 'text/css'
         },
-        children: ['']
+        children: []
       });
     }
     return this;
   }
 
-  public head(...node: XMLNode[]) {
+  public appendHead(...node: ElementContent[]) {
     this._head.push(...node);
     return this;
   }
 
-  public body(...node: XMLNode[]) {
+  public appendBody(...node: ElementContent[]) {
     this._body.push(...node);
     return this;
   }
 
-  public bodyAttrs(attrs: Record<string, string> = {}) {
-    const a = Object.entries(attrs).map(([key, value]) => [`@_${key}`, value]);
+  public updateBodyAttrs(attrs: Record<string, string> = {}) {
     this._bodyAttrs = {
       ...this._bodyAttrs,
-      ...Object.fromEntries(a)
+      ...attrs
     };
     return this;
   }
 
   public build() {
-    const replacer: Record<string, string> = {};
-
-    let content = builder.build({
-      html: {
-        '@_xmlns': 'http://www.w3.org/1999/xhtml',
-        '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
-        '@_lang': this._meta.language,
-        '@_xml:lang': this._meta.language,
-        head: {
-          title: this._meta.title,
-          ...list(this._head)
-        },
-        body: {
-          ...this._bodyAttrs,
-          ...list(this._body)
-        }
+    const content = toXml(
+      {
+        type: 'root',
+        data: {},
+        children: [
+          {
+            type: 'element',
+            name: 'html',
+            attributes: {
+              xmlns: 'http://www.w3.org/1999/xhtml',
+              'xmlns:epub': 'http://www.idpf.org/2007/ops',
+              lang: this._meta.language,
+              'xml:lang': this._meta.language
+            },
+            children: [
+              {
+                type: 'element',
+                name: 'head',
+                attributes: {},
+                children: normalizeChildren([...this._head])
+              },
+              {
+                type: 'element',
+                name: 'body',
+                attributes: {},
+                children: normalizeChildren([...this._body])
+              }
+            ]
+          }
+        ]
+      },
+      {
+        closeEmptyElements: true
       }
-    });
-
-    for (const [key, value] of Object.entries(replacer)) {
-      content = content.replace(key, value);
-    }
+    );
 
     return {
       filename: this._filename,
       meta: this._meta,
       content
     };
-
-    function build(node: XMLNode) {
-      const attrs = Object.fromEntries(
-        Object.entries(node.attrs ?? {}).map(([key, value]) => ['@_' + key, value])
-      );
-
-      if (node.attrs && 'html' in node.attrs) {
-        const id = `____${randomUUID()}____`;
-        replacer[id] = node.attrs.html;
-        return { ...attrs, '@_html': undefined, '#text': id };
-      } else {
-        const obj: any = {
-          ...attrs
-        };
-
-        if (Array.isArray(node.children)) {
-          const text = node.children.filter((c): c is string => typeof c === 'string');
-          const nodes = node.children.filter((c): c is XMLNode => typeof c !== 'string');
-          if (text.length > 0) {
-            obj['#text'] = text[0];
-          }
-          Object.assign(obj, list(nodes));
-        }
-
-        return obj;
-      }
-    }
-
-    function list(list: XMLNode[]) {
-      const obj: any = {};
-      const nodes = list.flatMap((n) => (n.tag === Fragment ? n.children ?? [] : [n]));
-      for (const c of nodes) {
-        if (typeof c === 'string') {
-          if (obj['#text']) {
-            obj['#text'] += c;
-          } else {
-            obj['#text'] = c;
-          }
-        } else if (c.tag in obj) {
-          obj[c.tag].push(build(c));
-        } else {
-          obj[c.tag] = [build(c)];
-        }
-      }
-      return obj;
-    }
   }
 }

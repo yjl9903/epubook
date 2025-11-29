@@ -6,7 +6,7 @@ import { HTMLMeta } from '@epubook/xml';
 
 import { type MediaType, type ImageMediaType, TextXHTML, TextCSS } from '../constant';
 
-import { Item, ItemRef } from './manifest';
+import { Item, ItemRef } from '../epub/manifest';
 
 export abstract class Resource {
   private readonly _fullPath: string;

@@ -1,7 +1,7 @@
 {
   "name": "@epubook/theme",
   "version": "0.0.11",
-  "description": "",
+  "description": "Epubook theme",
   "keywords": [
     "ebook",
     "epub",
@@ -23,21 +23,18 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist",
     "styles"
   ],
   "scripts": {
-    "build": "unbuild",
-    "format": "prettier --write src/**/*.{ts,tsx}",
+    "build": "tsdown",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -45,7 +42,7 @@
     "@epubook/xml": "workspace:*"
   },
   "engines": {
-    "node": ">=v18.16.0"
+    "node": ">=v20.10.0"
   },
   "epubook": {
     "styles": [

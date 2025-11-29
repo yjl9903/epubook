@@ -1,6 +1,6 @@
+import type { Resource } from '../resource';
 import type { MediaType } from '../constant';
 
-import type { Resource } from './resource';
 import type { Rendition } from './rendition';
 
 export class Manifest {

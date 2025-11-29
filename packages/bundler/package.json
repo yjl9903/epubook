@@ -19,22 +19,20 @@
   "license": "MIT",
   "author": "XLor",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "unbuild",
-    "format": "prettier --write src/**/*.{ts,tsx} test/**/*.{ts,tsx}",
+    "build": "tsdown",
     "test": "vitest",
     "test:ci": "vitest --run",
     "typecheck": "tsc --noEmit"
@@ -50,6 +48,6 @@
     "rollup": "^4.5.2"
   },
   "engines": {
-    "node": ">=v18.16.0"
+    "node": ">=v20.10.0"
   }
 }

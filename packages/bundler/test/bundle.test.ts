@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Epub, HTML } from '../src';
+import { Epub, HTML } from '@epubook/core';
 import { makeContainer, makePackageDocument } from '../src/bundle';
 
 describe('Bundle Epub', () => {
