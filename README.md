@@ -4,10 +4,12 @@
 
 A Node [EPUB 3](https://www.w3.org/publishing/epub32/) generation library which supports from **low-level API** to **high-level ebook abstraction** with **customizable themes**.
 
-+ Just use [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook) in your project to generate epub easily
-+ [@epubook/core](https://github.com/yjl9903/epubook/tree/main/packages/core) provides low-level EPUB generation API
++ Just use [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook) all-in-one library in your project to generate epub easily
++ [@epubook/core](https://github.com/yjl9903/epubook/tree/main/packages/core) provides low-level EPUB abstraction API
++ [@epubook/xml](https://github.com/yjl9903/epubook/tree/main/packages/xml) provides XML / XHTML builder API for EPUB content
++ [@epubook/bundler](https://github.com/yjl9903/epubook/tree/main/packages/bundler) bundles ZIP EPUB container file
 + [@epubook/theme](https://github.com/yjl9903/epubook/tree/main/packages/theme) is the default theme used in [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook)
-+ [@epubook/cli](https://github.com/yjl9903/epubook/tree/main/packages/cli) generates EPUB from local configuration and markdown content
++ [@epubook/cli](https://github.com/yjl9903/epubook/tree/main/packages/cli) creates EPUB from local configuration and text / html / markdown / ...
 
 > [!WARNING]
 > This library is still under active development.
