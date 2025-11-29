@@ -49,10 +49,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@epubook/builder": "workspace:*",
     "@epubook/core": "workspace:*",
-    "@epubook/loader": "workspace:*",
-    "@epubook/theme-default": "workspace:*"
+    "@epubook/bundler": "workspace:*",
+    "@epubook/theme": "workspace:*"
   },
   "engines": {
     "node": ">=v18.16.0"

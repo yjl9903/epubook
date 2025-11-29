@@ -1,6 +1,6 @@
-# @epubook/theme-default
+# @epubook/theme
 
-[![version](https://img.shields.io/npm/v/@epubook/theme-default?color=rgb%2850%2C203%2C86%29&label=@epubook/theme-default)](https://www.npmjs.com/package/@epubook/theme-default)
+[![version](https://img.shields.io/npm/v/@epubook/theme?color=rgb%2850%2C203%2C86%29&label=@epubook/theme)](https://www.npmjs.com/package/@epubook/theme)
 
 The default theme for [epubook](https://github.com/yjl9903/epubook).
 

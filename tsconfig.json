@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "baseUrl": ".",
     "noEmit": true,
     "target": "ESNext",
     "module": "ESNext",
@@ -10,9 +11,9 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
-    "jsx": "preserve",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "fragment",
+    // "jsx": "preserve",
+    // "jsxFactory": "h",
+    // "jsxFragmentFactory": "fragment",
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -27,14 +28,11 @@
       "@epubook/core": [
         "./packages/core/src/index.ts"
       ],
-      "@epubook/builder": [
-        "./packages/builder/src/index.ts"
+      "@epubook/bundler": [
+        "./packages/bundler/src/index.ts"
       ],
-      "@epubook/loader": [
-        "./packages/loader/src/index.ts"
-      ],
-      "@epubook/theme-default": [
-        "./packages/theme-default/src/index.ts"
+      "@epubook/theme": [
+        "./packages/theme/src/index.ts"
       ]
     }
   },

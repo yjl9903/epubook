@@ -1,7 +1,10 @@
 import type { XHTMLBuilder } from '@epubook/xml';
 
-import type { Prettify } from './types';
-import type { Image, NavList, NavOption } from './epub';
+import type { Image } from '@epubook/core';
+
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
 
 export type PageTemplate<T = any> = (file: string, props: T) => XHTMLBuilder;
 
@@ -15,7 +18,7 @@ export interface Theme<P extends Record<string, PageTemplate<any>>> {
   pages: Prettify<
     {
       cover(file: string, props: { image: Image; title?: string }): XHTMLBuilder;
-      nav(file: string, props: { nav: NavList; option: Partial<NavOption> }): XHTMLBuilder;
+      // nav(file: string, props: { nav: NavList; option: Partial<NavOption> }): XHTMLBuilder;
     } & P
   >;
 }

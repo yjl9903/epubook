@@ -1,6 +1,38 @@
 import type { MediaType } from '../constant';
 
-export class ManifestItem {
+import type { Resource } from './resource';
+import type { Rendition } from './rendition';
+
+export class Manifest {
+  private _resources: Resource[] = [];
+
+  public constructor(public readonly rendition: Rendition) {}
+
+  public get resources(): Resource[] {
+    return this._resources;
+  }
+
+  public add(...resources: Resource[]) {
+    this._resources.push(...resources);
+    return this;
+  }
+
+  public [Symbol.iterator]() {
+    return this._resources[Symbol.iterator]();
+  }
+
+  public map(fn: (resource: Resource, index: number, manifest: Manifest) => boolean) {
+    return this._resources.filter((v, i) => fn(v, i, this));
+  }
+
+  public filter(predicate: (resource: Resource, index: number, manifest: Manifest) => boolean) {
+    return new Manifest(this.rendition).add(
+      ...this._resources.filter((v, i) => predicate(v, i, this))
+    );
+  }
+}
+
+export class Item {
   private _href: string;
 
   private _id: string;
@@ -12,9 +44,10 @@ export class ManifestItem {
     properties?: string;
   } = {};
 
-  constructor(href: string, id: string) {
+  public constructor(href: string, id: string, info?: typeof this.optional) {
     this._href = href;
     this._id = id;
+    info && this.update(info);
   }
 
   public update(info: typeof this.optional) {
@@ -51,11 +84,11 @@ export class ManifestItem {
   }
 
   public ref() {
-    return new ManifestItemRef(this._id);
+    return new ItemRef(this._id);
   }
 }
 
-export class ManifestItemRef {
+export class ItemRef {
   private _idref: string;
 
   private optional: {
@@ -66,7 +99,7 @@ export class ManifestItemRef {
     properties?: string;
   } = {};
 
-  constructor(idref: string) {
+  public constructor(idref: string) {
     this._idref = idref;
   }
 

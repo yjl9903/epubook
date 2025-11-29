@@ -2,7 +2,7 @@ import * as path from 'pathe';
 import * as fflate from 'fflate';
 import { XMLBuilder } from 'fast-xml-parser';
 
-import type { Epub, ManifestItem, ManifestItemRef, PackageDocument } from '@epubook/core';
+import type { EpubPublication, Rendition, Item, ItemRef } from '@epubook/core';
 
 import { MIMETYPE } from '@epubook/core';
 
@@ -15,17 +15,17 @@ import { toISO8601String } from '../utils';
  * @param epub
  * @returns
  */
-export async function bundle(epub: Epub): Promise<Uint8Array> {
+export async function bundle(epub: EpubPublication): Promise<Uint8Array> {
   return new Promise(async (res, rej) => {
-    const opfs = epub
-      .packages()
-      .map((opf) => [opf.filename(), fflate.strToU8(makePackageDocument(opf))] as const);
+    const opfs = epub.rootfiles.map(
+      (opf) => [opf.path, fflate.strToU8(makePackageDocument(opf))] as const
+    );
 
     const items: Record<string, Uint8Array> = {};
-    for (const opf of epub.packages()) {
-      const base = path.dirname(opf.filename());
-      for (const item of opf.items()) {
-        const name = path.join(base, item.filename());
+    for (const opf of epub.rootfiles) {
+      const base = path.dirname(opf.path);
+      for (const item of opf.manifest.resources) {
+        const name = path.join(base, item.path);
         if (name in items) {
           continue;
         }
@@ -37,7 +37,7 @@ export async function bundle(epub: Epub): Promise<Uint8Array> {
     const abstractContainer: fflate.AsyncZippable = {
       mimetype: fflate.strToU8(MIMETYPE),
       'META-INF': {
-        'container.xml': fflate.strToU8(makeContainer(epub))
+        'container.xml': fflate.strToU8(makeContainerXml(epub))
       },
       ...Object.fromEntries(opfs),
       ...items
@@ -70,7 +70,7 @@ export async function bundle(epub: Epub): Promise<Uint8Array> {
  * @param epub
  * @returns xml string
  */
-export function makeContainer(epub: Epub): string {
+function makeContainerXml(epub: EpubPublication): string {
   const builder = new XMLBuilder({
     format: true,
     ignoreAttributes: false,
@@ -78,8 +78,8 @@ export function makeContainer(epub: Epub): string {
     unpairedTags: ['rootfile']
   });
 
-  const rootfile = epub.packages().map((p) => ({
-    '@_full-path': p.filename(),
+  const rootfile = epub.rootfiles.map((p) => ({
+    '@_full-path': p.path,
     '@_media-type': 'application/oebps-package+xml',
     '#text': ''
   }));
@@ -104,9 +104,9 @@ export function makeContainer(epub: Epub): string {
  * @param opf
  * @returns
  */
-export function makePackageDocument(opf: PackageDocument): string {
-  if (opf.version() !== '3.0') {
-    throw new BundleError(`Unsupport EPUB spec ${opf.version()}`);
+function makePackageDocument(rendition: Rendition): string {
+  if (rendition.version !== '3.0') {
+    throw new BundleError(`Unsupport EPUB spec ${rendition.version}`);
   }
 
   const builder = new XMLBuilder({
@@ -117,7 +117,7 @@ export function makePackageDocument(opf: PackageDocument): string {
   });
 
   const optionalMetadata: Record<string, any> = {};
-  const optionalList: Array<keyof ReturnType<typeof opf.metadata>> = [
+  const optionalList: Array<keyof typeof rendition.metadata> = [
     'contributor',
     'coverage',
     'format',
@@ -129,7 +129,7 @@ export function makePackageDocument(opf: PackageDocument): string {
     'type'
   ];
   for (const key of optionalList) {
-    const m = opf.metadata();
+    const m = rendition.metadata;
     if (!!m[key]) {
       optionalMetadata['dc:' + key] = m[key];
     }
@@ -137,32 +137,32 @@ export function makePackageDocument(opf: PackageDocument): string {
   const metadata = {
     '@_xmlns:dc': 'http://purl.org/dc/elements/1.1/',
     'dc:identifier': {
-      '@_id': opf.uniqueIdentifier(),
-      '#text': opf.identifier()
+      '@_id': rendition.uniqueIdentifier,
+      '#text': rendition.identifier
     },
-    'dc:title': opf.title(),
-    'dc:language': opf.language(),
+    'dc:title': rendition.title,
+    'dc:language': rendition.language,
     'dc:creator': {
-      '@_id': opf.creator().uid,
-      '#text': opf.creator().name
+      '@_id': rendition.creator.uid,
+      '#text': rendition.creator.name
     },
-    'dc:date': toISO8601String(opf.metadata().date),
-    'dc:description': opf.metadata().description,
+    'dc:date': toISO8601String(rendition.metadata.date),
+    'dc:description': rendition.metadata.description,
     ...optionalMetadata,
     meta: [
       {
         '@_property': 'dcterms:modified',
-        '#text': toISO8601String(opf.metadata().lastModified)
+        '#text': toISO8601String(rendition.metadata.lastModified)
       },
       {
-        '@_refines': '#' + opf.creator().uid,
+        '@_refines': '#' + rendition.creator.uid,
         '@_property': 'file-as',
-        '#text': opf.creator()?.fileAs ?? opf.creator().name
+        '#text': rendition.creator?.fileAs ?? rendition.creator.name
       }
     ]
   };
 
-  function makeManifestItem(item: ManifestItem) {
+  function makeManifestItem(item: Item) {
     return {
       '@_fallback': item.fallback(),
       '@_href': item.href(),
@@ -173,7 +173,7 @@ export function makePackageDocument(opf: PackageDocument): string {
     };
   }
 
-  function makeManifestItemRef(item: ManifestItemRef) {
+  function makeManifestItemRef(item: ItemRef) {
     return {
       '@_idref': item.idref()
     };
@@ -184,14 +184,14 @@ export function makePackageDocument(opf: PackageDocument): string {
     package: {
       '@_xmlns': 'http://www.idpf.org/2007/opf',
       '@_xmlns:epub': 'http://www.idpf.org/2007/ops',
-      '@_unique-identifier': opf.uniqueIdentifier(),
-      '@_version': opf.version(),
+      '@_unique-identifier': rendition.uniqueIdentifier,
+      '@_version': rendition.version,
       metadata,
       manifest: {
-        item: opf.manifest().map((i) => makeManifestItem(i))
+        item: rendition.manifest.resources.map((i) => makeManifestItem(i.item()))
       },
       spine: {
-        itemref: opf.spine().map((ir) => makeManifestItemRef(ir))
+        itemref: rendition.spine.itemrefs.map((ir) => makeManifestItemRef(ir))
       }
     }
   });

@@ -6,7 +6,7 @@ A Node [EPUB 3](https://www.w3.org/publishing/epub32/) generation library which 
 
 + Just use [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook) in your project to generate epub easily
 + [@epubook/core](https://github.com/yjl9903/epubook/tree/main/packages/core) provides low-level EPUB generation API
-+ [@epubook/theme-default](https://github.com/yjl9903/epubook/tree/main/packages/theme-default) is the default theme used in [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook)
++ [@epubook/theme](https://github.com/yjl9903/epubook/tree/main/packages/theme) is the default theme used in [epubook](https://github.com/yjl9903/epubook/tree/main/packages/epubook)
 + [@epubook/cli](https://github.com/yjl9903/epubook/tree/main/packages/cli) generates EPUB from local configuration and markdown content
 
 ## Usage

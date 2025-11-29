@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 
-import type { DefaultTheme, DefaultThemePageTemplate } from '@epubook/theme-default';
+import type { DefaultTheme, DefaultThemePageTemplate } from '../../theme/src';
 
 import {
   type Theme,
@@ -86,7 +86,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
     if (theme) {
       this.theme = theme;
     } else {
-      const { DefaultTheme } = await import('@epubook/theme-default');
+      const { DefaultTheme } = await import('../../theme/src');
       // @ts-ignore
       this.theme = (await DefaultTheme()) as Theme<P>;
     }
@@ -241,7 +241,7 @@ export class Epubook<P extends Record<string, PageTemplate> = DefaultThemePageTe
   }
 
   public async bundle() {
-    const { bundle } = await import('@epubook/builder');
+    const { bundle } = await import('@epubook/bundler');
     return await bundle(this._container);
   }
 }

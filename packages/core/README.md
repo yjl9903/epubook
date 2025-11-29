@@ -68,7 +68,7 @@ export default defineBuildConfig({
 });
 ```
 
-You can see [@epubook/theme-default](https://github.com/yjl9903/epubook/tree/main/packages/theme-default) for more details.
+You can see [@epubook/theme](https://github.com/yjl9903/epubook/tree/main/packages/theme) for more details.
 
 ## License
 

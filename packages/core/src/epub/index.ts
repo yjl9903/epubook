@@ -1,9 +1,9 @@
-export * from './opf';
+export * from './rendition';
 
-export * from './nav';
+export * from './navigation';
 
-export * from './epub';
+export * from './publication';
 
-export * from './item';
+export * from './resource';
 
 export * from './manifest';
