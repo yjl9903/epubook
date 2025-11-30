@@ -2,7 +2,7 @@
 
 import { describe, it, expect } from 'vitest';
 
-import { XHTMLBuilder } from '../src';
+import { XHTMLBuilder } from '../src/index.js';
 
 describe('XHTML Builder', () => {
   it('should build empty', () => {

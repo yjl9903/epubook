@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 
-import { parseHTML, serializeXML } from '../src';
+import { parseHTML, serializeXML } from '../src/index.js';
 
 describe('xhtml utils', () => {
   it('should parse xhtml', () => {
     const value =
-      parseHTML(`<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+      parseHTML(`<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en">
         <head>
           <title>a.xhtml</title>
         </head>
@@ -16,10 +16,10 @@ describe('xhtml utils', () => {
         "children": [
           {
             "attributes": {
-              "lang": "\\"en\\"",
-              "xml:lang": "\\"en\\"",
-              "xmlns": "\\"http://www.w3.org/1999/xhtml\\"",
-              "xmlns:epub": "\\"http://www.idpf.org/2007/ops\\"",
+              "lang": "en",
+              "xml:lang": "en",
+              "xmlns": "http://www.w3.org/1999/xhtml",
+              "xmlns:epub": "http://www.idpf.org/2007/ops",
             },
             "children": [
               {
@@ -144,7 +144,7 @@ describe('xhtml utils', () => {
 
   it('should serialize and parse xhtml', () => {
     const value = serializeXML(
-      parseHTML(`<html xmlns=\\"http://www.w3.org/1999/xhtml\\" xmlns:epub=\\"http://www.idpf.org/2007/ops\\" lang=\\"en\\" xml:lang=\\"en\\">
+      parseHTML(`<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en">
         <head>
           <title>a.xhtml</title>
         </head>
@@ -152,7 +152,7 @@ describe('xhtml utils', () => {
       </html>`)
     );
     expect(value).toMatchInlineSnapshot(`
-      "<html xmlns="\\&#x22;http://www.w3.org/1999/xhtml\\&#x22;" xmlns:epub="\\&#x22;http://www.idpf.org/2007/ops\\&#x22;" lang="\\&#x22;en\\&#x22;" xml:lang="\\&#x22;en\\&#x22;"><head>
+      "<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head>
                 <title>a.xhtml</title>
               </head>
               <body>
