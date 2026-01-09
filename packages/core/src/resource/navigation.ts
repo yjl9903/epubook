@@ -73,6 +73,8 @@ export class Navigation extends Resource {
       });
     }
 
+    const ol: ElementContent[] = [];
+
     const makeAnchorNode = (navItem: NavResourceLink | NavStaticLink): ElementContent => {
       if ('resource' in navItem) {
         return {
@@ -121,7 +123,7 @@ export class Navigation extends Resource {
 
     for (const navItem of this._nav) {
       if ('children' in navItem) {
-        nav.push({
+        ol.push({
           type: 'element',
           name: 'li',
           attributes: navItem.attrs || {},
@@ -146,7 +148,7 @@ export class Navigation extends Resource {
           ]
         });
       } else {
-        nav.push(makeAnchorNode(navItem));
+        ol.push(makeAnchorNode(navItem));
       }
     }
 
@@ -157,11 +159,12 @@ export class Navigation extends Resource {
         'epub:type': 'toc'
       },
       children: [
+        ...nav,
         {
           type: 'element',
           name: 'ol',
           attributes: {},
-          children: nav
+          children: ol
         }
       ]
     });
