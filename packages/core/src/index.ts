@@ -1,5 +1,5 @@
-export * from './epub';
+export * from './epub/index.js';
 
-export * from './resource';
+export * from './resource/index.js';
 
-export * from './constant';
+export * from './constant.js';

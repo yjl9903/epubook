@@ -1,1 +1,3 @@
-export * from './resource';
+export * from './resource.js';
+
+export * from './navigation.js';

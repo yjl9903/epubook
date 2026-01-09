@@ -1,7 +1,7 @@
-import type { Resource } from '../resource';
-import type { MediaType } from '../constant';
+import type { Resource } from '../resource/resource.js';
+import type { MediaType } from '../constant.js';
 
-import type { Rendition } from './rendition';
+import type { Rendition } from './rendition.js';
 
 export class Manifest {
   private _resources: Resource[] = [];
@@ -12,8 +12,19 @@ export class Manifest {
     return this._resources;
   }
 
+  public get items(): Item[] {
+    return this._resources.map((r) => r.item());
+  }
+
+  public get itemrefs(): ItemRef[] {
+    return this._resources.map((r) => r.itemref());
+  }
+
   public add(...resources: Resource[]) {
-    this._resources.push(...resources);
+    for (const r of resources) {
+      if (this._resources.find((item) => item.id === r.id)) continue;
+      this._resources.push(r);
+    }
     return this;
   }
 

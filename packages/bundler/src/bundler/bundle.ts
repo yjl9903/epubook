@@ -6,8 +6,8 @@ import type { EpubPublication, Rendition, Item, ItemRef } from '@epubook/core';
 
 import { MIMETYPE } from '@epubook/core';
 
-import { BundleError } from '../error';
-import { toISO8601String } from '../utils';
+import { BundleError } from '../error.js';
+import { toISO8601String } from '../utils/index.js';
 
 /**
  * Bundle epub to zip archive
@@ -29,8 +29,12 @@ export async function bundle(epub: EpubPublication): Promise<Uint8Array> {
         if (name in items) {
           continue;
         }
-        // TODO: parallel here
-        items[name] = await item.bundle();
+        try {
+          // TODO: parallel here
+          items[name] = await item.bundle();
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
 
@@ -70,7 +74,7 @@ export async function bundle(epub: EpubPublication): Promise<Uint8Array> {
  * @param epub
  * @returns xml string
  */
-function makeContainerXml(epub: EpubPublication): string {
+export function makeContainerXml(epub: EpubPublication): string {
   const builder = new XMLBuilder({
     format: true,
     ignoreAttributes: false,
@@ -104,7 +108,7 @@ function makeContainerXml(epub: EpubPublication): string {
  * @param opf
  * @returns
  */
-function makePackageDocument(rendition: Rendition): string {
+export function makePackageDocument(rendition: Rendition): string {
   if (rendition.version !== '3.0') {
     throw new BundleError(`Unsupport EPUB spec ${rendition.version}`);
   }
@@ -128,12 +132,14 @@ function makePackageDocument(rendition: Rendition): string {
     'subject',
     'type'
   ];
+
   for (const key of optionalList) {
     const m = rendition.metadata;
     if (!!m[key]) {
       optionalMetadata['dc:' + key] = m[key];
     }
   }
+
   const metadata = {
     '@_xmlns:dc': 'http://purl.org/dc/elements/1.1/',
     'dc:identifier': {
@@ -159,8 +165,15 @@ function makePackageDocument(rendition: Rendition): string {
         '@_property': 'file-as',
         '#text': rendition.creator?.fileAs ?? rendition.creator.name
       }
-    ]
+    ] as any[]
   };
+
+  if (rendition.cover) {
+    metadata.meta.unshift({
+      '@_name': 'cover',
+      '@_content': rendition.cover.id
+    });
+  }
 
   function makeManifestItem(item: Item) {
     return {

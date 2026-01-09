@@ -98,3 +98,6 @@ Thumbs.db
 # Ignore built ts files
 __tests__/runner/*
 lib/**/*
+
+# Download
+scripts/epubcheck

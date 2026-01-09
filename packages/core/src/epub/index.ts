@@ -1,7 +1,5 @@
-export * from './rendition';
+export * from './rendition.js';
 
-export * from './navigation';
+export * from './publication.js';
 
-export * from './publication';
-
-export * from './manifest';
+export * from './manifest.js';

@@ -29,6 +29,8 @@ export interface BaseHtmlElementAttrs {
 
   id?: string;
 
+  style?: string;
+
   children?: XmlChildren;
 }
 
@@ -53,4 +55,6 @@ export interface HtmlIntrinsicElements {
   span: BaseHtmlElementAttrs & {};
   code: BaseHtmlElementAttrs & {};
   a: BaseHtmlElementAttrs & { href: string };
+
+  img: BaseHtmlElementAttrs & { src: string; alt?: string };
 }

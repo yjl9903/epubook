@@ -15,7 +15,7 @@ importers:
         specifier: latest
         version: 10.3.2
       tsdown:
-        specifier: 0.17.0-beta.1
+        specifier: ^0.17.0-beta.1
         version: 0.17.0-beta.1(typescript@5.9.3)
       turbo:
         specifier: ^2.6.1

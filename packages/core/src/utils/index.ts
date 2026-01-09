@@ -1,3 +1,3 @@
-export * from './defu';
+export * from './defu.js';
 
-export * from './types';
+export * from './types.js';

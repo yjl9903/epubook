@@ -1,4 +1,4 @@
-import { Rendition, PackageDocumentMeta } from './rendition';
+import { Rendition, PackageDocumentMeta } from './rendition.js';
 
 export class EpubPublication {
   /**
@@ -10,15 +10,19 @@ export class EpubPublication {
    */
   private _rootfiles: Rendition[] = [];
 
-  public constructor() {}
+  private constructor() {}
+
+  public static empty() {
+    return new EpubPublication();
+  }
 
   public static create(
     fullPath: string = 'OEBPS/content.opf',
-    meta: Partial<PackageDocumentMeta> = {}
+    rootMeta: Partial<PackageDocumentMeta> = {}
   ) {
     const container = new EpubPublication();
     const rendition = new Rendition(fullPath);
-    rendition.updateMetadata(meta);
+    rendition.updateMetadata(rootMeta);
     container._rootfiles.push(rendition);
     return container;
   }

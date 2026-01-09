@@ -9,7 +9,7 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder('a.xhtml');
     const xhtml = builder.build();
     expect(xhtml.content).toMatchInlineSnapshot(
-      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head /><body /></html>"`
+      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head><title>a.xhtml</title></head><body /></html>"`
     );
   });
 
@@ -19,7 +19,7 @@ describe('XHTML Builder', () => {
     const xhtml = builder.build();
 
     expect(xhtml.content).toMatchInlineSnapshot(
-      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head><link href="123" rel="stylesheet" type="text/css" /><link href="456" rel="stylesheet" type="text/css" /></head><body /></html>"`
+      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head><link href="123" rel="stylesheet" type="text/css" /><link href="456" rel="stylesheet" type="text/css" /><title>with style</title></head><body /></html>"`
     );
   });
 
@@ -68,15 +68,18 @@ describe('XHTML Builder', () => {
 
   it('should build fragment', () => {
     const builder = new XHTMLBuilder('a.xhtml');
-    builder.setTitle('framgent').appendBody(
-      <>
-        123 <span>456</span>
-      </>
-    );
+    builder
+      .setLanguage('zh-cn')
+      .setTitle('framgent')
+      .appendBody(
+        <>
+          123 <span>456</span>
+        </>
+      );
     const xhtml = builder.build();
 
     expect(xhtml.content).toMatchInlineSnapshot(
-      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head /><body>123 <span>456</span></body></html>"`
+      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="zh-cn" xml:lang="zh-cn"><head><title>framgent</title></head><body>123 <span>456</span></body></html>"`
     );
   });
 
@@ -84,7 +87,7 @@ describe('XHTML Builder', () => {
     const builder = new XHTMLBuilder('a.xhtml');
     const xhtml = builder.appendBody(<p>{'abc<br>def<br>ghi'}</p>).build();
     expect(xhtml.content).toMatchInlineSnapshot(
-      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head /><body><p>abc&#x3C;br>def&#x3C;br>ghi</p></body></html>"`
+      `"<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en"><head><title>a.xhtml</title></head><body><p>abc&#x3C;br>def&#x3C;br>ghi</p></body></html>"`
     );
   });
 });

@@ -1,0 +1,495 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Bundle Epub > generate opf 2`] = `
+Rendition {
+  "_cover": Cover {
+    "_data": undefined,
+    "_fullPath": "cover.png",
+    "_id": "cover",
+    "_mediaType": "image/png",
+    "_properties": "cover-image",
+  },
+  "_fullPath": "OEBPS/content.opf",
+  "_identifier": "test-book-id",
+  "_manifest": Manifest {
+    "_resources": [
+      Cover {
+        "_data": undefined,
+        "_fullPath": "cover.png",
+        "_id": "cover",
+        "_mediaType": "image/png",
+        "_properties": "cover-image",
+      },
+    ],
+    "rendition": [Circular],
+  },
+  "_metadata": {
+    "contributor": [],
+    "coverage": "",
+    "creator": {
+      "fileAs": "XLor",
+      "name": "XLor",
+      "uid": "creator",
+    },
+    "date": 2023-02-01T11:00:00.000Z,
+    "description": "for test usage",
+    "format": "",
+    "language": "zh-CN",
+    "lastModified": 2023-02-26T11:00:00.000Z,
+    "publisher": "",
+    "relation": "",
+    "rights": "",
+    "source": "imagine",
+    "subject": "",
+    "title": "Test Book",
+    "type": "",
+  },
+  "_navigation": undefined,
+  "_specVersion": "3.0",
+  "_spine": Spine {
+    "_itemrefs": [],
+    "rendition": [Circular],
+  },
+  "_uniqueIdentifier": "BookId",
+}
+`;
+
+exports[`Bundle Epub > generate toc 1`] = `
+Rendition {
+  "_cover": undefined,
+  "_fullPath": "OEBPS/content.opf",
+  "_identifier": "12345",
+  "_manifest": Manifest {
+    "_resources": [
+      XHTML {
+        "_content": "1",
+        "_fullPath": "page1.xhtml",
+        "_id": "page1",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      XHTML {
+        "_content": "2",
+        "_fullPath": "page2.xhtml",
+        "_id": "page2",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      XHTML {
+        "_content": "3",
+        "_fullPath": "page3.xhtml",
+        "_id": "page3",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      XHTML {
+        "_content": "4",
+        "_fullPath": "page4.xhtml",
+        "_id": "page4",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      XHTML {
+        "_content": "5",
+        "_fullPath": "page5.xhtml",
+        "_id": "page5",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      Navigation {
+        "_fullPath": "nav.xhtml",
+        "_id": "nav",
+        "_mediaType": "application/xhtml+xml",
+        "_nav": [
+          {
+            "resource": XHTML {
+              "_content": "1",
+              "_fullPath": "page1.xhtml",
+              "_id": "page1",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "1",
+          },
+          {
+            "resource": XHTML {
+              "_content": "2",
+              "_fullPath": "page2.xhtml",
+              "_id": "page2",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "2",
+          },
+          {
+            "children": [
+              {
+                "resource": XHTML {
+                  "_content": "3",
+                  "_fullPath": "page3.xhtml",
+                  "_id": "page3",
+                  "_mediaType": "application/xhtml+xml",
+                  "_meta": {
+                    "language": "",
+                    "title": "",
+                  },
+                  "_properties": undefined,
+                },
+                "title": "3",
+              },
+              {
+                "resource": XHTML {
+                  "_content": "4",
+                  "_fullPath": "page4.xhtml",
+                  "_id": "page4",
+                  "_mediaType": "application/xhtml+xml",
+                  "_meta": {
+                    "language": "",
+                    "title": "",
+                  },
+                  "_properties": undefined,
+                },
+                "title": "4",
+              },
+            ],
+            "title": "Sub",
+          },
+          {
+            "resource": XHTML {
+              "_content": "5",
+              "_fullPath": "page5.xhtml",
+              "_id": "page5",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "5",
+          },
+        ],
+        "_options": {
+          "heading": {
+            "level": 2,
+          },
+          "title": "Toc",
+        },
+        "_properties": "nav",
+      },
+    ],
+    "rendition": [Circular],
+  },
+  "_metadata": {
+    "contributor": [],
+    "coverage": "",
+    "creator": {
+      "fileAs": "XLor",
+      "name": "XLor",
+      "uid": "creator",
+    },
+    "date": 2023-02-01T11:00:00.000Z,
+    "description": "for test usage",
+    "format": "",
+    "language": "zh-CN",
+    "lastModified": 2023-02-26T11:00:00.000Z,
+    "publisher": "",
+    "relation": "",
+    "rights": "",
+    "source": "imagine",
+    "subject": "",
+    "title": "Test Book",
+    "type": "",
+  },
+  "_navigation": Navigation {
+    "_fullPath": "nav.xhtml",
+    "_id": "nav",
+    "_mediaType": "application/xhtml+xml",
+    "_nav": [
+      {
+        "resource": XHTML {
+          "_content": "1",
+          "_fullPath": "page1.xhtml",
+          "_id": "page1",
+          "_mediaType": "application/xhtml+xml",
+          "_meta": {
+            "language": "",
+            "title": "",
+          },
+          "_properties": undefined,
+        },
+        "title": "1",
+      },
+      {
+        "resource": XHTML {
+          "_content": "2",
+          "_fullPath": "page2.xhtml",
+          "_id": "page2",
+          "_mediaType": "application/xhtml+xml",
+          "_meta": {
+            "language": "",
+            "title": "",
+          },
+          "_properties": undefined,
+        },
+        "title": "2",
+      },
+      {
+        "children": [
+          {
+            "resource": XHTML {
+              "_content": "3",
+              "_fullPath": "page3.xhtml",
+              "_id": "page3",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "3",
+          },
+          {
+            "resource": XHTML {
+              "_content": "4",
+              "_fullPath": "page4.xhtml",
+              "_id": "page4",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "4",
+          },
+        ],
+        "title": "Sub",
+      },
+      {
+        "resource": XHTML {
+          "_content": "5",
+          "_fullPath": "page5.xhtml",
+          "_id": "page5",
+          "_mediaType": "application/xhtml+xml",
+          "_meta": {
+            "language": "",
+            "title": "",
+          },
+          "_properties": undefined,
+        },
+        "title": "5",
+      },
+    ],
+    "_options": {
+      "heading": {
+        "level": 2,
+      },
+      "title": "Toc",
+    },
+    "_properties": "nav",
+  },
+  "_specVersion": "3.0",
+  "_spine": Spine {
+    "_itemrefs": [
+      ItemRef {
+        "_idref": "page1",
+        "optional": {},
+      },
+      ItemRef {
+        "_idref": "page2",
+        "optional": {},
+      },
+      ItemRef {
+        "_idref": "page3",
+        "optional": {},
+      },
+      ItemRef {
+        "_idref": "page4",
+        "optional": {},
+      },
+      ItemRef {
+        "_idref": "page5",
+        "optional": {},
+      },
+    ],
+    "rendition": [Circular],
+  },
+  "_uniqueIdentifier": "book-id",
+}
+`;
+
+exports[`Bundle Epub > write epub 1`] = `
+Rendition {
+  "_cover": undefined,
+  "_fullPath": "OEBPS/content.opf",
+  "_identifier": "test-book-id",
+  "_manifest": Manifest {
+    "_resources": [
+      XHTML {
+        "_content": "<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+  <head>
+    <title>Data URL does not open in top-level context</title>
+    <style>
+      code {
+        color: #c63501;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data URL does not open in top-level context</h1>
+    <p>The following jpeg is contained within a <code>data:</code> URL, which is used as the <code>src</code> attribute for an <code>img</code> element.</p>
+    <p>The test passes if you are able to see the image below inside this ebook.</p>
+  </body>
+</html>",
+        "_fullPath": "cover.xhtml",
+        "_id": "cover",
+        "_mediaType": "application/xhtml+xml",
+        "_meta": {
+          "language": "en",
+          "title": "",
+        },
+        "_properties": undefined,
+      },
+      Navigation {
+        "_fullPath": "nav.xhtml",
+        "_id": "nav",
+        "_mediaType": "application/xhtml+xml",
+        "_nav": [
+          {
+            "resource": XHTML {
+              "_content": "<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+  <head>
+    <title>Data URL does not open in top-level context</title>
+    <style>
+      code {
+        color: #c63501;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data URL does not open in top-level context</h1>
+    <p>The following jpeg is contained within a <code>data:</code> URL, which is used as the <code>src</code> attribute for an <code>img</code> element.</p>
+    <p>The test passes if you are able to see the image below inside this ebook.</p>
+  </body>
+</html>",
+              "_fullPath": "cover.xhtml",
+              "_id": "cover",
+              "_mediaType": "application/xhtml+xml",
+              "_meta": {
+                "language": "en",
+                "title": "",
+              },
+              "_properties": undefined,
+            },
+            "title": "cover",
+          },
+        ],
+        "_options": {},
+        "_properties": "nav",
+      },
+    ],
+    "rendition": [Circular],
+  },
+  "_metadata": {
+    "contributor": [],
+    "coverage": "",
+    "creator": {
+      "fileAs": "XLor",
+      "name": "XLor",
+      "uid": "creator",
+    },
+    "date": 2023-02-01T11:00:00.000Z,
+    "description": "for test usage",
+    "format": "",
+    "language": "zh-CN",
+    "lastModified": 2023-02-26T11:00:00.000Z,
+    "publisher": "",
+    "relation": "",
+    "rights": "",
+    "source": "imagine",
+    "subject": "",
+    "title": "Test Book",
+    "type": "",
+  },
+  "_navigation": Navigation {
+    "_fullPath": "nav.xhtml",
+    "_id": "nav",
+    "_mediaType": "application/xhtml+xml",
+    "_nav": [
+      {
+        "resource": XHTML {
+          "_content": "<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en">
+  <head>
+    <title>Data URL does not open in top-level context</title>
+    <style>
+      code {
+        color: #c63501;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data URL does not open in top-level context</h1>
+    <p>The following jpeg is contained within a <code>data:</code> URL, which is used as the <code>src</code> attribute for an <code>img</code> element.</p>
+    <p>The test passes if you are able to see the image below inside this ebook.</p>
+  </body>
+</html>",
+          "_fullPath": "cover.xhtml",
+          "_id": "cover",
+          "_mediaType": "application/xhtml+xml",
+          "_meta": {
+            "language": "en",
+            "title": "",
+          },
+          "_properties": undefined,
+        },
+        "title": "cover",
+      },
+    ],
+    "_options": {},
+    "_properties": "nav",
+  },
+  "_specVersion": "3.0",
+  "_spine": Spine {
+    "_itemrefs": [
+      ItemRef {
+        "_idref": "cover",
+        "optional": {},
+      },
+    ],
+    "rendition": [Circular],
+  },
+  "_uniqueIdentifier": "BookId",
+}
+`;
+
+exports[`Bundle Epub > write epub 2`] = `"UEsDBBQAAAAAABW5KVxvYassFAAAABQAAAAIAAAAbWltZXR5cGVhcHBsaWNhdGlvbi9lcHViK3ppcFBLAwQUAAAAAAAVuSlcAAAAAAAAAAAAAAAACQAAAE1FVEEtSU5GL1BLAwQUAAAAAAAVuSlcFrWz3PwAAAD8AAAAFgAAAE1FVEEtSU5GL2NvbnRhaW5lci54bWw8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8Y29udGFpbmVyIHZlcnNpb249IjEuMCIgeG1sbnM9InVybjpvYXNpczpuYW1lczp0YzpvcGVuZG9jdW1lbnQ6eG1sbnM6Y29udGFpbmVyIj4KICA8cm9vdGZpbGVzPgogICAgPHJvb3RmaWxlIGZ1bGwtcGF0aD0iT0VCUFMvY29udGVudC5vcGYiIG1lZGlhLXR5cGU9ImFwcGxpY2F0aW9uL29lYnBzLXBhY2thZ2UreG1sIi8+CiAgPC9yb290ZmlsZXM+CjwvY29udGFpbmVyPgpQSwMEFAAAAAAAFbkpXIAmOqSjAwAAowMAABEAAABPRUJQUy9jb250ZW50Lm9wZjw/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjxwYWNrYWdlIHhtbG5zPSJodHRwOi8vd3d3LmlkcGYub3JnLzIwMDcvb3BmIiB4bWxuczplcHViPSJodHRwOi8vd3d3LmlkcGYub3JnLzIwMDcvb3BzIiB1bmlxdWUtaWRlbnRpZmllcj0iQm9va0lkIiB2ZXJzaW9uPSIzLjAiPgogIDxtZXRhZGF0YSB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iPgogICAgPGRjOmlkZW50aWZpZXIgaWQ9IkJvb2tJZCI+dGVzdC1ib29rLWlkPC9kYzppZGVudGlmaWVyPgogICAgPGRjOnRpdGxlPlRlc3QgQm9vazwvZGM6dGl0bGU+CiAgICA8ZGM6bGFuZ3VhZ2U+emgtQ048L2RjOmxhbmd1YWdlPgogICAgPGRjOmNyZWF0b3IgaWQ9ImNyZWF0b3IiPlhMb3I8L2RjOmNyZWF0b3I+CiAgICA8ZGM6ZGF0ZT4yMDIzLTAyLTAxVDExOjAwOjAwWjwvZGM6ZGF0ZT4KICAgIDxkYzpkZXNjcmlwdGlvbj5mb3IgdGVzdCB1c2FnZTwvZGM6ZGVzY3JpcHRpb24+CiAgICA8ZGM6c291cmNlPmltYWdpbmU8L2RjOnNvdXJjZT4KICAgIDxtZXRhIHByb3BlcnR5PSJkY3Rlcm1zOm1vZGlmaWVkIj4yMDIzLTAyLTI2VDExOjAwOjAwWjwvbWV0YT4KICAgIDxtZXRhIHJlZmluZXM9IiNjcmVhdG9yIiBwcm9wZXJ0eT0iZmlsZS1hcyI+WExvcjwvbWV0YT4KICA8L21ldGFkYXRhPgogIDxtYW5pZmVzdD4KICAgIDxpdGVtIGhyZWY9ImNvdmVyLnhodG1sIiBpZD0iY292ZXIiIG1lZGlhLXR5cGU9ImFwcGxpY2F0aW9uL3hodG1sK3htbCIvPgogICAgPGl0ZW0gaHJlZj0ibmF2LnhodG1sIiBpZD0ibmF2IiBtZWRpYS10eXBlPSJhcHBsaWNhdGlvbi94aHRtbCt4bWwiIHByb3BlcnRpZXM9Im5hdiIvPgogIDwvbWFuaWZlc3Q+CiAgPHNwaW5lPgogICAgPGl0ZW1yZWYgaWRyZWY9ImNvdmVyIi8+CiAgPC9zcGluZT4KPC9wYWNrYWdlPgpQSwMEFAAAAAAAFbkpXAaejRJBAgAAQQIAABEAAABPRUJQUy9jb3Zlci54aHRtbDxodG1sIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiB4bWxuczplcHViPSJodHRwOi8vd3d3LmlkcGYub3JnLzIwMDcvb3BzIiB4bWw6bGFuZz0iZW4iPgogIDxoZWFkPgogICAgPHRpdGxlPkRhdGEgVVJMIGRvZXMgbm90IG9wZW4gaW4gdG9wLWxldmVsIGNvbnRleHQ8L3RpdGxlPgogICAgPHN0eWxlPgogICAgICBjb2RlIHsKICAgICAgICBjb2xvcjogI2M2MzUwMTsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2hlYWQ+CiAgPGJvZHk+CiAgICA8aDE+RGF0YSBVUkwgZG9lcyBub3Qgb3BlbiBpbiB0b3AtbGV2ZWwgY29udGV4dDwvaDE+CiAgICA8cD5UaGUgZm9sbG93aW5nIGpwZWcgaXMgY29udGFpbmVkIHdpdGhpbiBhIDxjb2RlPmRhdGE6PC9jb2RlPiBVUkwsIHdoaWNoIGlzIHVzZWQgYXMgdGhlIDxjb2RlPnNyYzwvY29kZT4gYXR0cmlidXRlIGZvciBhbiA8Y29kZT5pbWc8L2NvZGU+IGVsZW1lbnQuPC9wPgogICAgPHA+VGhlIHRlc3QgcGFzc2VzIGlmIHlvdSBhcmUgYWJsZSB0byBzZWUgdGhlIGltYWdlIGJlbG93IGluc2lkZSB0aGlzIGVib29rLjwvcD4KICA8L2JvZHk+CjwvaHRtbD5QSwMEFAAAAAAAFbkpXFgRSpb0AAAA9AAAAA8AAABPRUJQUy9uYXYueGh0bWw8aHRtbCB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgeG1sbnM6ZXB1Yj0iaHR0cDovL3d3dy5pZHBmLm9yZy8yMDA3L29wcyIgbGFuZz0iZW4iIHhtbDpsYW5nPSJlbiI+PGhlYWQ+PHRpdGxlPm5hdi54aHRtbDwvdGl0bGU+PC9oZWFkPjxib2R5PjxuYXYgZXB1Yjp0eXBlPSJ0b2MiPjxuYXY+PGxpPjxhIGhyZWY9ImNvdmVyLnhodG1sIj5jb3ZlcjwvYT48L2xpPjwvbmF2PjwvbmF2PjwvYm9keT48L2h0bWw+UEsBAhQAFAAAAAAAFbkpXG9hqywUAAAAFAAAAAgAAAAAAAAAAAAAAAAAAAAAAG1pbWV0eXBlUEsBAhQAFAAAAAAAFbkpXAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAOgAAAE1FVEEtSU5GL1BLAQIUABQAAAAAABW5KVwWtbPc/AAAAPwAAAAWAAAAAAAAAAAAAAAAAGEAAABNRVRBLUlORi9jb250YWluZXIueG1sUEsBAhQAFAAAAAAAFbkpXIAmOqSjAwAAowMAABEAAAAAAAAAAAAAAAAAkQEAAE9FQlBTL2NvbnRlbnQub3BmUEsBAhQAFAAAAAAAFbkpXAaejRJBAgAAQQIAABEAAAAAAAAAAAAAAAAAYwUAAE9FQlBTL2NvdmVyLnhodG1sUEsBAhQAFAAAAAAAFbkpXFgRSpb0AAAA9AAAAA8AAAAAAAAAAAAAAAAA0wcAAE9FQlBTL25hdi54aHRtbFBLBQYAAAAABgAGAGwBAAD0CAAAAAA="`;

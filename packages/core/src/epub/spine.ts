@@ -1,5 +1,5 @@
-import type { ItemRef } from './manifest';
-import type { Rendition } from './rendition';
+import type { ItemRef } from './manifest.js';
+import type { Rendition } from './rendition.js';
 
 export class Spine {
   private _itemrefs: ItemRef[] = [];
@@ -10,18 +10,30 @@ export class Spine {
     return this._itemrefs;
   }
 
-  public set() {
-    // TODO
+  public shift() {
+    return this._itemrefs.shift();
+  }
+
+  public unshift(ref: ItemRef) {
+    this._itemrefs.unshift(ref);
     return this;
   }
 
-  public push() {
-    // TODO
+  public pop() {
+    return this._itemrefs.pop();
+  }
+
+  public push(...itemrefs: ItemRef[]) {
+    this._itemrefs.push(...itemrefs);
     return this;
   }
 
   public clear() {
-    // TODO
+    this._itemrefs.splice(0, this._itemrefs.length);
     return this;
+  }
+
+  public [Symbol.iterator]() {
+    return this._itemrefs[Symbol.iterator]();
   }
 }

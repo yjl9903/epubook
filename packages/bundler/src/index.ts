@@ -1,3 +1,3 @@
-export * from './bundler';
+export * from './error.js';
 
-export * from './error';
+export * from './bundler/index.js';

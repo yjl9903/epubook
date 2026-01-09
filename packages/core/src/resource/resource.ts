@@ -2,25 +2,34 @@ import * as path from 'pathe';
 
 import { strToU8 } from 'fflate';
 
-import { HTMLMeta } from '@epubook/xml';
+import { XHTMLMeta } from '@epubook/xml';
 
-import { type MediaType, type ImageMediaType, TextXHTML, TextCSS } from '../constant';
-
-import { Item, ItemRef } from '../epub/manifest';
+import { Item, ItemRef } from '../epub/manifest.js';
+import {
+  type MediaType,
+  type ImageMediaType,
+  TextXHTML,
+  TextCSS,
+  Properties
+} from '../constant.js';
 
 export abstract class Resource {
-  private readonly _fullPath: string;
+  protected readonly _id: string;
 
-  private readonly _mediaType: MediaType;
+  protected readonly _fullPath: string;
 
-  private _id: string;
+  protected _mediaType: MediaType;
 
-  private _properties?: string;
+  protected _properties?: Properties;
 
-  public constructor(fullPath: string, mediaType: MediaType) {
+  public constructor(id: string | undefined, fullPath: string, mediaType: MediaType) {
+    this._id = id || fullPath.replace(/\/|\\/g, '_').replace(/\.[\w]+$/, '');
     this._fullPath = fullPath;
-    this._id = fullPath.replace(/\/|\\/g, '_').replace(/\.[\w]+$/, '');
     this._mediaType = mediaType;
+  }
+
+  public get id() {
+    return this._id;
   }
 
   public get path() {
@@ -31,15 +40,14 @@ export abstract class Resource {
     return path.relative(path.dirname(from), this._fullPath);
   }
 
-  public update(info: Partial<{ properties: string }>) {
+  public updateAttrs(info: Partial<{ mediaType: MediaType; properties: Properties }>) {
+    if (info.mediaType) {
+      this._mediaType = info.mediaType;
+    }
     if (info.properties) {
       this._properties = info.properties;
     }
     return this;
-  }
-
-  public get id() {
-    return this._id;
   }
 
   public item() {
@@ -57,40 +65,75 @@ export abstract class Resource {
 }
 
 export class StyleSheet extends Resource {
-  private content: string;
+  private _content: string;
 
-  public constructor(file: string, content: string) {
-    super(file, TextCSS);
-    this.content = content;
+  public constructor(fullPath: string, content: string = '', options: { id?: string } = {}) {
+    super(options.id, fullPath, TextCSS);
+    this._content = content;
+  }
+
+  public update(content: string) {
+    this._content = content;
+    return this;
   }
 
   public async bundle(): Promise<Uint8Array> {
     // TODO: check encode format
-    return strToU8(this.content);
+    return strToU8(this._content);
   }
 }
 
 export class Image extends Resource {
-  private data: Uint8Array;
+  private _data: Uint8Array | undefined;
 
-  public constructor(file: string, type: ImageMediaType, data: Uint8Array) {
-    super(file, type);
-    this.data = data;
+  public constructor(
+    fullPath: string,
+    type: ImageMediaType,
+    data: Uint8Array | undefined = undefined,
+    options: { id?: string } = {}
+  ) {
+    super(options.id, fullPath, type);
+    this._mediaType = type;
+    this._data = data;
+  }
+
+  public update(type: ImageMediaType, data: Uint8Array) {
+    this._mediaType = type;
+    this._data = data;
+    return this;
   }
 
   public async bundle(): Promise<Uint8Array> {
-    return this.data;
+    if (!this._data) return new Uint8Array(0);
+    return this._data;
   }
 }
 
-export class Xhtml extends Resource {
-  private _meta: HTMLMeta;
+export class Cover extends Image {
+  public constructor(
+    fullPath: string,
+    type: ImageMediaType,
+    data: Uint8Array | undefined = undefined,
+    options: { id?: string } = {}
+  ) {
+    super(fullPath, type, data, options);
+    this._properties = 'cover-image';
+  }
+}
 
-  private _content: string;
+export class XHTML extends Resource {
+  private _meta: XHTMLMeta;
 
-  public constructor(file: string, meta: HTMLMeta, content: string) {
-    super(file, TextXHTML);
-    this._meta = meta;
+  private _content: string | undefined;
+
+  public constructor(
+    fullPath: string,
+    meta: Partial<XHTMLMeta> = { title: '', language: 'en' },
+    content: string | undefined = undefined,
+    options: { id?: string } = {}
+  ) {
+    super(options.id, fullPath, TextXHTML);
+    this._meta = { title: '', language: 'en', ...meta };
     this._content = content;
   }
 
@@ -106,12 +149,17 @@ export class Xhtml extends Resource {
     return this._meta.language;
   }
 
-  public content() {
+  public get content() {
     return this._content;
+  }
+
+  public update(text: string) {
+    this._content = text;
+    return this;
   }
 
   public async bundle(): Promise<Uint8Array> {
     // TODO: check encode format
-    return strToU8(this._content);
+    return strToU8(this._content || '');
   }
 }

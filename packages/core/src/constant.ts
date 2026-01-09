@@ -23,6 +23,8 @@ export const TextXHTML = 'application/xhtml+xml';
 
 export type MediaType = ImageMediaType | typeof TextCSS | typeof TextXHTML;
 
+export type Properties = 'nav' | 'cover-image' | string;
+
 export function getImageMediaType(file: string): ImageMediaType | undefined {
   const ext = extname(file);
   switch (ext) {

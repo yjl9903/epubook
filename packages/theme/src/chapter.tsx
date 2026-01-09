@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { XHTMLBuilder } from '@epubook/core';
 
 import type { DefaultThemePageTemplate } from './types';

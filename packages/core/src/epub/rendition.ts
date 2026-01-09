@@ -1,8 +1,10 @@
-import { defu } from '../utils';
+import { defu } from '../utils/defu.js';
 
-import { Spine } from './spine';
-import { Manifest } from './manifest';
-import { Navigation } from './navigation';
+import type { Navigation } from '../resource/navigation.js';
+import type { Cover, Resource } from '../resource/resource.js';
+
+import { Spine } from './spine.js';
+import { Manifest } from './manifest.js';
 
 export interface Author {
   name: string;
@@ -62,17 +64,18 @@ export class Rendition {
     lastModified: new Date()
   };
 
+  private _cover: Cover | undefined;
+
   private _manifest: Manifest;
 
   private _spine: Spine;
 
-  private _navigation: Navigation;
+  private _navigation: Navigation | undefined;
 
-  constructor(fullPath: string) {
+  public constructor(fullPath: string) {
     this._fullPath = fullPath;
     this._manifest = new Manifest(this);
     this._spine = new Spine(this);
-    this._navigation = new Navigation(this);
   }
 
   public get path() {
@@ -100,6 +103,10 @@ export class Rendition {
     return this._metadata;
   }
 
+  public get cover() {
+    return this._cover;
+  }
+
   public updateMetadata(newMetadata: Partial<PackageDocumentMeta>) {
     // TODO: valiate input data
     this._metadata = defu(newMetadata, this._metadata);
@@ -118,6 +125,7 @@ export class Rendition {
   public setIdentifier(identifier: string, uniqueIdentifier: string = 'uuid') {
     this._identifier = identifier;
     this._uniqueIdentifier = uniqueIdentifier;
+    return this;
   }
 
   // --- manifest ---
@@ -132,5 +140,23 @@ export class Rendition {
 
   public get navigation() {
     return this._navigation;
+  }
+
+  // --- resources ---
+  public setNavigation(navigation: Navigation) {
+    this._navigation = navigation;
+    this._manifest.add(navigation);
+    return this;
+  }
+
+  public setCover(cover: Cover) {
+    this._cover = cover;
+    this._manifest.add(cover);
+    return this;
+  }
+
+  public addResource(resource: Resource) {
+    this._manifest.add(resource);
+    return this;
   }
 }

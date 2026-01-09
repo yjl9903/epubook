@@ -1,6 +1,5 @@
-import * as path from 'pathe';
 import { toXml } from 'xast-util-to-xml';
-import { ElementContent } from 'xast';
+import { ElementContent, Root } from 'xast';
 
 import { normalizeChildren } from '../jsx/runtime.js';
 
@@ -9,11 +8,14 @@ export interface XHTMLMeta {
   language: string;
 }
 
+export interface XHTMLBuilderHooks {
+  'build:before': (builder: XHTMLBuilder) => void;
+
+  'build:done': (builder: XHTMLBuilder, result: ReturnType<XHTMLBuilder['build']>) => void;
+}
+
 export class XHTMLBuilder {
-  private _meta: XHTMLMeta = {
-    language: 'en',
-    title: ''
-  };
+  private _meta: XHTMLMeta;
 
   private _filename: string;
 
@@ -21,11 +23,15 @@ export class XHTMLBuilder {
 
   private _body: ElementContent[] = [];
 
+  private _htmlAttrs: Record<string, string> = {};
+
   private _bodyAttrs: Record<string, string> = {};
 
-  public constructor(filename: string) {
+  private _ast: Root | undefined;
+
+  public constructor(filename: string, meta: XHTMLMeta = { title: '', language: 'en' }) {
     this._filename = filename;
-    this._meta.title = path.basename(filename);
+    this._meta = meta;
   }
 
   public get language() {
@@ -72,7 +78,7 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public updateBodyAttrs(attrs: Record<string, string> = {}) {
+  public updateBodyAttrs(attrs: Record<string, string>) {
     this._bodyAttrs = {
       ...this._bodyAttrs,
       ...attrs
@@ -80,47 +86,69 @@ export class XHTMLBuilder {
     return this;
   }
 
-  public build() {
-    const content = toXml(
-      {
-        type: 'root',
-        data: {},
-        children: [
-          {
-            type: 'element',
-            name: 'html',
-            attributes: {
-              xmlns: 'http://www.w3.org/1999/xhtml',
-              'xmlns:epub': 'http://www.idpf.org/2007/ops',
-              lang: this._meta.language,
-              'xml:lang': this._meta.language
-            },
-            children: [
-              {
-                type: 'element',
-                name: 'head',
-                attributes: {},
-                children: normalizeChildren([...this._head])
-              },
-              {
-                type: 'element',
-                name: 'body',
-                attributes: {},
-                children: normalizeChildren([...this._body])
-              }
-            ]
-          }
-        ]
-      },
-      {
-        closeEmptyElements: true
-      }
-    );
+  public updateXHTMLAttrs(attrs: Record<string, string>) {
+    this._htmlAttrs = {
+      ...this._htmlAttrs,
+      ...attrs
+    };
+    return this;
+  }
 
-    return {
+  public get ast() {
+    if (this._ast) return this._ast;
+    this._ast = {
+      type: 'root',
+      data: {},
+      children: [
+        {
+          type: 'element',
+          name: 'html',
+          attributes: {
+            xmlns: 'http://www.w3.org/1999/xhtml',
+            'xmlns:epub': 'http://www.idpf.org/2007/ops',
+            lang: this._meta.language,
+            'xml:lang': this._meta.language,
+            ...this._htmlAttrs
+          },
+          children: [
+            {
+              type: 'element',
+              name: 'head',
+              attributes: {},
+              children: normalizeChildren([
+                ...this._head,
+                {
+                  type: 'element',
+                  name: 'title',
+                  attributes: {},
+                  children: [{ type: 'text', value: this._meta.title || this._filename }]
+                }
+              ])
+            },
+            {
+              type: 'element',
+              name: 'body',
+              attributes: {},
+              children: normalizeChildren([...this._body])
+            }
+          ]
+        }
+      ]
+    };
+    return this._ast;
+  }
+
+  public build() {
+    const content = toXml(this.ast, {
+      closeEmptyElements: true
+    });
+
+    const result = {
       filename: this._filename,
       meta: this._meta,
       content
     };
+
+    return result;
   }
 }
