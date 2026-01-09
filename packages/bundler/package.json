@@ -45,7 +45,7 @@
     "pathe": "^1.1.1"
   },
   "devDependencies": {
-    "rollup": "^4.5.2"
+    "rollup": "^4.55.1"
   },
   "engines": {
     "node": ">=v20.10.0"
