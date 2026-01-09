@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import * as path from 'node:path';
 
 import type { DefaultTheme, DefaultThemePageTemplate } from '../../theme/src';

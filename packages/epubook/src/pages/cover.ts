@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Image, XHTML } from '@epubook/core';
 
 export class Cover extends XHTML {

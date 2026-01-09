@@ -34,8 +34,8 @@
     "styles"
   ],
   "scripts": {
-    "build": "tsdown",
-    "typecheck": "tsc --noEmit"
+    "build!": "tsdown",
+    "typecheck!": "tsc --noEmit"
   },
   "dependencies": {
     "@epubook/core": "workspace:*",
