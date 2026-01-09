@@ -16,13 +16,13 @@
     "epubook": "tsx packages/cli/src/cli.ts"
   },
   "devDependencies": {
-    "@types/node": "^20.19.25",
+    "@types/node": "^24.6.0",
     "bumpp": "latest",
-    "tsdown": "^0.17.0-beta.1",
-    "turbo": "^2.6.1",
+    "tsdown": "^0.19.0-beta.5",
+    "turbo": "^2.7.3",
     "typescript": "^5.9.3",
-    "vite": "^7.2.4",
-    "vitest": "^4.0.14"
+    "vite": "^7.3.1",
+    "vitest": "^4.0.16"
   },
   "packageManager": "pnpm@10.24.0",
   "engines": {
