@@ -15,8 +15,8 @@ importers:
         specifier: latest
         version: 10.3.2
       tsdown:
-        specifier: ^0.19.0-beta.5
-        version: 0.19.0-beta.5(typescript@5.9.3)
+        specifier: ^0.19.0
+        version: 0.19.0(typescript@5.9.3)
       turbo:
         specifier: ^2.7.3
         version: 2.7.3
@@ -919,8 +919,8 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
 
-  tsdown@0.19.0-beta.5:
-    resolution: {integrity: sha512-2/Mn1jqkJS65tD1oXqld7cShhx/Gg8etv4Oy1eEm0Cl+hEbYmXVQtsV9OL75X4ObbYu42U0vO7g6KyuAaEwklg==}
+  tsdown@0.19.0:
+    resolution: {integrity: sha512-uqg8yzlS7GemFWcM6aCp/sptF4bJiJbWUibuHTRLLCBEsGCgJxuqxPhuVTqyHXqoEkh9ohwAdlyDKli5MEWCyQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
@@ -1796,7 +1796,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  tsdown@0.19.0-beta.5(typescript@5.9.3):
+  tsdown@0.19.0(typescript@5.9.3):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
