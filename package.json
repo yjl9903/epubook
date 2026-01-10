@@ -16,7 +16,7 @@
     "epubook": "tsx packages/cli/src/cli.ts"
   },
   "devDependencies": {
-    "@types/node": "^24.10.4",
+    "@types/node": "^24.10.6",
     "bumpp": "latest",
     "tsdown": "^0.19.0-beta.5",
     "turbo": "^2.7.3",
