@@ -43,6 +43,38 @@ function stripHtml(html) {
     .trim();
 }
 
+function normalizeAuthors(input) {
+  if (!input) return { creator: null, contributors: [] };
+  const list = Array.isArray(input) ? input : [input];
+  const normalized = list
+    .map((entry) => {
+      if (typeof entry === 'string') {
+        const name = entry.trim();
+        return name ? { name, position: 'author' } : null;
+      }
+      if (typeof entry === 'object') {
+        const name =
+          typeof entry.name === 'string'
+            ? entry.name.trim()
+            : typeof entry.author === 'string'
+              ? entry.author.trim()
+              : '';
+        if (!name) return null;
+        return { name, position: entry.position || entry.role || '' };
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+  const creator =
+    normalized.find((item) => item.position === 'author') ||
+    normalized.find((item) => item.position === 'writer') ||
+    normalized[0] ||
+    null;
+  const contributors = normalized.filter((item) => item !== creator);
+  return { creator, contributors };
+}
+
 function escapeXml(text) {
   return String(text)
     .replace(/&/g, '&amp;')
@@ -124,6 +156,7 @@ async function main(novelId, volumeId, options) {
     throw new Error('Volume request failed');
   }
   const volumeData = volume.data;
+  const { creator, contributors } = normalizeAuthors(volumeData.authors ?? volumeData.author);
 
   const updatedAt = volumeData.updatedAt ? new Date(volumeData.updatedAt) : new Date();
   const epub = EpubPublication.create('OEBPS/content.opf', {
@@ -133,7 +166,8 @@ async function main(novelId, volumeId, options) {
     source: volumeUrl,
     date: updatedAt,
     lastModified: updatedAt,
-    creator: { name: 'BiliNovel', uid: 'creator' }
+    creator: { name: creator?.name || 'BiliNovel', uid: 'creator' },
+    contributor: contributors.map((item) => ({ name: item.name }))
   });
   const rendition = epub.rootfile;
   rendition.setIdentifier(volumeUrl, 'url');
