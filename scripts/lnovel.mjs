@@ -14,6 +14,7 @@ import {
 import { bundle } from '@epubook/bundler';
 
 const language = 'zh-CN';
+const baseUrl = 'https://lnovel.animes.garden';
 
 const imgSrcRe = /<img[^>]+src=(["'])([^"']+)\1[^>]*>/gi;
 
@@ -148,8 +149,8 @@ async function localizeImages(html, rendition, imageCache) {
 }
 
 async function main(novelId, volumeId, options) {
-  const volumeUrl = `https://lnovel.animes.garden/bili/novel/${novelId}/vol/${volumeId}`;
-  const chapterBaseUrl = `https://lnovel.animes.garden/bili/novel/${novelId}/chapter/`;
+  const volumeUrl = `${baseUrl}/bili/novel/${novelId}/vol/${volumeId}`;
+  const chapterBaseUrl = `${baseUrl}/bili/novel/${novelId}/chapter/`;
 
   const volume = await fetchJson(volumeUrl);
   if (!volume.ok) {
