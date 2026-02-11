@@ -19,7 +19,7 @@
     "@types/node": "^24.10.13",
     "bumpp": "latest",
     "tsdown": "^0.20.3",
-    "turbo": "^2.8.3",
+    "turbo": "^2.8.5",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
