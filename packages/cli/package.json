@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@epubook/core": "workspace:*",
-    "breadc": "^0.9.7"
+    "breadc": "^1.0.0-beta.12"
   },
   "engines": {
     "node": ">=v20.10.0"
