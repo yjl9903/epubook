@@ -39,8 +39,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       fast-xml-parser:
-        specifier: ^5.3.3
-        version: 5.3.7
+        specifier: ^5.4.1
+        version: 5.4.1
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -66,8 +66,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       fast-xml-parser:
-        specifier: ^5.3.3
-        version: 5.3.7
+        specifier: ^5.4.1
+        version: 5.4.1
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -757,8 +757,11 @@ packages:
   exsolve@1.0.8:
     resolution: {integrity: sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA==}
 
-  fast-xml-parser@5.3.7:
-    resolution: {integrity: sha512-JzVLro9NQv92pOM/jTCR6mHlJh2FGwtomH8ZQjhFj/R29P2Fnj38OgPJVtcvYw6SuKClhgYuwUZf5b3rd8u2mA==}
+  fast-xml-builder@1.0.0:
+    resolution: {integrity: sha512-fpZuDogrAgnyt9oDDz+5DBz0zgPdPZz6D4IR7iESxRXElrlGTRkHJ9eEt+SACRJwT0FNFrt71DFQIUFBJfX/uQ==}
+
+  fast-xml-parser@5.4.1:
+    resolution: {integrity: sha512-BQ30U1mKkvXQXXkAGcuyUA/GA26oEB7NzOtsxCDtyu62sjGw5QraKFhx2Em3WQNjPw9PG6MQ9yuIIgkSDfGu5A==}
     hasBin: true
 
   fdir@6.5.0:
@@ -1642,8 +1645,11 @@ snapshots:
 
   exsolve@1.0.8: {}
 
-  fast-xml-parser@5.3.7:
+  fast-xml-builder@1.0.0: {}
+
+  fast-xml-parser@5.4.1:
     dependencies:
+      fast-xml-builder: 1.0.0
       strnum: 2.1.2
 
   fdir@6.5.0(picomatch@4.0.3):
