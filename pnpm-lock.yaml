@@ -40,7 +40,7 @@ importers:
         version: 6.1.4
       fast-xml-parser:
         specifier: ^5.3.3
-        version: 5.3.7
+        version: 5.3.8
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -67,7 +67,7 @@ importers:
         version: 6.1.4
       fast-xml-parser:
         specifier: ^5.3.3
-        version: 5.3.7
+        version: 5.3.8
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -757,8 +757,8 @@ packages:
   exsolve@1.0.8:
     resolution: {integrity: sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA==}
 
-  fast-xml-parser@5.3.7:
-    resolution: {integrity: sha512-JzVLro9NQv92pOM/jTCR6mHlJh2FGwtomH8ZQjhFj/R29P2Fnj38OgPJVtcvYw6SuKClhgYuwUZf5b3rd8u2mA==}
+  fast-xml-parser@5.3.8:
+    resolution: {integrity: sha512-53jIF4N6u/pxvaL1eb/hEZts/cFLWZ92eCfLrNyCI0k38lettCG/Bs40W9pPwoPXyHQlKu2OUbQtiEIZK/J6Vw==}
     hasBin: true
 
   fdir@6.5.0:
@@ -1642,7 +1642,7 @@ snapshots:
 
   exsolve@1.0.8: {}
 
-  fast-xml-parser@5.3.7:
+  fast-xml-parser@5.3.8:
     dependencies:
       strnum: 2.1.2
 
