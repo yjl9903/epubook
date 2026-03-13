@@ -54,7 +54,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       breadc:
-        specifier: ^1.0.0-beta.12
+        specifier: ^1.0.0-beta.13
         version: 1.0.0-beta.13
 
   packages/core:
