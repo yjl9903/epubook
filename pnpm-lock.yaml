@@ -13,10 +13,10 @@ importers:
         version: 24.12.0
       bumpp:
         specifier: latest
-        version: 11.0.0
+        version: 11.0.1
       tsdown:
-        specifier: ^0.21.3
-        version: 0.21.3(typescript@5.9.3)
+        specifier: ^0.21.4
+        version: 0.21.4(typescript@5.9.3)
       turbo:
         specifier: ^2.8.17
         version: 2.8.17
@@ -375,8 +375,8 @@ packages:
   breadc@1.0.0-beta.13:
     resolution: {integrity: sha512-CWuTWTbAUKHatG9e9ZttrTBHqWuY0kPYtp+6caRCrS0h9Wf9091dk2vGSJLCZDsGc2KTJzHQCgg88vJpSz4EGQ==}
 
-  bumpp@11.0.0:
-    resolution: {integrity: sha512-rxW8H4VIB+KvnNDZ87y4tyktHydN4wzmXHYJ8CfzhWl8yKd6yuQMPcV78Hrz47udmBssjrN5wQo+JLmyU94gaA==}
+  bumpp@11.0.1:
+    resolution: {integrity: sha512-X0ti27I/ewsx/u0EJSyl0IZWWOE95q+wIpAG/60kc5gqMNR4a23YJdd3lL7JsBN11TgLbCM4KpfGMuFfdigb4g==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -701,14 +701,14 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
 
-  tsdown@0.21.3:
-    resolution: {integrity: sha512-oKKeMC8+IgNsB+81hvF5VBsqhqL/nr0g9vse+ujbK40vv0i3ReFI6gUts7hQH7J53ylQNjMgf2Vu6n0+P/uddA==}
+  tsdown@0.21.4:
+    resolution: {integrity: sha512-Q/kBi8SXkr4X6JI/NAZKZY1UuiEcbuXtIskL4tZCsgpDiEPM/2W6lC+OonNA31S+V3KsWedFvbFDBs23hvt+Aw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
     peerDependencies:
       '@arethetypeswrong/core': ^0.18.1
-      '@tsdown/css': 0.21.3
-      '@tsdown/exe': 0.21.3
+      '@tsdown/css': 0.21.4
+      '@tsdown/exe': 0.21.4
       '@vitejs/devtools': '*'
       publint: ^0.3.0
       typescript: ^5.0.0
@@ -1128,7 +1128,7 @@ snapshots:
       '@breadc/death': 1.0.0-beta.13
       '@breadc/tui': 1.0.0-beta.13
 
-  bumpp@11.0.0:
+  bumpp@11.0.1:
     dependencies:
       args-tokenizer: 0.3.0
       cac: 7.0.0
@@ -1404,7 +1404,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  tsdown@0.21.3(typescript@5.9.3):
+  tsdown@0.21.4(typescript@5.9.3):
     dependencies:
       ansis: 4.2.0
       cac: 7.0.0
