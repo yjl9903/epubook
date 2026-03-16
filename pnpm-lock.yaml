@@ -13,7 +13,7 @@ importers:
         version: 24.12.0
       bumpp:
         specifier: latest
-        version: 11.0.0
+        version: 11.0.1
       tsdown:
         specifier: ^0.21.3
         version: 0.21.3(typescript@5.9.3)
@@ -39,8 +39,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       fast-xml-parser:
-        specifier: ^5.3.3
-        version: 5.5.5
+        specifier: ^5.5.6
+        version: 5.5.6
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -66,8 +66,8 @@ importers:
         specifier: ^6.1.4
         version: 6.1.4
       fast-xml-parser:
-        specifier: ^5.3.3
-        version: 5.5.5
+        specifier: ^5.5.6
+        version: 5.5.6
       fflate:
         specifier: ^0.8.2
         version: 0.8.2
@@ -375,8 +375,8 @@ packages:
   breadc@1.0.0-beta.13:
     resolution: {integrity: sha512-CWuTWTbAUKHatG9e9ZttrTBHqWuY0kPYtp+6caRCrS0h9Wf9091dk2vGSJLCZDsGc2KTJzHQCgg88vJpSz4EGQ==}
 
-  bumpp@11.0.0:
-    resolution: {integrity: sha512-rxW8H4VIB+KvnNDZ87y4tyktHydN4wzmXHYJ8CfzhWl8yKd6yuQMPcV78Hrz47udmBssjrN5wQo+JLmyU94gaA==}
+  bumpp@11.0.1:
+    resolution: {integrity: sha512-X0ti27I/ewsx/u0EJSyl0IZWWOE95q+wIpAG/60kc5gqMNR4a23YJdd3lL7JsBN11TgLbCM4KpfGMuFfdigb4g==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -444,11 +444,11 @@ packages:
     resolution: {integrity: sha512-knvyeauYhqjOYvQ66MznSMs83wmHrCycNEN6Ao+2AeYEfxUIkuiVxdEa1qlGEPK+We3n0THiDciYSsCcgW/DoA==}
     engines: {node: '>=12.0.0'}
 
-  fast-xml-builder@1.1.3:
-    resolution: {integrity: sha512-1o60KoFw2+LWKQu3IdcfcFlGTW4dpqEWmjhYec6H82AYZU2TVBXep6tMl8Z1Y+wM+ZrzCwe3BZ9Vyd9N2rIvmg==}
+  fast-xml-builder@1.1.4:
+    resolution: {integrity: sha512-f2jhpN4Eccy0/Uz9csxh3Nu6q4ErKxf0XIsasomfOihuSUa3/xw6w8dnOtCDgEItQFJG8KyXPzQXzcODDrrbOg==}
 
-  fast-xml-parser@5.5.5:
-    resolution: {integrity: sha512-NLY+V5NNbdmiEszx9n14mZBseJTC50bRq1VHsaxOmR72JDuZt+5J1Co+dC/4JPnyq+WrIHNM69r0sqf7BMb3Mg==}
+  fast-xml-parser@5.5.6:
+    resolution: {integrity: sha512-3+fdZyBRVg29n4rXP0joHthhcHdPUHaIC16cuyyd1iLsuaO6Vea36MPrxgAzbZna8lhvZeRL8Bc9GP56/J9xEw==}
     hasBin: true
 
   fdir@6.5.0:
@@ -1128,7 +1128,7 @@ snapshots:
       '@breadc/death': 1.0.0-beta.13
       '@breadc/tui': 1.0.0-beta.13
 
-  bumpp@11.0.0:
+  bumpp@11.0.1:
     dependencies:
       args-tokenizer: 0.3.0
       cac: 7.0.0
@@ -1178,13 +1178,13 @@ snapshots:
 
   expect-type@1.3.0: {}
 
-  fast-xml-builder@1.1.3:
+  fast-xml-builder@1.1.4:
     dependencies:
       path-expression-matcher: 1.1.3
 
-  fast-xml-parser@5.5.5:
+  fast-xml-parser@5.5.6:
     dependencies:
-      fast-xml-builder: 1.1.3
+      fast-xml-builder: 1.1.4
       path-expression-matcher: 1.1.3
       strnum: 2.2.0
 
