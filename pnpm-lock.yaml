@@ -37,7 +37,7 @@ importers:
         version: link:../core
       defu:
         specifier: ^6.1.4
-        version: 6.1.4
+        version: 6.1.5
       fast-xml-parser:
         specifier: ^5.3.3
         version: 5.7.0
@@ -64,7 +64,7 @@ importers:
         version: link:../xml
       defu:
         specifier: ^6.1.4
-        version: 6.1.4
+        version: 6.1.5
       fast-xml-parser:
         specifier: ^5.3.3
         version: 5.7.0
@@ -542,8 +542,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  defu@6.1.4:
-    resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
+  defu@6.1.5:
+    resolution: {integrity: sha512-pwdBJxJuJXmqrLO6s0VBmfbRz+G7FUzkjldAsdi9Yrv86mPyzq0ll1o8+8gB4Gsr6GJHbK1Lh3ngllgTInDCjA==}
 
   defu@6.1.7:
     resolution: {integrity: sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ==}
@@ -1357,7 +1357,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  defu@6.1.4: {}
+  defu@6.1.5: {}
 
   defu@6.1.7: {}
 
@@ -1689,7 +1689,7 @@ snapshots:
   unconfig@7.5.0:
     dependencies:
       '@quansync/fs': 1.0.0
-      defu: 6.1.4
+      defu: 6.1.7
       jiti: 2.6.1
       quansync: 1.0.0
       unconfig-core: 7.5.0
