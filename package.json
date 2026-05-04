@@ -6,14 +6,14 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "epubook": "tsx packages/cli/src/cli.ts",
     "format": "prettier --write '**/*.{js,mjs,ts,tsx}'",
-    "release": "bumpp package.json packages/*/package.json --commit --push --tag && pnpm -r publish --access public",
+    "lnovel": "node scripts/lnovel.mjs",
+    "release": "bumpp package.json packages/*/package.json --commit --push --tag",
     "test": "vitest",
     "test:ci": "turbo run test:ci",
     "typecheck": "turbo run typecheck",
-    "preversion": "turbo run test:ci",
-    "postversion": "turbo run build",
-    "epubook": "tsx packages/cli/src/cli.ts"
+    "preversion": "turbo run test:ci"
   },
   "devDependencies": {
     "@types/node": "^24.12.0",
