@@ -1,6 +1,6 @@
 {
   "name": "@epubook/xml",
-  "version": "0.0.11",
+  "version": "0.0.12-beta.1",
   "description": "Epubook XML Supports",
   "keywords": [
     "ebook",
