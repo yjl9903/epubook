@@ -40,7 +40,7 @@
   "dependencies": {
     "@epubook/xml": "workspace:*",
     "defu": "^6.1.7",
-    "fast-xml-parser": "^5.7.2",
+    "fast-xml-parser": "^5.7.3",
     "fflate": "^0.8.2",
     "pathe": "^2.0.3"
   },
