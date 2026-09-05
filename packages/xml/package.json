@@ -56,7 +56,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/hast": "^3.0.4",
+    "@types/hast": "^3.0.5",
     "@types/xast": "^2.0.4",
     "hast-util-from-html": "^2.0.3",
     "pathe": "^2.0.3",
