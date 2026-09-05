@@ -1,6 +1,6 @@
 {
   "name": "@epubook/monorepo",
-  "version": "0.0.12-beta.3",
+  "version": "0.0.12-beta.4",
   "private": true,
   "type": "module",
   "scripts": {
