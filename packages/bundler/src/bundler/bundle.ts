@@ -16,37 +16,33 @@ import { toISO8601String } from '../utils/index.js';
  * @returns
  */
 export async function bundle(epub: EpubPublication): Promise<Uint8Array> {
-  return new Promise(async (res, rej) => {
-    const opfs = epub.rootfiles.map(
-      (opf) => [opf.path, fflate.strToU8(makePackageDocument(opf))] as const
-    );
+  const opfs = epub.rootfiles.map(
+    (opf) => [opf.path, fflate.strToU8(makePackageDocument(opf))] as const
+  );
 
-    const items: Record<string, Uint8Array> = {};
-    for (const opf of epub.rootfiles) {
-      const base = path.dirname(opf.path);
-      for (const item of opf.manifest.resources) {
-        const name = path.join(base, item.path);
-        if (name in items) {
-          continue;
-        }
-        try {
-          // TODO: parallel here
-          items[name] = await item.bundle();
-        } catch (error) {
-          console.error(error);
-        }
+  const items: Record<string, Uint8Array> = {};
+  for (const opf of epub.rootfiles) {
+    const base = path.dirname(opf.path);
+    for (const item of opf.manifest.resources) {
+      const name = path.join(base, item.path);
+      if (name in items) {
+        continue;
       }
+      // TODO: parallel here
+      items[name] = await item.bundle();
     }
+  }
 
-    const abstractContainer: fflate.AsyncZippable = {
-      mimetype: fflate.strToU8(MIMETYPE),
-      'META-INF': {
-        'container.xml': fflate.strToU8(makeContainerXml(epub))
-      },
-      ...Object.fromEntries(opfs),
-      ...items
-    };
+  const abstractContainer: fflate.AsyncZippable = {
+    mimetype: fflate.strToU8(MIMETYPE),
+    'META-INF': {
+      'container.xml': fflate.strToU8(makeContainerXml(epub))
+    },
+    ...Object.fromEntries(opfs),
+    ...items
+  };
 
+  return new Promise((res, rej) => {
     fflate.zip(
       abstractContainer,
       {
@@ -122,7 +118,6 @@ export function makePackageDocument(rendition: Rendition): string {
 
   const optionalMetadata: Record<string, any> = {};
   const optionalList: Array<keyof typeof rendition.metadata> = [
-    'contributor',
     'coverage',
     'format',
     'publisher',
@@ -154,6 +149,9 @@ export function makePackageDocument(rendition: Rendition): string {
     },
     'dc:date': toISO8601String(rendition.metadata.date),
     'dc:description': rendition.metadata.description,
+    'dc:contributor': rendition.metadata.contributor.map((author) => ({
+      '#text': author.name
+    })),
     ...optionalMetadata,
     meta: [
       {

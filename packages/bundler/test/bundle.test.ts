@@ -1,10 +1,116 @@
-import { describe, it, expect } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
+import { strFromU8, unzipSync, zip } from 'fflate';
+import type { FlateCallback, ZipOptions } from 'fflate';
+import { XMLParser, XMLValidator } from 'fast-xml-parser';
 
 import { EpubPublication, XHTML, Navigation, Cover } from '@epubook/core';
 
 import { bundle, makeContainerXml, makePackageDocument } from '../src/bundler/bundle.js';
+import { BundleError } from '../src/error.js';
+
+vi.mock('fflate', async (importOriginal) => {
+  const original = await importOriginal<typeof import('fflate')>();
+  return { ...original, zip: vi.fn(original.zip) };
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.mocked(zip).mockReset();
+});
 
 describe('Bundle Epub', () => {
+  it.each([
+    { contributors: [] },
+    { contributors: [{ name: '插画师' }] },
+    {
+      contributors: [
+        { name: '插画 & <绘者>', uid: 'illustrator', role: 'ill', fileAs: '绘者' },
+        { name: '译者 "甲"' }
+      ]
+    }
+  ])('serializes contributors as separate text elements ($contributors)', ({ contributors }) => {
+    const epub = EpubPublication.create('OEBPS/content.opf', {
+      contributor: contributors
+    });
+    const xml = makePackageDocument(epub.rootfile);
+    expect(XMLValidator.validate(xml)).toBe(true);
+
+    const parsed = new XMLParser({
+      ignoreAttributes: false,
+      isArray: (name) => name === 'dc:contributor'
+    }).parse(xml);
+    expect(parsed.package.metadata['dc:contributor'] ?? []).toEqual(
+      contributors.map((author) => author.name)
+    );
+    if (contributors.length > 1) {
+      expect(xml).toContain('<dc:contributor>插画 &amp; &lt;绘者&gt;</dc:contributor>');
+    }
+  });
+
+  it('includes contributor text and every resource in the ZIP', async () => {
+    const epub = EpubPublication.create('OEBPS/content.opf', {
+      contributor: [{ name: '插画师' }, { name: '译者' }]
+    });
+    const chapter = new XHTML('chapter.xhtml', {}, '<html/>');
+    const cover = new Cover('images/cover.png', 'image/png', new Uint8Array([1, 2, 3]));
+    epub.rootfile.manifest.add(chapter, cover);
+
+    const result = await bundle(epub);
+    expect(result).toBeInstanceOf(Uint8Array);
+    const files = unzipSync(result);
+    expect(strFromU8(files.mimetype)).toBe('application/epub+zip');
+    expect(strFromU8(files['META-INF/container.xml'])).toBe(makeContainerXml(epub));
+    expect(strFromU8(files['OEBPS/content.opf'])).toBe(makePackageDocument(epub.rootfile));
+    expect(strFromU8(files['OEBPS/chapter.xhtml'])).toBe('<html/>');
+    expect(files['OEBPS/images/cover.png']).toEqual(new Uint8Array([1, 2, 3]));
+  });
+
+  it.each(['reject', 'throw'] as const)('rejects when a resource fails with %s', async (mode) => {
+    const epub = EpubPublication.create();
+    const resource = new XHTML('chapter.xhtml');
+    const error = new Error('Could not load chapter');
+    vi.spyOn(resource, 'bundle').mockImplementation(() => {
+      if (mode === 'throw') throw error;
+      return Promise.reject(error);
+    });
+    epub.rootfile.manifest.add(resource);
+
+    await expect(bundle(epub)).rejects.toBe(error);
+    expect(zip).not.toHaveBeenCalled();
+  });
+
+  it('rejects unsupported EPUB versions instead of leaving the promise pending', async () => {
+    const epub = EpubPublication.create();
+    vi.spyOn(epub.rootfile, 'version', 'get').mockReturnValue('2.0' as '3.0');
+
+    await expect(bundle(epub)).rejects.toBeInstanceOf(BundleError);
+    expect(zip).not.toHaveBeenCalled();
+  });
+
+  it('propagates metadata serialization errors to the caller', async () => {
+    const epub = EpubPublication.create();
+    const error = new Error('Could not serialize metadata');
+    vi.spyOn(epub.rootfile.metadata.date, 'getUTCFullYear').mockImplementation(() => {
+      throw error;
+    });
+
+    await expect(bundle(epub)).rejects.toBe(error);
+    expect(zip).not.toHaveBeenCalled();
+  });
+
+  it('propagates asynchronous ZIP errors to the caller', async () => {
+    const error = Object.assign(new Error('Could not create ZIP'), { code: 0 });
+    vi.mocked(zip).mockImplementationOnce(
+      (_files, options: ZipOptions | FlateCallback, callback?: FlateCallback) => {
+        const cb = typeof options === 'function' ? options : callback!;
+        queueMicrotask(() => cb(error, new Uint8Array()));
+        return () => {};
+      }
+    );
+
+    await expect(bundle(EpubPublication.create())).rejects.toBe(error);
+  });
+
   it('generate container.xml', () => {
     const epub = EpubPublication.create();
     const res = makeContainerXml(epub);
