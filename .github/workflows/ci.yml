@@ -24,7 +24,7 @@ jobs:
           node-version: 24.20.0
           cache: pnpm
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
           java-version: '17'
