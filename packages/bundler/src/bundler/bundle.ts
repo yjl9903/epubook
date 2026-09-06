@@ -148,7 +148,7 @@ export function makePackageDocument(rendition: Rendition): string {
       '#text': rendition.creator.name
     },
     'dc:date': toISO8601String(rendition.metadata.date),
-    'dc:description': rendition.metadata.description,
+    'dc:description': rendition.metadata.description || undefined,
     'dc:contributor': rendition.metadata.contributor.map((author) => ({
       '#text': author.name
     })),

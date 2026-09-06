@@ -19,6 +19,26 @@ afterEach(() => {
 });
 
 describe('Bundle Epub', () => {
+  it.each([{}, { description: '' }])('omits an empty description (%j)', async (metadata) => {
+    const epub = EpubPublication.create('OEBPS/content.opf', metadata);
+    const xml = makePackageDocument(epub.rootfile);
+    expect(xml).not.toContain('dc:description');
+
+    const files = unzipSync(await bundle(epub));
+    expect(strFromU8(files['OEBPS/content.opf'])).not.toContain('dc:description');
+  });
+
+  it('preserves and escapes a non-empty description', async () => {
+    const description = '  简介 & <内容>\n第二段。  ';
+    const epub = EpubPublication.create('OEBPS/content.opf', { description });
+    const files = unzipSync(await bundle(epub));
+    const xml = strFromU8(files['OEBPS/content.opf']);
+    expect(XMLValidator.validate(xml)).toBe(true);
+    expect(xml).toContain('简介 &amp; &lt;内容&gt;');
+    const parsed = new XMLParser({ trimValues: false }).parse(xml);
+    expect(parsed.package.metadata['dc:description']).toBe(description);
+  });
+
   it.each([
     { contributors: [] },
     { contributors: [{ name: '插画师' }] },
