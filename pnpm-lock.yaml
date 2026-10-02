@@ -212,8 +212,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       breadc:
-        specifier: ^1.0.0-beta.18
-        version: 1.0.0-beta.18
+        specifier: ^1.0.0-beta.20
+        version: 1.0.0-beta.20
 
   packages/core:
     dependencies:
@@ -283,17 +283,17 @@ importers:
 
 packages:
 
-  '@breadc/color@1.0.0-beta.18':
-    resolution: {integrity: sha512-vClJTkTXJSScmk9kzX0N4C0a0a282X9fb0KYU/2emaHvseAUidrh7FBrueE3vzfHTuYiE2o4PHBfPTr0wOBsdQ==}
+  '@breadc/color@1.0.0-beta.20':
+    resolution: {integrity: sha512-hFXqlKwwJHXuTQSlhZtsUdyONGnj2d4KPSbYjx4I6sJxQooW02fEtoDS4twH7D+MU4EPIHaGCRBQV34dizT2TQ==}
 
-  '@breadc/core@1.0.0-beta.18':
-    resolution: {integrity: sha512-PMAB7Gwh8M1+/yYb8gK5mjUzPSjMtaJrpA6e0hPIm0V0+rukNLOczul26Gn47Ivbju/XyL3PK0UDapnuI8difQ==}
+  '@breadc/core@1.0.0-beta.20':
+    resolution: {integrity: sha512-2CCf2iszKPR82rAJPQWpkk60VNDBBmvdcXLditvNpbu5z1/qeifzOn0/eYkHWiqrTWObNA8fTAVUDMnH8OrmPA==}
 
-  '@breadc/death@1.0.0-beta.18':
-    resolution: {integrity: sha512-cunyKh7QPgY6mSmazqikkQ1n7QFHiTPP885H093QY/mCTKLyvIFM6MsT8yo6J3CeLtBzN30EiEVRqMlJT3ZMbA==}
+  '@breadc/death@1.0.0-beta.20':
+    resolution: {integrity: sha512-htInMkdJxgFy2Mk9QpRZlPpljfR2Qg+udw82Zz3LhRCXSizui2hzxP+i7RrqFtpTO5Tyndbn9iE0WiJ0jy+JFQ==}
 
-  '@breadc/tui@1.0.0-beta.18':
-    resolution: {integrity: sha512-q3d2OkuoLsT9aYHroUqfbBo1yX5TCtbFvi7e4P857m7MDAZisfpOHY9/mXd59u4bH69vcC4rmrfYZ5YIO8GqvQ==}
+  '@breadc/tui@1.0.0-beta.20':
+    resolution: {integrity: sha512-VpxUFdLYjIQ+j5ZLvzalTBT5KO7r3N0hd+rjGTGAyEcpAlh+RCC87a2UfD8FTf1lsAUHj3Q7pXoJ//FDdk7XpQ==}
 
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
@@ -412,6 +412,9 @@ packages:
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
+
+  '@standard-schema/spec@1.1.0':
+    resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
   '@turbo/darwin-64@2.11.6':
     resolution: {integrity: sha512-nAvJwDBgz/cKoSPhB7YOGPFmDEwCRavFjy0jUsrGqR97cLyJqXU2rZC/zTnw+9J3DkB2gfjpolX7mKsBatMcCQ==}
@@ -743,8 +746,8 @@ packages:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
 
-  breadc@1.0.0-beta.18:
-    resolution: {integrity: sha512-L/gKQSCc0yY1VtV/y4y4EKI52FVSX0gLRy29rV6jd+S1xrIQTxV8cBtAY75r542lB2clNh1kxMGB8ia9yjz33A==}
+  breadc@1.0.0-beta.20:
+    resolution: {integrity: sha512-lrBhaYWdpw9J/IGfaZynqwbN1SO6puQziIXOpBoY3EahOZR6SKhuKyDidi63cTzjNKCykzp0tIM5WsLMlDNqnw==}
 
   bumpp@12.3.0:
     resolution: {integrity: sha512-YgW09sgbIGQmAD/Jk7FEGP0tm0PeDz+Zgk+IAk+MOHhb/98pj/l3CgkxSjd7C1O99JPxTNwS+bPOTNaHuNh6lQ==}
@@ -1243,20 +1246,20 @@ packages:
 
 snapshots:
 
-  '@breadc/color@1.0.0-beta.18': {}
+  '@breadc/color@1.0.0-beta.20': {}
 
-  '@breadc/core@1.0.0-beta.18':
+  '@breadc/core@1.0.0-beta.20':
     dependencies:
-      '@breadc/color': 1.0.0-beta.18
+      '@breadc/color': 1.0.0-beta.20
+      '@standard-schema/spec': 1.1.0
 
-  '@breadc/death@1.0.0-beta.18': {}
+  '@breadc/death@1.0.0-beta.20': {}
 
-  '@breadc/tui@1.0.0-beta.18':
+  '@breadc/tui@1.0.0-beta.20':
     dependencies:
-      '@breadc/color': 1.0.0-beta.18
-      '@breadc/death': 1.0.0-beta.18
+      '@breadc/color': 1.0.0-beta.20
+      '@breadc/death': 1.0.0-beta.20
       fast-string-width: 3.0.2
-      std-env: 4.2.0
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
@@ -1321,6 +1324,8 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.1': {}
+
+  '@standard-schema/spec@1.1.0': {}
 
   '@turbo/darwin-64@2.11.6':
     optional: true
@@ -1514,12 +1519,12 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  breadc@1.0.0-beta.18:
+  breadc@1.0.0-beta.20:
     dependencies:
-      '@breadc/color': 1.0.0-beta.18
-      '@breadc/core': 1.0.0-beta.18
-      '@breadc/death': 1.0.0-beta.18
-      '@breadc/tui': 1.0.0-beta.18
+      '@breadc/color': 1.0.0-beta.20
+      '@breadc/core': 1.0.0-beta.20
+      '@breadc/death': 1.0.0-beta.20
+      '@breadc/tui': 1.0.0-beta.20
 
   bumpp@12.3.0:
     dependencies:
