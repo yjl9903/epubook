@@ -16,7 +16,7 @@
     "preversion": "turbo run test:ci"
   },
   "devDependencies": {
-    "@types/node": "^24.19.2",
+    "@types/node": "^26.6.6",
     "bumpp": "latest",
     "tsdown": "^0.23.3",
     "turbo": "^2.11.10",
