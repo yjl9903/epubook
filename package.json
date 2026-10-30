@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "bumpp": "latest",
-    "tsdown": "^0.23.3",
+    "tsdown": "^0.23.4",
     "turbo": "^2.11.10",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
