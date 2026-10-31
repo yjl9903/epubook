@@ -278,8 +278,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       xastscript:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^4.0.1
+        version: 4.0.1
 
 packages:
 
@@ -1260,8 +1260,8 @@ packages:
   xast-util-to-xml@4.0.0:
     resolution: {integrity: sha512-r1euIWS5yZJUNpfN+ReE4m7Vld2iytaOPJtuXVuRQacRZwqRN1MAb+dv0aGLrdXOZrpGLyvUFf1Upyrb3R5qBg==}
 
-  xastscript@4.0.0:
-    resolution: {integrity: sha512-r7a0kObEyivkML0dLrp/nOH5l51y9v5DL1MT/Xc6qUgGGNP1mZZUmT6NXtWAmx2FLfjonop++PtpVMwp1Hw/Gw==}
+  xastscript@4.0.1:
+    resolution: {integrity: sha512-c7zkuV2UyrHe/7a+yM7HcJVqPz/k49uvuT7C6xuD8ym9FHVD3yYDJ5ooV9SNd6X1aMq14uI2aJs8dD5MqUdt6g==}
 
   xml-naming@0.3.0:
     resolution: {integrity: sha512-ghig2TBE/H11aOVgmahA3MhimvkBr6JIYknH/Dhdk10nXwdbIqBJsbfMxpvFPG8bAw77gN29aQWvKpmVoPlvPQ==}
@@ -2008,7 +2008,7 @@ snapshots:
       ccount: 2.0.1
       stringify-entities: 4.0.4
 
-  xastscript@4.0.0:
+  xastscript@4.0.1:
     dependencies:
       '@types/xast': 2.0.4
 
