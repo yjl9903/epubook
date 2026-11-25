@@ -58,7 +58,7 @@
   "dependencies": {
     "@types/hast": "^3.0.5",
     "@types/xast": "^2.0.4",
-    "hast-util-from-html": "^2.0.3",
+    "hast-util-from-html": "^2.1.0",
     "pathe": "^2.0.3",
     "property-information": "^7.2.0",
     "xast-util-to-xml": "^4.0.0",
