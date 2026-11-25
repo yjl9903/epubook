@@ -60,7 +60,7 @@
     "@types/xast": "^2.0.4",
     "hast-util-from-html": "^2.0.3",
     "pathe": "^2.0.3",
-    "property-information": "^7.1.0",
+    "property-information": "^7.2.0",
     "xast-util-to-xml": "^4.0.0",
     "xastscript": "^4.0.0"
   },
